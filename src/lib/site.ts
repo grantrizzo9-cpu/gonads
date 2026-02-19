@@ -1,3 +1,4 @@
+
 export type Article = {
   slug: string;
   title: string;
@@ -47,7 +48,7 @@ export const strategyArticles: Article[] = [
     title: 'AI Content Velocity',
     description: 'Master the art of rapid content creation using the AI Studio to dominate your niche.',
     image: 'strategy-3',
-    content: \`
+    content: `
       <h2 class="font-headline text-2xl font-bold mb-4">Achieving Content Velocity with AI</h2>
       <p class="mb-4">In today's digital landscape, content is the currency of attention. "Content Velocity" refers to the speed and efficiency with which you can produce high-quality, relevant content. The faster your velocity, the faster you can capture traffic, build authority, and drive conversions. Our AI Studio is your engine for achieving unmatched content velocity.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2">The Tools at Your Disposal</h3>
@@ -57,14 +58,14 @@ export const strategyArticles: Article[] = [
         <li><strong>Video Studio:</strong> Turn articles and scripts into engaging short-form videos for social media. Video is the highest engagement medium, and our studio makes it accessible to everyone.</li>
       </ul>
       <p>Imagine being able to deploy a full content marketing campaign—blog post, social ads, and a promotional video—in under an hour. This is the competitive advantage Affiliate AI Host provides. While your competitors are spending days writing and designing, you're already deploying and earning.</p>
-    \`,
+    `,
   },
   {
     slug: 'nvme-edge-seo-advantage',
     title: 'NVMe Edge SEO Advantage',
     description: 'Discover how sub-second load times give your sites a powerful ranking advantage on Google.',
     image: 'strategy-4',
-    content: \`
+    content: `
       <h2 class="font-headline text-2xl font-bold mb-4">The SEO Power of NVMe Edge Hosting</h2>
       <p class="mb-4">Search Engine Optimization (SEO) is a complex game, but one factor is becoming increasingly dominant: page speed. Google has explicitly stated that site speed, particularly as measured by Core Web Vitals, is a critical ranking factor. This is where our NVMe Edge Hosting gives you and your referrals an undeniable advantage.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2">NVMe vs. SSD: A Generational Leap</h3>
@@ -75,14 +76,14 @@ export const strategyArticles: Article[] = [
         <li><strong>Improved Core Web Vitals:</strong> Faster data access directly improves Largest Contentful Paint (LCP) and First Input Delay (FID).</li>
       </ul>
       <p>When you refer a client to Affiliate AI Host, you are giving them an instant SEO boost. Their pages load faster, users are more engaged, and Google rewards them with higher rankings. This makes your job as an affiliate easier—you're not just selling hosting; you're selling better search engine rankings.</p>
-    \`,
+    `,
   },
   {
     slug: 'daily-paypal-cashflow',
     title: 'Daily PayPal Cashflow Management',
     description: 'Strategies for managing and reinvesting your daily payouts to accelerate growth.',
     image: 'strategy-5',
-    content: \`
+    content: `
       <h2 class="font-headline text-2xl font-bold mb-4">Mastering Your Daily Cashflow</h2>
       <p class="mb-4">Receiving affiliate commissions daily, instead of monthly, is a paradigm shift. It transforms your earnings from a distant paycheck into active working capital. The velocity of money is a powerful concept, and our daily PayPal payouts put it directly in your hands. Here's how to leverage it.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2">The Compound Growth Engine</h3>
@@ -95,14 +96,14 @@ export const strategyArticles: Article[] = [
         <li><strong>Repeat:</strong> The new referrals add to your daily commission base, increasing the amount you can reinvest the next day.</li>
       </ol>
       <p class="mb-4">This is how you scale rapidly. A monthly payout schedule forces you to wait weeks to refuel your marketing efforts. A daily payout schedule allows you to compound your growth every single day. Manage this cashflow wisely, and you can build a formidable affiliate business in record time.</p>
-    \`,
+    `,
   },
   {
     slug: 'one-click-niche-site-scaling',
     title: '1-Click Niche Site Scaling',
     description: 'A look into the future of affiliate marketing: deploying entire niche sites with a single click.',
     image: 'strategy-6',
-    content: \`
+    content: `
       <h2 class="font-headline text-2xl font-bold mb-4">The Future is Automated: 1-Click Niche Sites</h2>
       <p class="mb-4">The traditional way of building a niche affiliate site is slow and laborious: research a niche, buy a domain, set up WordPress, find a theme, write content, and so on. It can take weeks to get a single site live. The Affiliate AI Host Website Builder is designed to obsolete this entire process.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2">How It Works (An Overview)</h3>
@@ -114,7 +115,7 @@ export const strategyArticles: Article[] = [
         <li><strong>Site Assembly:</strong> The AI selects a suitable theme, assembles the pages, creates a navigation menu, and deploys the entire website to your hosting account.</li>
       </ol>
       <p class="mb-4">What once took weeks now takes minutes. This allows you to test new niches with unprecedented speed. You can deploy a portfolio of niche sites, see which ones gain traction, and then focus your efforts on the winners. This is not just about saving time; it's about fundamentally changing the economics of affiliate marketing, allowing you to scale your operations exponentially.</p>
-    \`,
+    `,
   },
 ];
 
