@@ -48,7 +48,7 @@ export default function Home() {
             />
           )}
           <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
-          <div className="container relative z-10 mx-auto text-center">
+          <div className="container px-4 sm:px-6 relative z-10 mx-auto text-center">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
               Infrastructure as Income
             </h1>
@@ -69,7 +69,7 @@ export default function Home() {
 
         {/* Features Section */}
         <section id="features" className="w-full bg-card py-12 md:py-24">
-          <div className="container">
+          <div className="container px-4 sm:px-6">
             <div className="mx-auto mb-12 max-w-2xl text-center">
               <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">The High-Income Affiliate Stack</h2>
               <p className="mt-4 text-muted-foreground">Everything you need to build, scale, and monetize.</p>
@@ -105,7 +105,7 @@ export default function Home() {
 
         {/* OpenSRS & Transparency Section */}
         <section className="w-full py-12 md:py-24">
-          <div className="container grid items-center gap-8 md:grid-cols-2">
+          <div className="container px-4 sm:px-6 grid items-center gap-8 md:grid-cols-2">
             <div>
               <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Transparent & Reliable Foundation</h2>
               <p className="mt-4 text-muted-foreground">

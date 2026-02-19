@@ -12,7 +12,7 @@ export default function PricingPage() {
     <>
       <Header />
       <main className="flex-1">
-        <section className="container py-12 md:py-24">
+        <section className="container px-4 sm:px-6 py-12 md:py-24">
           <div className="mx-auto mb-12 max-w-3xl text-center">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl">
               Find Your Edge. Start Earning Daily.

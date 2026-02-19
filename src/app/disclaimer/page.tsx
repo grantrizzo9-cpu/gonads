@@ -6,7 +6,7 @@ export default function DisclaimerPage() {
     <>
       <Header />
       <main className="flex-1">
-        <div className="container max-w-3xl py-12 md:py-24">
+        <div className="container max-w-3xl px-4 sm:px-6 py-12 md:py-24">
           <h1 className="font-headline text-4xl font-bold mb-8 text-accent">Earnings Disclaimer</h1>
           <div className="prose space-y-4">
             <p>Affiliate AI Host provides tools and a platform for affiliate marketing. Any earnings or income statements, or earnings or income examples, are only estimates of what we think you could earn. There is no assurance you'll do as well.</p>

@@ -30,7 +30,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     <>
       <Header />
       <main className="flex-1">
-        <article className="container max-w-4xl py-12 md:py-24">
+        <article className="container max-w-4xl px-4 sm:px-6 py-12 md:py-24">
           <div className="space-y-4 text-center">
             <h1 className="font-headline text-4xl font-extrabold tracking-tighter lg:text-5xl">
               {article.title}
