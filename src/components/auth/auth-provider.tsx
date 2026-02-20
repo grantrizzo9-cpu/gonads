@@ -21,10 +21,10 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Mock default user
 const defaultMockUser: User = {
-  uid: 'mock-user-123',
-  email: 'affiliate@ai-host.com',
-  displayName: 'Pro Affiliate',
-  username: 'proaffiliate',
+  uid: 'mock-admin-user-123',
+  email: 'renntapog@gmail.com',
+  displayName: 'Host Pro Ai Admin',
+  username: 'hostproai',
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
