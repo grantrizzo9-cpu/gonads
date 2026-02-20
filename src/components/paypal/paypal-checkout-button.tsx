@@ -60,23 +60,25 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     };
 
     const onError = (err: any) => {
+        // The PayPal script logs an error to the console when the popup is closed by the user.
+        // This is expected behavior. We check for this specific error message and ignore it
+        // to prevent it from being treated as a real application error.
         const message = err.toString();
-        // The 'Window closed' error occurs when the user closes the PayPal popup.
-        // It is a user action, not a critical failure, so we just ignore it.
         if (message.includes('Window closed')) {
             return;
         }
 
-        // For all other errors, we display an error message to the user.
+        // For all other actual errors, we display an error message to the user.
         console.error('PayPal Checkout onError', err);
-        setError('A PayPal error occurred. This could be due to your sandbox account setup. Please check your browser console for more details and verify your sandbox seller account can receive payments.');
+        setError('An unexpected error occurred with PayPal. This could be due to your sandbox account setup. Please check your browser console for more details and verify your sandbox seller account can receive payments.');
     };
     
     const onCancel = (data: Record<string, unknown>) => {
-        // User explicitly cancelled the payment flow from within the PayPal popup.
+        // This callback is fired when the user clicks the "Cancel and return to merchant" link
+        // from within the PayPal popup. We can show a simple notification.
         toast({
             title: 'Payment Canceled',
-            description: 'You closed the payment window before completing the transaction.',
+            description: 'You canceled the payment process.',
             variant: 'default'
         });
     };
