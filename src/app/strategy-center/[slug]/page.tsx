@@ -51,7 +51,7 @@ export default function ArticlePage({ params }: ArticlePageProps) {
             </div>
           )}
           <div
-            className="prose prose-invert mx-auto mt-8 max-w-none prose-h2:font-headline prose-h3:font-headline prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground"
+            className="prose mx-auto mt-8 max-w-none prose-h2:font-headline prose-h2:text-accent prose-h3:font-headline prose-h3:text-accent prose-p:text-muted-foreground prose-a:text-primary prose-strong:text-foreground"
             dangerouslySetInnerHTML={{ __html: article.content }}
           />
         </article>

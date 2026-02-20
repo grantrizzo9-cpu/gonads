@@ -26,39 +26,39 @@
     },
     {
       "id": "strategy-1",
-      "description": "Abstract image for 'Infrastructure as Income'",
-      "imageUrl": "https://images.unsplash.com/photo-1678078475921-d9802c53d21d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8aW5mcmFzdHJ1Y3R1cmUlMjBpbmNvbWV8ZW58MHx8fHwxNzcxNTI4NzM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "infrastructure income"
+      "description": "Image of a modern data center server rack",
+      "imageUrl": "https://images.unsplash.com/photo-1590959651373-a3db0f38a9b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYXRhJTIwY2VudGVyfGVufDB8fHx8MTc3MTYyODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "data center"
     },
     {
       "id": "strategy-2",
-      "description": "Abstract image for 'Roadmap to 10 Referrals'",
-      "imageUrl": "https://images.unsplash.com/photo-1601411380999-15e12a74b729?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxyb2FkbWFwJTIwZ3Jvd3RofGVufDB8fHx8MTc3MTUyODczN3ww&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "roadmap growth"
+      "description": "Team collaborating on a digital roadmap on a whiteboard",
+      "imageUrl": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkaWdpdGFsJTIwcm9hZG1hcHxlbnwwfHx8fDE3NzE2Mjg5OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "digital roadmap"
     },
     {
       "id": "strategy-3",
-      "description": "Abstract image for 'AI Content Velocity'",
-      "imageUrl": "https://images.unsplash.com/photo-1764664282125-f9bbeedd9479?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw4fHxhaSUyMGNvbnRlbnR8ZW58MHx8fHwxNzcxNTI4NzM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ai content"
+      "description": "Robot hand writing with a pen, symbolizing AI content creation",
+      "imageUrl": "https://images.unsplash.com/photo-1677756229124-053835595827?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhaSUyMHdyaXRpbmd8ZW58MHx8fHwxNzcxNjI5MDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ai writing"
     },
     {
       "id": "strategy-4",
-      "description": "Abstract image for 'NVMe Edge SEO Advantage'",
-      "imageUrl": "https://picsum.photos/seed/4/600/400",
-      "imageHint": "seo advantage"
+      "description": "Laptop showing SEO analytics charts and graphs",
+      "imageUrl": "https://images.unsplash.com/photo-1560472355-536de3962603?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzZW8lMjBhbmFseXRpY3N8ZW58MHx8fHwxNzcxNjI5MDI3fDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "seo analytics"
     },
     {
       "id": "strategy-5",
-      "description": "Abstract image for 'Daily PayPal Cashflow Management'",
-      "imageUrl": "https://picsum.photos/seed/5/600/400",
-      "imageHint": "paypal cashflow"
+      "description": "Person making an online payment with a credit card on a laptop",
+      "imageUrl": "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxvbmxpbmUlMjBwYXltZW50fGVufDB8fHx8MTc3MTYyOTA0M3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "online payment"
     },
     {
       "id": "strategy-6",
-      "description": "Abstract image for '1-Click Niche Site Scaling'",
-      "imageUrl": "https://images.unsplash.com/photo-1694106582336-e01fb4b7d185?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuaWNoZSUyMHNjYWxpbmd8ZW58MHx8fHwxNzcxNTI4NzM3fDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "niche scaling"
+      "description": "Group of people collaborating and networking, representing growth",
+      "imageUrl": "https://images.unsplash.com/photo-1517048676732-d65bc937f952?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxuZXR3b3JrJTIwZ3Jvd3RofGVufDB8fHx8MTc3MTYyOTA1OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "network growth"
     },
     {
       "id": "ad-studio-placeholder",
