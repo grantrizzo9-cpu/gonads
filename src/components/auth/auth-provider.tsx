@@ -27,7 +27,7 @@ const defaultMockUser: User = {
   email: 'renntapog@gmail.com',
   displayName: 'Host Pro Ai Admin',
   username: 'hostproai',
-  isPaid: true,
+  isPaid: false,
 };
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {

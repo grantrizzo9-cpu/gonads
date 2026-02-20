@@ -151,6 +151,30 @@ function AdminDashboard() {
   );
 }
 
+function ActivationCard() {
+  return (
+      <Card className="max-w-2xl mx-auto">
+          <CardHeader>
+              <CardTitle className="font-headline text-2xl flex items-center gap-2">
+                  <CreditCard />
+                  Activate Your Account
+              </CardTitle>
+              <CardDescription>
+                  Your account is not yet active. To start using the dashboard and earning commissions, you need to activate your plan.
+              </CardDescription>
+          </CardHeader>
+          <CardContent>
+              <p>Click the button below to choose a plan and complete the activation. Your 3-day free trial will start immediately after the one-time activation fee is paid.</p>
+          </CardContent>
+          <CardFooter>
+              <Button asChild className="w-full">
+                  <Link href="/pricing">Activate Your Plan</Link>
+              </Button>
+          </CardFooter>
+      </Card>
+  );
+}
+
 function UserDashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
@@ -168,30 +192,6 @@ function UserDashboard() {
       description: "Your affiliate link has been copied.",
     });
   };
-
-  if (!user?.isPaid) {
-    return (
-        <Card className="max-w-2xl mx-auto">
-            <CardHeader>
-                <CardTitle className="font-headline text-2xl flex items-center gap-2">
-                    <CreditCard />
-                    Activate Your Account
-                </CardTitle>
-                <CardDescription>
-                    Your account is not yet active. To start using the dashboard and earning commissions, you need to activate your plan.
-                </CardDescription>
-            </CardHeader>
-            <CardContent>
-                <p>Click the button below to choose a plan and complete the activation. Your 3-day free trial will start immediately after the one-time activation fee is paid.</p>
-            </CardContent>
-            <CardFooter>
-                <Button asChild className="w-full">
-                    <Link href="/pricing">Activate Your Plan</Link>
-                </Button>
-            </CardFooter>
-        </Card>
-    )
-  }
 
   return (
     <div className="space-y-8">
@@ -314,6 +314,10 @@ function UserDashboard() {
 export default function DashboardOverviewPage() {
     const { user } = useAuth();
     const isAdmin = user?.email === 'renntapog@gmail.com';
+
+    if (!user?.isPaid) {
+        return <ActivationCard />;
+    }
 
     return isAdmin ? <AdminDashboard /> : <UserDashboard />;
 }
