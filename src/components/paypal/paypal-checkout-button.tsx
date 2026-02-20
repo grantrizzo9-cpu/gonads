@@ -62,9 +62,32 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     };
 
     const onError = (err: any) => {
+        const message = err.toString();
+        // The 'Window closed' error occurs when the user closes the PayPal popup.
+        // It's a user action, not a critical failure, so we don't show a big error message.
+        if (message.includes('Window closed')) {
+            console.log('PayPal window closed by user.');
+            toast({
+                title: 'Payment Canceled',
+                description: 'You closed the payment window before completing the transaction.',
+            });
+            return;
+        }
+
         console.error('PayPal Checkout onError', err);
         setError('A PayPal error occurred. This could be due to your sandbox account setup. Please check your browser console for more details and verify your sandbox seller account can receive payments.');
     };
+    
+    const onCancel = (data: Record<string, unknown>) => {
+        // User explicitly cancelled the payment flow from within the PayPal popup
+        console.log('Payment cancelled by user. Data:', data);
+        toast({
+            title: 'Payment Canceled',
+            description: 'The payment process was canceled as requested.',
+            variant: 'default'
+        });
+    };
+
 
     if (isLoading) {
         return <div className="flex justify-center items-center h-10"><Loader2 className="h-6 w-6 animate-spin" /></div>
@@ -84,6 +107,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 createOrder={createOrder}
                 onApprove={onApprove}
                 onError={onError}
+                onCancel={onCancel}
                 onClick={() => setError(null)}
             />
         </>
