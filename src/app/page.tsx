@@ -116,7 +116,7 @@ const faqs = [
   },
   {
     question: "Can I get a refund on the activation fee?",
-    answer: "The one-time activation fee is non-refundable as it covers the cost of instantly provisioning your dedicated server resources on our NVMe infrastructure. However, your affiliate link is active from day one, allowing you to start earning commissions immediately, even during your 3-day free trial.",
+    answer: "Yes. We offer a no-questions-asked refund on your one-time activation fee if you request it within 24 hours of joining. We want you to be happy. If you decide it's not for you, just let us know, and we'll process it with no hard feelings. Please note that if you choose to receive a refund, your account will be closed, and you will no longer be able to log in.",
   }
 ];
 
