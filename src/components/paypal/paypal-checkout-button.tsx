@@ -14,7 +14,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { toast } = useToast();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+    const [error, setError] = useState<string | React.ReactNode | null>(null);
 
     const handleSuccessfulPayment = () => {
         activateAccount();
@@ -54,7 +54,18 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
             handleSuccessfulPayment();
         }).catch((err: any) => {
             console.error("PayPal payment capture failed. This is often a sandbox configuration issue. Full error object:", err);
-            setError("Payment failed. This is a common sandbox issue. Please verify that your PayPal developer sandbox seller account is correctly configured to receive payments. Check the browser's developer console for the full error object from PayPal.");
+            setError(
+                <div>
+                    <h3 className="font-bold mb-2">Payment Failed in PayPal Sandbox</h3>
+                    <p className="mb-2">This is a common issue and usually means the test seller account is not set up correctly. Please check the following in your PayPal Developer Dashboard:</p>
+                    <ul className="list-disc list-inside space-y-1 text-xs">
+                        <li><strong>Account Verified:</strong> Ensure your sandbox seller email address is verified.</li>
+                        <li><strong>Receiving Preferences:</strong> Check that your seller account is not blocking payments.</li>
+                        <li><strong>Currency Support:</strong> Make sure your seller account can accept payments in <strong>AUD</strong>.</li>
+                    </ul>
+                    <p className="mt-2 text-xs">For more specific details, please check the browser's developer console for the full error from PayPal.</p>
+                </div>
+            );
             setIsLoading(false);
         });
     };
@@ -93,7 +104,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
             {error && (
                 <div className="flex items-start gap-2 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive mb-2">
                     <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                    <p>{error}</p>
+                    <div>{error}</div>
                 </div>
             )}
             <PayPalButtons
