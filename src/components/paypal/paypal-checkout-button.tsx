@@ -8,6 +8,7 @@ import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
 import { type PricingTier } from '@/lib/site';
 import { Loader2, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount } = useAuth();
@@ -24,6 +25,15 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         });
         router.push('/dashboard');
     };
+
+    const handleSimulatePayment = () => {
+        setIsLoading(true);
+        setError(null);
+        // Simulate network delay
+        setTimeout(() => {
+            handleSuccessfulPayment();
+        }, 500);
+    }
 
     const createOrder = (data: CreateOrderData, actions: any) => {
         // IMPORTANT: In a production environment, you should create the order on your server
@@ -116,6 +126,19 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 onCancel={onCancel}
                 onClick={() => setError(null)}
             />
+            <div className="relative my-4">
+                <div className="absolute inset-0 flex items-center">
+                    <span className="w-full border-t" />
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                    <span className="bg-card px-2 text-muted-foreground">
+                        For Development
+                    </span>
+                </div>
+            </div>
+            <Button variant="outline" className="w-full" onClick={handleSimulatePayment}>
+                Simulate Successful Payment
+            </Button>
         </>
     );
 }
