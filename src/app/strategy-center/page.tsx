@@ -13,7 +13,7 @@ export default function StrategyCenterPage() {
       <main className="flex-1">
         <section className="container px-4 sm:px-6 py-12 md:py-24">
           <div className="mx-auto mb-12 max-w-3xl text-center">
-            <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl">
+            <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl text-accent">
               Strategy Center
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">

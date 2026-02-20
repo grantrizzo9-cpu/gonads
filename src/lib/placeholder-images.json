@@ -27,7 +27,7 @@
     {
       "id": "strategy-1",
       "description": "Image of a modern data center server rack",
-      "imageUrl": "https://images.unsplash.com/photo-1590959651373-a3db0f38a9b1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYXRhJTIwY2VudGVyfGVufDB8fHx8MTc3MTYyODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1629188882414-c4b691063673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkYXRhJTIwY2VudGVyfGVufDB8fHx8MTc3MTYyODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "data center"
     },
     {
@@ -38,9 +38,9 @@
     },
     {
       "id": "strategy-3",
-      "description": "Robot hand writing with a pen, symbolizing AI content creation",
-      "imageUrl": "https://images.unsplash.com/photo-1677756229124-053835595827?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxhaSUyMHdyaXRpbmd8ZW58MHx8fHwxNzcxNjI5MDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
-      "imageHint": "ai writing"
+      "description": "Abstract image representing artificial intelligence and data",
+      "imageUrl": "https://images.unsplash.com/photo-1682343213322-269e010a3d13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhaSUyMGFic3RyYWN0JTIwdGVjaG5vbG9neXxlbnwwfHx8fDE3NzE3MDM2Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "ai data"
     },
     {
       "id": "strategy-4",
