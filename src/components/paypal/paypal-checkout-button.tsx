@@ -53,8 +53,8 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         return actions.order.capture().then((details: any) => {
             handleSuccessfulPayment();
         }).catch((err: any) => {
-            console.error('Error capturing payment:', err);
-            setError("There was an error processing your payment. This can sometimes happen with sandbox accounts. Please check your PayPal sandbox account's balance and notification settings, then try again.");
+            console.error("PayPal payment capture failed. This is often a sandbox configuration issue. Full error object:", err);
+            setError("Payment failed. This is a common sandbox issue. Please verify that your PayPal developer sandbox seller account is correctly configured to receive payments. Check the browser's developer console for the full error object from PayPal.");
             setIsLoading(false);
         });
     };
@@ -63,7 +63,6 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         const message = err.toString();
         // The 'Window closed' error occurs when the user closes the PayPal popup.
         // It is a user action, not a critical failure, so we just ignore it.
-        // The onCancel callback will show a toast notification if needed.
         if (message.includes('Window closed')) {
             return;
         }
