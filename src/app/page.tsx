@@ -47,7 +47,7 @@ export default function Home() {
               priority
             />
           )}
-          <div className="absolute inset-0 bg-background/80 backdrop-blur-sm"></div>
+          <div className="absolute inset-0 bg-background/80"></div>
           <div className="container px-4 sm:px-6 relative z-10 mx-auto text-center">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl">
               Infrastructure as Income
@@ -67,6 +67,13 @@ export default function Home() {
           </div>
         </section>
 
+        <section className="w-full py-12 md:py-24">
+            <div className="container px-4 text-center">
+                <h2 className="font-headline text-4xl font-bold tracking-tighter text-primary sm:text-5xl">The problem is, you're paying for infrastructure.</h2>
+                <p className="mx-auto mt-4 max-w-[600px] text-lg text-muted-foreground md:text-xl">With Host Pro Ai, you get paid by it.</p>
+            </div>
+        </section>
+
         {/* Features Section */}
         <section id="features" className="w-full bg-card py-12 md:py-24">
           <div className="container px-4 sm:px-6">
@@ -76,7 +83,7 @@ export default function Home() {
             </div>
             <div className="grid gap-8 md:grid-cols-3">
               {features.map((feature) => (
-                <Card key={feature.title} className="flex flex-col">
+                <Card key={feature.title} className="flex flex-col bg-background/50 transition-all duration-300 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20">
                    {feature.image && (
                     <div className="relative h-48 w-full">
                       <Image
@@ -152,9 +159,12 @@ export default function Home() {
                 </li>
               </ul>
             </div>
-            <div className="relative h-80 rounded-lg bg-muted p-6">
-              <div className="flex flex-col items-center justify-center h-full">
-              </div>
+            <div className="relative flex h-80 items-center justify-center rounded-lg bg-background/50 p-6">
+                <div className="flex flex-col items-center justify-center space-y-4 text-center">
+                    <p className="text-sm text-muted-foreground">Domain fulfillment powered by</p>
+                    <p className="text-5xl font-bold font-headline tracking-widest text-foreground/80">OpenSRS</p>
+                    <p className="text-sm text-muted-foreground">A Tucows Company</p>
+                </div>
             </div>
           </div>
         </section>
