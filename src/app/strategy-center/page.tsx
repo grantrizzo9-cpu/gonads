@@ -39,7 +39,7 @@ export default function StrategyCenterPage() {
                       </div>
                     )}
                     <CardHeader>
-                      <CardTitle className="font-headline text-xl">{article.title}</CardTitle>
+                      <CardTitle className="font-headline text-xl text-accent">{article.title}</CardTitle>
                     </CardHeader>
                     <CardContent>
                       <CardDescription>{article.description}</CardDescription>
