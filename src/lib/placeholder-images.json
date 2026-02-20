@@ -27,19 +27,19 @@
     {
       "id": "strategy-1",
       "description": "Image of a modern data center server rack",
-      "imageUrl": "https://images.unsplash.com/photo-1629188882414-c4b691063673?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw5fHxkYXRhJTIwY2VudGVyfGVufDB8fHx8MTc3MTYyODk3N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1506399558188-acca6f8cbf41?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxkYXRhJTIwY2VudGVyfGVufDB8fHx8MTc3MTUwNjU5OHww&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "data center"
     },
     {
       "id": "strategy-2",
       "description": "Team collaborating on a digital roadmap on a whiteboard",
-      "imageUrl": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxkaWdpdGFsJTIwcm9hZG1hcHxlbnwwfHx8fDE3NzE2Mjg5OTZ8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1542744173-8e7e53415bb0?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxrZGlnaXRhbCUyMHJvYWRtYXB8ZW58MHx8fHwxNzcxNjI4OTk2fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "digital roadmap"
     },
     {
       "id": "strategy-3",
       "description": "Abstract image representing artificial intelligence and data",
-      "imageUrl": "https://images.unsplash.com/photo-1682343213322-269e010a3d13?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw3fHxhaSUyMGFic3RyYWN0JTIwdGVjaG5vbG9neXxlbnwwfHx8fDE3NzE3MDM2Mjh8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1568952433726-3896e3881c65?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw0fHxhaSUyMGRhdGF8ZW58MHx8fHwxNzcxNDc4MzA1fDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "ai data"
     },
     {
@@ -51,7 +51,7 @@
     {
       "id": "strategy-5",
       "description": "Person making an online payment with a credit card on a laptop",
-      "imageUrl": "https://images.unsplash.com/photo-1567427018141-0584cfcbf1b8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwzfHxvbmxpbmUlMjBwYXltZW50fGVufDB8fHx8fDE3NzE2MjkwNDN8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageUrl": "https://images.unsplash.com/photo-1608286022625-bc07f7a21154?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxMHx8b25saW5lJTIwcGF5bWVudHxlbnwwfHx8fDE3NzE1NDcxNDJ8MA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "online payment"
     },
     {
