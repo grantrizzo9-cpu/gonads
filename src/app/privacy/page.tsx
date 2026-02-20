@@ -6,10 +6,10 @@ export default function PrivacyPage() {
     <>
       <Header />
       <main className="flex-1">
-        <div className="container max-w-3xl px-4 sm:px-6 py-12 md:py-24">
+        <div className="container max-w-4xl px-4 sm:px-6 py-12 md:py-24">
           <h1 className="font-headline text-4xl font-bold mb-8 text-accent">Privacy Policy</h1>
           <div className="prose prose-h2:text-accent space-y-4">
-            <p>This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from Affiliate AI Host (the "Site").</p>
+            <p>This Privacy Policy describes how your personal information is collected, used, and shared when you visit or make a purchase from Host Pro Ai (the "Site").</p>
             
             <h2 className="font-headline">Personal Information We Collect</h2>
             <p>When you visit the Site, we automatically collect certain information about your device, including information about your web browser, IP address, time zone, and some of the cookies that are installed on your device.</p>

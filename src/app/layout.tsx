@@ -4,7 +4,7 @@ import { Toaster } from '@/components/ui/toaster';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Affiliate AI Host',
+  title: 'Host Pro Ai',
   description: 'Infrastructure as Income for High-Income Affiliate Marketers',
 };
 
