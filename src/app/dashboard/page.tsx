@@ -1,10 +1,10 @@
 "use client";
 
-import { AreaChart, BarChart, DollarSign, Users, Percent, Link as LinkIcon } from "lucide-react";
+import { AreaChart as AreaChartIcon, BarChart as BarChartIcon, DollarSign, Users, Percent, Link as LinkIcon } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Area, Bar } from 'recharts';
+import { CartesianGrid, XAxis, YAxis, Tooltip, AreaChart, Area, BarChart, Bar } from 'recharts';
 import { earningsData, referralsData, recentReferrals } from "@/lib/mock-data";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useAuth } from "@/components/auth/auth-provider";
@@ -93,37 +93,33 @@ export default function DashboardOverviewPage() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline flex items-center gap-2"><AreaChart className="h-5 w-5" />Daily Earnings</CardTitle>
+            <CardTitle className="font-headline flex items-center gap-2"><AreaChartIcon className="h-5 w-5" />Daily Earnings</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-64 w-full">
-              <ResponsiveContainer>
-                <AreaChart data={earningsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                  <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                  <Area dataKey="earnings" type="monotone" fill="var(--color-earnings)" fillOpacity={0.4} stroke="var(--color-earnings)" />
-                </AreaChart>
-              </ResponsiveContainer>
+              <AreaChart data={earningsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
+                <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+                <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                <Area dataKey="earnings" type="monotone" fill="var(--color-earnings)" fillOpacity={0.4} stroke="var(--color-earnings)" />
+              </AreaChart>
             </ChartContainer>
           </CardContent>
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline flex items-center gap-2"><BarChart className="h-5 w-5" />New Referrals (6m)</CardTitle>
+            <CardTitle className="font-headline flex items-center gap-2"><BarChartIcon className="h-5 w-5" />New Referrals (6m)</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-64 w-full">
-              <ResponsiveContainer>
-                <BarChart data={referralsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                  <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
-                  <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                  <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
-                  <Bar dataKey="referrals" fill="var(--color-referrals)" radius={4} />
-                </BarChart>
-              </ResponsiveContainer>
+              <BarChart data={referralsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+                <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
+                <YAxis tickLine={false} axisLine={false} tickMargin={8} />
+                <Tooltip cursor={false} content={<ChartTooltipContent indicator="dot" />} />
+                <Bar dataKey="referrals" fill="var(--color-referrals)" radius={4} />
+              </BarChart>
             </ChartContainer>
           </CardContent>
         </Card>
