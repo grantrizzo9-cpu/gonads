@@ -16,7 +16,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 const formSchema = z.object({
   niche: z.string().min(5, 'Please describe your niche in at least 5 characters.'),
-  targetDemographic: z.string().min(5, 'Please describe your target demographic.'),
+  targetAudience: z.string().min(5, 'Please describe your target audience.'),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -31,7 +31,7 @@ export default function WebsiteBuilderPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       niche: '',
-      targetDemographic: '',
+      targetAudience: '',
     },
   });
 
@@ -49,7 +49,7 @@ export default function WebsiteBuilderPage() {
     try {
       const result = await generateAffiliateWebsite({ 
         niche: values.niche,
-        targetDemographic: values.targetDemographic,
+        targetAudience: values.targetAudience,
         affiliateUsername: user.username,
       });
       setGeneratedCode(result.pageComponent);
@@ -104,10 +104,10 @@ export default function WebsiteBuilderPage() {
               />
               <FormField
                 control={form.control}
-                name="targetDemographic"
+                name="targetAudience"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Target Demographic</FormLabel>
+                    <FormLabel>Target Audience</FormLabel>
                     <FormControl>
                       <Input
                         placeholder="e.g., 'Tech-savvy young professionals'"
