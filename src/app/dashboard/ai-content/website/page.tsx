@@ -1,29 +1,59 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { generateAffiliateWebsite } from '@/ai/flows/generate-affiliate-website';
+import {
+  generateWebsiteJson,
+  type GenerateWebsiteJsonOutput,
+} from '@/ai/flows/website-generator';
+import { generateHtmlForWebsite } from '@/lib/website-html-generator';
+import { saveWebsite } from '@/lib/firestore';
+import { themes, type Theme } from '@/lib/data';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/components/auth/auth-provider';
-import { Loader2, Wand2, Clipboard, FileCode, BookUser, Palette } from 'lucide-react';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Loader2, Wand2, Eye, UploadCloud } from 'lucide-react';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 
 const formSchema = z.object({
   niche: z.string().min(5, 'Please describe your niche in at least 5 characters.'),
-  targetAudience: z.string().min(5, 'Please describe your target audience.'),
+  themeName: z.string({
+    required_error: 'Please select a theme.',
+  }),
 });
 
 type FormValues = z.infer<typeof formSchema>;
 
 export default function WebsiteBuilderPage() {
-  const [generatedCode, setGeneratedCode] = useState<string | null>(null);
+  const [generatedHtml, setGeneratedHtml] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isPublished, setIsPublished] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
 
@@ -31,33 +61,47 @@ export default function WebsiteBuilderPage() {
     resolver: zodResolver(formSchema),
     defaultValues: {
       niche: '',
-      targetAudience: '',
+      themeName: 'Midnight Glow',
     },
   });
 
   async function onSubmit(values: FormValues) {
     if (!user?.username) {
-        toast({
-            title: 'Error',
-            description: 'Could not find your affiliate username. Please ensure you are logged in.',
-            variant: 'destructive',
-        });
-        return;
+      toast({
+        title: 'Error',
+        description: 'Could not find your affiliate username. Please ensure you are logged in.',
+        variant: 'destructive',
+      });
+      return;
     }
     setIsLoading(true);
-    setGeneratedCode(null);
+    setGeneratedHtml(null);
+    setIsPublished(false);
     try {
-      const result = await generateAffiliateWebsite({ 
+      // 1. Generate the JSON content from the AI
+      const jsonContent = await generateWebsiteJson({
         niche: values.niche,
-        targetAudience: values.targetAudience,
-        affiliateUsername: user.username,
+        username: user.username,
       });
-      setGeneratedCode(result.pageComponent);
+
+      // 2. Find the selected theme
+      const selectedTheme = themes.find(t => t.name === values.themeName);
+      if (!selectedTheme) {
+        throw new Error('Selected theme not found.');
+      }
+
+      // 3. Generate the final HTML
+      const html = generateHtmlForWebsite(
+        jsonContent,
+        selectedTheme,
+        user.username
+      );
+      setGeneratedHtml(html);
     } catch (error) {
       console.error('Error generating website:', error);
       toast({
-        title: 'Error',
-        description: 'Failed to generate the website code. Please try again.',
+        title: 'Error Generating Website',
+        description: 'Failed to generate the website content. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -65,22 +109,36 @@ export default function WebsiteBuilderPage() {
     }
   }
 
-  const copyToClipboard = () => {
-    if (!generatedCode) return;
-    navigator.clipboard.writeText(generatedCode);
-    toast({
-      title: "Code Copied!",
-      description: "The website component code has been copied to your clipboard.",
-    });
+  const handlePublish = async () => {
+    if (!generatedHtml || !user?.uid) {
+      toast({ title: 'Error', description: 'No website content to publish.', variant: 'destructive'});
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const selectedThemeName = form.getValues('themeName');
+      const websiteId = await saveWebsite(user.uid, generatedHtml, selectedThemeName);
+      setIsPublished(true);
+      toast({
+        title: 'Website Published!',
+        description: `Your new site is saved with ID: ${websiteId}`,
+      });
+    } catch (error) {
+       console.error('Error publishing website:', error);
+       toast({ title: 'Error Publishing', description: 'Could not save website to database.', variant: 'destructive'});
+    } finally {
+        setIsLoading(false);
+    }
   };
+
 
   return (
     <div className="grid gap-8 md:grid-cols-2">
       <Card>
         <CardHeader>
-          <CardTitle>AI Website Builder</CardTitle>
+          <CardTitle>1-Click Website Generator</CardTitle>
           <CardDescription>
-            Generate a complete, single-page affiliate site with your referral link built-in.
+            Generate a complete, themed affiliate site with your referral link built-in.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -93,10 +151,7 @@ export default function WebsiteBuilderPage() {
                   <FormItem>
                     <FormLabel>Niche Topic</FormLabel>
                     <FormControl>
-                      <Input
-                        placeholder="e.g., 'Cold brew coffee makers'"
-                        {...field}
-                      />
+                      <Input placeholder="e.g., 'Cold brew coffee makers'" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -104,22 +159,30 @@ export default function WebsiteBuilderPage() {
               />
               <FormField
                 control={form.control}
-                name="targetAudience"
+                name="themeName"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Target Audience</FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="e.g., 'Tech-savvy young professionals'"
-                        {...field}
-                      />
-                    </FormControl>
+                    <FormLabel>Visual Theme</FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a theme" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {themes.map(theme => (
+                          <SelectItem key={theme.name} value={theme.name}>
+                            {theme.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                     <FormMessage />
                   </FormItem>
                 )}
               />
               <Button type="submit" disabled={isLoading} className="w-full">
-                {isLoading ? (
+                {isLoading && !generatedHtml ? (
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                 ) : (
                   <Wand2 className="mr-2 h-4 w-4" />
@@ -131,63 +194,57 @@ export default function WebsiteBuilderPage() {
         </CardContent>
       </Card>
 
-      <Card className="min-h-[400px]">
+      <Card className="min-h-[600px] flex flex-col">
         <CardHeader>
           <CardTitle>Generated Website</CardTitle>
-          <CardDescription>Your AI-generated website code and instructions will appear here.</CardDescription>
+          <CardDescription>Your AI-generated website preview will appear here.</CardDescription>
         </CardHeader>
-        <CardContent>
-          {isLoading && (
-            <div className="flex items-center justify-center h-64">
-              <Loader2 className="h-8 w-8 animate-spin text-primary" />
+        <CardContent className="flex-grow flex flex-col">
+          {isLoading && !generatedHtml && (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center space-y-2">
+                <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto" />
+                <p className="text-muted-foreground">Generating content & building your site...</p>
+              </div>
             </div>
           )}
-          {generatedCode && (
-            <Tabs defaultValue="code" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="code"><FileCode className="mr-2"/>Code</TabsTrigger>
-                <TabsTrigger value="instructions"><BookUser className="mr-2"/>Instructions</TabsTrigger>
-                <TabsTrigger value="customization"><Palette className="mr-2"/>Customize</TabsTrigger>
-              </TabsList>
-              <TabsContent value="code" className="relative mt-4">
-                <Button variant="ghost" size="icon" className="absolute top-2 right-2 h-7 w-7" onClick={copyToClipboard}>
-                    <Clipboard className="h-4 w-4"/>
-                </Button>
-                <pre className="bg-muted text-muted-foreground rounded-lg p-4 text-xs overflow-x-auto max-h-[500px]">
-                  <code>
-                    {generatedCode}
-                  </code>
-                </pre>
-              </TabsContent>
-              <TabsContent value="instructions" className="text-sm text-muted-foreground p-2 space-y-4">
-                <div>
-                    <h4 className="font-semibold text-foreground mb-2">How to Use This Code</h4>
-                    <p>This generated code is a complete Next.js page. Here’s how to launch it:</p>
-                    <ol className="list-decimal list-inside space-y-2 mt-2 bg-muted p-4 rounded-lg">
-                        <li>Open your terminal and run `npx create-next-app@latest my-affiliate-site` to start a new project.</li>
-                        <li>Follow the prompts to create your Next.js app (using TypeScript and Tailwind CSS is recommended).</li>
-                        <li>Navigate into your new project: `cd my-affiliate-site`.</li>
-                        <li>Open `src/app/page.tsx` and replace its entire content with the code you copied from the "Code" tab.</li>
-                        <li>Run `npm run dev` to start the development server. Your new affiliate site will be live at `http://localhost:3000`.</li>
-                    </ol>
+          {generatedHtml && (
+            <div className="flex flex-col flex-grow space-y-4">
+              <Tabs defaultValue="preview" className="w-full flex-grow flex flex-col">
+                <div className="flex justify-between items-center">
+                    <TabsList>
+                        <TabsTrigger value="preview"><Eye className="mr-2"/>Preview</TabsTrigger>
+                        <TabsTrigger value="html">{'</>'}</TabsTrigger>
+                    </TabsList>
+                    <Button onClick={handlePublish} disabled={isLoading || isPublished} size="sm">
+                        {isLoading && generatedHtml ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <UploadCloud className="mr-2 h-4 w-4" />}
+                        {isPublished ? 'Published' : 'Publish'}
+                    </Button>
                 </div>
-                <div>
-                    <h4 className="font-semibold text-foreground mb-2">Deploying Your Site</h4>
-                    <p>Once you are ready, you can deploy your site to services like Vercel or Netlify for free to make it available to the world.</p>
-                </div>
-              </TabsContent>
-               <TabsContent value="customization" className="text-sm text-muted-foreground p-2 space-y-4">
-                 <div>
-                    <h4 className="font-semibold text-foreground mb-2">Easy Customization</h4>
-                    <p>The generated code includes comments to help you make changes:</p>
-                    <ul className="list-disc list-inside space-y-2 mt-2 bg-muted p-4 rounded-lg">
-                        <li><strong>Text:</strong> Find the text you want to change directly in the JSX and edit it. For example, look for `<h1>...</h1>` for headlines.</li>
-                        <li><strong>Images:</strong> Look for the `next/image` component and change the `src` URL. You can use a free service like Unsplash or upload your own images.</li>
-                        <li><strong>Colors:</strong> The code uses Tailwind CSS utility classes. To change the main color, you can search for classes like `bg-primary` or `text-primary` and replace them with other Tailwind color classes (e.g., `bg-blue-600`).</li>
-                    </ul>
-                </div>
-              </TabsContent>
-            </Tabs>
+                <TabsContent value="preview" className="flex-grow mt-4">
+                  <iframe
+                    srcDoc={generatedHtml}
+                    className="w-full h-full border rounded-md bg-white"
+                    title="Generated Website Preview"
+                    sandbox="allow-scripts"
+                  />
+                </TabsContent>
+                <TabsContent value="html" className="relative mt-4 flex-grow">
+                     <pre className="bg-muted text-muted-foreground rounded-lg p-4 text-xs overflow-auto h-full max-h-[600px]">
+                        <code>{generatedHtml}</code>
+                    </pre>
+                </TabsContent>
+              </Tabs>
+               {isPublished && (
+                 <Alert>
+                    <UploadCloud className="h-4 w-4" />
+                    <AlertTitle>Site Saved!</AlertTitle>
+                    <AlertDescription>
+                        Your website has been saved. You can access it from your dashboard in the future. (Feature coming soon).
+                    </AlertDescription>
+                </Alert>
+               )}
+            </div>
           )}
         </CardContent>
       </Card>
