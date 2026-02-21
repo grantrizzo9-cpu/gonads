@@ -10,7 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Loader2, Sparkles, Wand2, Lightbulb, Sitemap } from 'lucide-react';
+import { Loader2, Sparkles, Wand2, Lightbulb, Network } from 'lucide-react';
 
 const formSchema = z.object({
   niche: z.string().min(5, 'Please describe your niche in at least 5 characters.'),
@@ -136,7 +136,7 @@ export default function WebsiteBuilderPage() {
                 </div>
                  <div>
                     <h3 className="font-semibold font-headline flex items-center gap-2 mb-3">
-                        <Sitemap className="h-5 w-5 text-primary"/>
+                        <Network className="h-5 w-5 text-primary"/>
                         Site Outline
                     </h3>
                     <div className="text-sm text-muted-foreground whitespace-pre-wrap bg-muted p-4 rounded-lg font-mono text-xs">
