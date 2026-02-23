@@ -14,7 +14,7 @@ const GenerateWebsiteJsonInputSchema = z.object({
   username: z.string().describe("The affiliate's username."),
   niche: z.string().describe('The niche topic for the affiliate website.'),
 });
-export type GenerateWebsiteJsonInput = z.infer<
+type GenerateWebsiteJsonInput = z.infer<
   typeof GenerateWebsiteJsonInputSchema
 >;
 
@@ -72,7 +72,7 @@ const GenerateWebsiteJsonOutputSchema = z.object({
   }),
 });
 
-export type GenerateWebsiteJsonOutput = z.infer<
+type GenerateWebsiteJsonOutput = z.infer<
   typeof GenerateWebsiteJsonOutputSchema
 >;
 
@@ -98,6 +98,26 @@ Generate a complete JSON object that contains all the text and content needed fo
 - For legal text, generate standard, comprehensive boilerplate content.
 - All CTA buttons will eventually link to "https://hostproai.com/?ref={{{username}}}". The button text should be action-oriented.
 `,
+  config: {
+    safetySettings: [
+      {
+        category: 'HARM_CATEGORY_DANGEROUS_CONTENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HATE_SPEECH',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_HARASSMENT',
+        threshold: 'BLOCK_NONE',
+      },
+      {
+        category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
+        threshold: 'BLOCK_NONE',
+      },
+    ],
+  },
 });
 
 const websiteGeneratorFlow = ai.defineFlow(
