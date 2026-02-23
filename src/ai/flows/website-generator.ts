@@ -10,7 +10,7 @@
 import { ai } from '@/ai/genkit';
 import { z } from 'genkit';
 
-export const GenerateWebsiteJsonInputSchema = z.object({
+const GenerateWebsiteJsonInputSchema = z.object({
   username: z.string().describe("The affiliate's username."),
   niche: z.string().describe('The niche topic for the affiliate website.'),
 });
@@ -18,7 +18,7 @@ export type GenerateWebsiteJsonInput = z.infer<
   typeof GenerateWebsiteJsonInputSchema
 >;
 
-export const GenerateWebsiteJsonOutputSchema = z.object({
+const GenerateWebsiteJsonOutputSchema = z.object({
   homepage: z.object({
     title: z.string().describe('SEO-friendly site title for the niche.'),
     navLinks: z
