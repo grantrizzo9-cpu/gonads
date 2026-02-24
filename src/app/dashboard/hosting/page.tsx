@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from "react";
@@ -63,11 +64,11 @@ export default function HostingPage() {
                 description: `${domainInput} has been successfully verified and added.`,
             });
         } else {
-             // Simulate an error
+             // Simulate an error where all records are missing
             setCheckResults([
-                { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
+                { type: 'A', host: '@', value: '199.36.158.100', status: 'missing' },
                 { type: 'A', host: '@', value: '199.36.158.101', status: 'missing' },
-                { type: 'CNAME', host: 'www', value: cnameValue, status: 'ok' },
+                { type: 'CNAME', host: 'www', value: cnameValue, status: 'missing' },
             ]);
             setCheckStatus('error');
             toast({
