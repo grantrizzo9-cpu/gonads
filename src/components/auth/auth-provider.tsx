@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
@@ -9,6 +9,8 @@ interface User {
   displayName: string | null;
   username: string | null;
   isPaid?: boolean;
+  plan?: string;
+  isFriendAndFamily?: boolean;
 }
 
 interface AuthContextType {
@@ -16,10 +18,16 @@ interface AuthContextType {
   loading: boolean;
   signIn: (userToSignIn?: User, isNewUser?: boolean) => void;
   signOut: () => void;
-  activateAccount: () => void;
+  activateAccount: (planName: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+// List of special accounts
+const friendsAndFamilyEmails = [
+    'friend@example.com',
+    'family@example.com',
+];
 
 // Mock default user
 const defaultMockUser: User = {
@@ -47,8 +55,15 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const signIn = (userToSignIn?: User, isNewUser = false) => {
     setLoading(true);
     let userToSet: User;
+
     if (userToSignIn) {
-      userToSet = { ...userToSignIn, isPaid: isNewUser ? false : userToSignIn.isPaid ?? true };
+      const isFriend = userToSignIn.email ? friendsAndFamilyEmails.includes(userToSignIn.email) : false;
+      
+      if (isFriend) {
+          userToSet = { ...userToSignIn, isPaid: true, plan: 'Diamond', isFriendAndFamily: true };
+      } else {
+        userToSet = { ...userToSignIn, isPaid: isNewUser ? false : userToSignIn.isPaid ?? true, isFriendAndFamily: false };
+      }
     } else {
       userToSet = defaultMockUser;
     }
@@ -67,9 +82,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     setLoading(false);
   };
   
-  const activateAccount = () => {
+  const activateAccount = (planName: string) => {
     if (user) {
-      const updatedUser = { ...user, isPaid: true };
+      const updatedUser = { ...user, isPaid: true, plan: planName };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
     }

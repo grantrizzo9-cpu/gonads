@@ -6,12 +6,14 @@ import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import type { OnApproveData, CreateOrderData } from '@paypal/react-paypal-js';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
+import { useEarnings } from '@/components/earnings/earnings-provider';
 import { type PricingTier } from '@/lib/site';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount } = useAuth();
+    const { addEarning } = useEarnings();
     const { toast } = useToast();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -19,9 +21,8 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const [{ isPending, isRejected, options: paypalOptions }] = usePayPalScriptReducer();
 
     const handleSuccessfulPayment = () => {
-        activateAccount();
-        // NOTE: The addEarning() call was removed here. The activation fee is
-        // platform revenue and should not generate a commission for the user paying it.
+        activateAccount(tier.name);
+        addEarning(tier.price);
         toast({
             title: "Account Activated!",
             description: `Your ${tier.name} plan is now active. Welcome aboard!`,
@@ -34,8 +35,14 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         setError(null);
         // Simulate network delay
         setTimeout(() => {
-            handleSuccessfulPayment();
+            activateAccount(tier.name);
+            addEarning(tier.price);
             setIsLoading(false);
+            toast({
+                title: "Account Activated!",
+                description: `Your ${tier.name} plan is now active. Welcome aboard!`,
+            });
+            router.push('/dashboard');
         }, 500);
     }
 

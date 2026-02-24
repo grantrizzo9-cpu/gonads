@@ -26,12 +26,6 @@ const chartConfig = {
   }
 };
 
-// Add the email addresses of friends and family here to give them a special dashboard view
-const friendsAndFamilyEmails = [
-    'friend@example.com',
-    'family@example.com',
-];
-
 function AdminDashboard() {
   const pendingActivationsCount = platformReferrals.filter(r => r.status === 'pending').length;
 
@@ -354,7 +348,7 @@ function UserDashboard() {
 export default function DashboardOverviewPage() {
     const { user } = useAuth();
     const isAdmin = user?.email === 'renntapog@gmail.com';
-    const isFriendsAndFamily = user?.email ? friendsAndFamilyEmails.includes(user.email) : false;
+    const isFriendsAndFamily = user?.isFriendAndFamily;
 
     if (!user?.isPaid) {
         return <ActivationCard />;
