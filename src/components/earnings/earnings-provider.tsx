@@ -66,13 +66,25 @@ export const EarningsProvider = ({ children }: { children: ReactNode }) => {
     // Process only activated referrals for earnings
     const activatedReferrals = myPlatformReferrals.filter(r => r.status === 'activated');
 
-    const processedReferrals: Referral[] = activatedReferrals.map(pr => {
-      // Per the business rule: "The first payment from every new user is a 100% platform fee."
-      // This means the affiliate's commission on the initial activation is $0.
-      // In a real application, you'd check if this is the first payment cycle.
-      // For this simulation, we assume any 'activated' referral is a new one and thus commission is 0.
-      const dailyCommission = 0;
+    // Determine the correct commission rate
+    const commissionRate = activatedReferrals.length >= 10 ? 75 : 70;
 
+    const processedReferrals: Referral[] = activatedReferrals.map((pr, index) => {
+      let dailyCommission = 0;
+
+      // SIMULATION LOGIC:
+      // The first payment always goes to the platform owner (commission = $0).
+      // To demonstrate how recurring commissions work for affiliates, we'll simulate
+      // that every *second* referral is an "older" one on a recurring payment cycle.
+      const isRecurring = index % 2 !== 0;
+
+      if (isRecurring) {
+        const tier = pricingTiers.find(t => t.name === pr.plan);
+        if (tier) {
+          dailyCommission = tier.price * (commissionRate / 100);
+        }
+      }
+      
       return {
         id: pr.email,
         email: pr.email,
@@ -85,17 +97,19 @@ export const EarningsProvider = ({ children }: { children: ReactNode }) => {
       };
     });
 
-    const processedEarnings: Earning[] = processedReferrals.map(r => ({
-      amount: r.commission,
-      date: r.date,
-    }));
+    const processedEarnings: Earning[] = processedReferrals
+      .filter(r => r.commission > 0) // Only include actual earnings
+      .map(r => ({
+        amount: r.commission,
+        date: r.date,
+      }));
 
     setReferrals(processedReferrals);
     setEarnings(processedEarnings);
   }, [user, platformReferrals]);
 
   // This function is no longer needed but kept for compatibility with the payment button.
-  // It correctly does nothing.
+  // It correctly does nothing as earnings are now derived from referrals.
   const addEarning = () => {};
 
   const processEarningsForChart = (): DailyEarning[] => {
