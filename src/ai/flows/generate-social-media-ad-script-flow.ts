@@ -81,6 +81,10 @@ Include relevant hashtags and emojis to maximize engagement on the chosen platfo
         category: 'HARM_CATEGORY_SEXUALLY_EXPLICIT',
         threshold: 'BLOCK_NONE',
       },
+      {
+        category: 'HARM_CATEGORY_CIVIC_INTEGRITY',
+        threshold: 'BLOCK_NONE',
+      },
     ],
   },
 });
