@@ -1,10 +1,11 @@
+
 "use client";
 
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { generateMarketingAdCopy } from '@/ai/flows/generate-marketing-ad-copy-flow';
+import { generateSocialMediaAdScript, type GenerateSocialMediaAdScriptOutput } from '@/ai/flows/generate-social-media-ad-script-flow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
@@ -26,17 +27,8 @@ const formSchema = z.object({
 
 type FormValues = z.infer<typeof formSchema>;
 
-// A generic type to hold the generated ad data, adaptable to different AI flow outputs
-type GeneratedAd = {
-    headline: string;
-    bodyText: string;
-    callToActionPhrase: string;
-    hashtags: string[];
-    emojis: string[];
-};
-
 export default function AdStudioPage() {
-  const [generatedAd, setGeneratedAd] = useState<GeneratedAd | null>(null);
+  const [generatedAd, setGeneratedAd] = useState<GenerateSocialMediaAdScriptOutput | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const adImage = PlaceHolderImages.find(img => img.id === 'ad-studio-placeholder');
@@ -57,24 +49,15 @@ export default function AdStudioPage() {
     setIsLoading(true);
     setGeneratedAd(null);
     try {
-      // Using generateMarketingAdCopy as a diagnostic step
-      const result = await generateMarketingAdCopy({
-        productDescription: values.productName,
+      const result = await generateSocialMediaAdScript({
+        productName: values.productName,
         targetAudience: values.targetAudience,
-        keyFeaturesBenefits: values.keyBenefits.split('\n'),
+        keyBenefits: values.keyBenefits.split('\n').filter(b => b.trim() !== ''),
         callToAction: values.callToAction,
         platform: values.platform,
-        adLength: 'Medium', // Hardcode a reasonable default
       });
 
-      // Adapt the result to the UI's expected format
-      setGeneratedAd({
-          headline: result.headline,
-          bodyText: result.bodyCopy, // Map bodyCopy to bodyText
-          callToActionPhrase: result.callToActionPhrase,
-          hashtags: result.hashtags,
-          emojis: result.emojis,
-      });
+      setGeneratedAd(result);
 
     } catch (error) {
       console.error('Error generating ad:', error);

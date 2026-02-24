@@ -1,3 +1,4 @@
+
 'use server';
 /**
  * @fileOverview A Genkit flow for generating social media ad scripts.
@@ -57,7 +58,10 @@ Ensure the ad is optimized for the specified platform, uses engaging language, a
 
 Product Name: {{{productName}}}
 Target Audience: {{{targetAudience}}}
-Key Benefits: {{{#each keyBenefits}}}- {{{this}}}\n{{{/each}}}
+Key Benefits: 
+{{#each keyBenefits}}
+- {{{this}}}
+{{/each}}
 Call to Action: {{{callToAction}}}
 Platform: {{{platform}}}
 
