@@ -12,6 +12,7 @@ import {
   CreditCard,
   Heart,
   UserCheck,
+  ReceiptText,
 } from 'lucide-react';
 import {
   Card,
@@ -59,20 +60,19 @@ function AdminDashboard() {
 
   const activatedReferrals = platformReferrals.filter(r => r.status === 'activated');
 
-  const totalGrossSales = activatedReferrals.reduce((total, referral) => {
-    // Find the pricing tier that matches the referral's plan
+  // Business Logic: The first payment from every new user is a 100% platform fee.
+  const totalFirstPaymentsRevenue = activatedReferrals.reduce((total, referral) => {
     const tier = pricingTiers.find(t => t.name === referral.plan);
-    // Add the tier's price to the total, or 0 if not found
     return total + (tier ? tier.price : 0);
   }, 0);
-
-  // Business logic: "The first payment from every new user is a 100% platform fee."
-  // Therefore, for these initial activations, the affiliate payout is $0.
-  const totalAffiliatePayouts = 0;
-
-  // Platform revenue is the gross sales minus what's paid out to affiliates.
-  const platformRevenue = totalGrossSales - totalAffiliatePayouts;
   
+  // Placeholders for future recurring payment logic
+  const totalRecurringPlatformShare = 0.00;
+  const totalRecurringAffiliatePayouts = 0.00;
+  const totalRefundsProcessed = 0.00;
+
+  const totalPlatformEarnings = totalFirstPaymentsRevenue + totalRecurringPlatformShare - totalRefundsProcessed;
+
   // Calculate total unique users and affiliates
   const totalUsers = new Set(platformReferrals.map(r => r.email)).size + 1; // +1 for admin
   const totalAffiliates = new Set(platformReferrals.map(r => r.affiliate)).size;
@@ -95,36 +95,55 @@ function AdminDashboard() {
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Platform Revenue</CardTitle>
+            <CardTitle className="text-sm font-medium">First Payment Revenue</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${platformRevenue.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">Platform profit after affiliate payouts.</p>
+            <div className="text-2xl font-bold">${totalFirstPaymentsRevenue.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">100% platform revenue from all initial activations.</p>
+          </CardContent>
+        </Card>
+         <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Recurring Platform Share</CardTitle>
+            <Percent className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalRecurringPlatformShare.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">30% share from future recurring payments.</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Gross Sales</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Platform Earnings</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalGrossSales.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">
-              Total value of all sales before affiliate payouts.
-            </p>
+            <div className="text-2xl font-bold">${totalPlatformEarnings.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Total profit after affiliate payouts & refunds.</p>
           </CardContent>
         </Card>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Affiliate Payouts</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
+            <CardTitle className="text-sm font-medium">Refunds Processed</CardTitle>
+            <ReceiptText className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
-            <div className="text-2xl font-bold">${totalAffiliatePayouts.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">
-              Total commissions paid or due to all affiliates.
-            </p>
+            <div className="text-2xl font-bold">${totalRefundsProcessed.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">Total value of all processed refunds.</p>
+          </CardContent>
+        </Card>
+      </div>
+
+       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+         <Card>
+          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+            <CardTitle className="text-sm font-medium">Recurring Affiliate Payouts</CardTitle>
+            <Users className="h-4 w-4 text-muted-foreground" />
+          </CardHeader>
+          <CardContent>
+            <div className="text-2xl font-bold">${totalRecurringAffiliatePayouts.toFixed(2)}</div>
+            <p className="text-xs text-muted-foreground">70-75% commissions on recurring payments.</p>
           </CardContent>
         </Card>
         <Card>
@@ -139,23 +158,6 @@ function AdminDashboard() {
             </p>
           </CardContent>
         </Card>
-      </div>
-
-      <div className="grid gap-4 md:grid-cols-3">
-        <Link href="/dashboard/admin/activations" className="block">
-          <Card className="hover:bg-muted h-full">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Pending Activations</CardTitle>
-              <UserCheck className="h-4 w-4 text-muted-foreground" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{pendingActivationsCount}</div>
-              <p className="text-xs text-muted-foreground">
-                Click to manage new accounts pending activation.
-              </p>
-            </CardContent>
-          </Card>
-        </Link>
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
             <CardTitle className="text-sm font-medium">Total Platform Users</CardTitle>
@@ -180,6 +182,23 @@ function AdminDashboard() {
             </p>
           </CardContent>
         </Card>
+       </div>
+
+      <div className="grid gap-4 md:grid-cols-3">
+        <Link href="/dashboard/admin/activations" className="block">
+          <Card className="hover:bg-muted h-full">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Pending Activations</CardTitle>
+              <UserCheck className="h-4 w-4 text-muted-foreground" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">{pendingActivationsCount}</div>
+              <p className="text-xs text-muted-foreground">
+                Click to manage new accounts pending activation.
+              </p>
+            </CardContent>
+          </Card>
+        </Link>
       </div>
 
       <Card>
