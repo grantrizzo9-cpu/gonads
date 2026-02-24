@@ -1,3 +1,4 @@
+
 import type { GenerateWebsiteJsonOutput } from '@/ai/flows/website-generator';
 import type { Theme } from './data';
 
@@ -196,17 +197,17 @@ export function generateHtmlForWebsite(
         <div class="container mx-auto px-4 py-8 flex flex-col md:flex-row justify-between items-center gap-4">
             <p class="text-sm opacity-70">&copy; ${new Date().getFullYear()} ${homepage.title}. All rights reserved.</p>
             <div class="flex gap-4 text-sm">
-                <a href="#" class="hover:text-primary" onclick="openModal('termsModal')">Terms</a>
-                <a href="#" class="hover:text-primary" onclick="openModal('privacyModal')">Privacy</a>
-                <a href="#" class="hover:text-primary" onclick="openModal('disclaimerModal')">Disclaimer</a>
+                <a href="#" class="hover:text-primary" onclick="event.preventDefault(); openModal('termsModal')">Terms</a>
+                <a href="#" class="hover:text-primary" onclick="event.preventDefault(); openModal('privacyModal')">Privacy</a>
+                <a href="#" class="hover:text-primary" onclick="event.preventDefault(); openModal('disclaimerModal')">Disclaimer</a>
             </div>
         </div>
     </footer>
 
     <!-- Modals -->
-    <div id="termsModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('termsModal')">&times;</span><div class="prose"><h2>Terms & Conditions</h2>${legal.terms.replace(/\n/g, '<p>')}</div></div></div>
-    <div id="privacyModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('privacyModal')">&times;</span><div class="prose"><h2>Privacy Policy</h2>${legal.privacy.replace(/\n/g, '<p>')}</div></div></div>
-    <div id="disclaimerModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('disclaimerModal')">&times;</span><div class="prose"><h2>Disclaimer</h2>${legal.disclaimer.replace(/\n/g, '<p>')}</div></div></div>
+    <div id="termsModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('termsModal')">&times;</span><div class="prose"><h2>Terms & Conditions</h2><p>${legal.terms.replace(/\n/g, '<br />')}</p></div></div></div>
+    <div id="privacyModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('privacyModal')">&times;</span><div class="prose"><h2>Privacy Policy</h2><p>${legal.privacy.replace(/\n/g, '<br />')}</p></div></div></div>
+    <div id="disclaimerModal" class="modal"><div class="modal-content"><span class="close-btn" onclick="closeModal('disclaimerModal')">&times;</span><div class="prose"><h2>Disclaimer</h2><p>${legal.disclaimer.replace(/\n/g, '<br />')}</p></div></div></div>
 
     <script>
         function openModal(modalId) {
@@ -225,3 +226,5 @@ export function generateHtmlForWebsite(
 </html>
   `;
 }
+
+    
