@@ -7,6 +7,8 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 
 export default function StrategyCenterPage() {
+  const publicArticles = strategyArticles.filter(article => article.slug !== 'connecting-your-domain');
+  
   return (
     <>
       <Header />
@@ -22,7 +24,7 @@ export default function StrategyCenterPage() {
           </div>
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {strategyArticles.map((article) => {
+            {publicArticles.map((article) => {
               const image = PlaceHolderImages.find(img => img.id === article.image);
               return (
                 <Link href={`/strategy-center/${article.slug}`} key={article.slug}>

@@ -37,7 +37,7 @@ const navLinks = [
   { href: "/dashboard/hosting", label: "Hosting", icon: HardDrive },
   { href: "/dashboard/website", label: "Website", icon: Globe },
   { href: "/dashboard/ai-content", label: "AI Content", icon: Bot },
-  { href: "/strategy-center", label: "Marketing Guides", icon: BookOpen },
+  { href: "/dashboard/strategy-center", label: "Marketing Guides", icon: BookOpen },
   { href: "/dashboard/upgrade", label: "Upgrade", icon: ArrowUpCircle },
   { href: "/dashboard/referrals", label: "Referrals", icon: Users },
   { href: "/dashboard/payouts", label: "Payouts", icon: Wallet },
@@ -46,7 +46,7 @@ const navLinks = [
 
 const adminNavLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/strategy-center", label: "Marketing Guides", icon: BookOpen },
+  { href: "/dashboard/strategy-center", label: "Marketing Guides", icon: BookOpen },
 ];
 
 const adminLinks = [
