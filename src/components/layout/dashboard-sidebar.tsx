@@ -37,7 +37,7 @@ const navLinks = [
   { href: "/dashboard/hosting", label: "Hosting", icon: HardDrive },
   { href: "/dashboard/website", label: "Website", icon: Globe },
   { href: "/dashboard/ai-content", label: "AI Content", icon: Bot },
-  { href: "/strategy-center", label: "Marketing Guides", icon: BookOpen, target: "_blank" },
+  { href: "/strategy-center", label: "Marketing Guides", icon: BookOpen },
   { href: "/dashboard/upgrade", label: "Upgrade", icon: ArrowUpCircle },
   { href: "/dashboard/referrals", label: "Referrals", icon: Users },
   { href: "/dashboard/payouts", label: "Payouts", icon: Wallet },
@@ -78,7 +78,7 @@ export function DashboardSidebar() {
                 {navLinks.map(link => (
                     <SidebarMenuItem key={link.href}>
                         <SidebarMenuButton asChild isActive={isActive(link.href)} tooltip={link.label}>
-                            <Link href={link.href} target={link.target}>
+                            <Link href={link.href}>
                                 <link.icon/>
                                 <span>{link.label}</span>
                             </Link>
