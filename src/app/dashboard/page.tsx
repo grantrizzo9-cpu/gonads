@@ -1,6 +1,6 @@
 "use client";
 
-import { AreaChart as AreaChartIcon, BarChart as BarChartIcon, DollarSign, Users, Percent, Link as LinkIcon, Info, TrendingUp, AlertCircle, Package, ShieldAlert, LayoutDashboard, CreditCard, Heart } from "lucide-react";
+import { AreaChart as AreaChartIcon, BarChart as BarChartIcon, DollarSign, Users, Percent, Link as LinkIcon, Info, TrendingUp, AlertCircle, Package, ShieldAlert, LayoutDashboard, CreditCard, Heart, UserCheck } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
@@ -33,6 +33,8 @@ const friendsAndFamilyEmails = [
 ];
 
 function AdminDashboard() {
+  const pendingActivationsCount = platformReferrals.filter(r => r.status === 'pending').length;
+
   return (
     <div className="space-y-8">
         <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
@@ -90,16 +92,18 @@ function AdminDashboard() {
         </div>
 
         <div className="grid gap-4 md:grid-cols-3">
-             <Card>
-                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Pending Activations</CardTitle>
-                    <AlertCircle className="h-4 w-4 text-muted-foreground" />
-                </CardHeader>
-                <CardContent>
-                    <div className="text-2xl font-bold">4</div>
-                    <p className="text-xs text-muted-foreground">Users who signed up but have not yet paid.</p>
-                </CardContent>
-            </Card>
+             <Link href="/dashboard/admin/activations" className="block">
+                <Card className="hover:bg-muted h-full">
+                    <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <CardTitle className="text-sm font-medium">Pending Activations</CardTitle>
+                        <UserCheck className="h-4 w-4 text-muted-foreground" />
+                    </CardHeader>
+                    <CardContent>
+                        <div className="text-2xl font-bold">{pendingActivationsCount}</div>
+                        <p className="text-xs text-muted-foreground">Click to manage new accounts pending activation.</p>
+                    </CardContent>
+                </Card>
+            </Link>
             <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                     <CardTitle className="text-sm font-medium">Total Platform Users</CardTitle>
@@ -366,5 +370,3 @@ export default function DashboardOverviewPage() {
 
     return <UserDashboard />;
 }
-
-    

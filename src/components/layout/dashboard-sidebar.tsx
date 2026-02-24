@@ -14,7 +14,8 @@ import {
   CircleHelp,
   Globe,
   Package,
-  ShieldAlert
+  ShieldAlert,
+  UserCheck
 } from "lucide-react";
 import { Logo } from "@/components/icons/logo";
 import { useAuth } from "../auth/auth-provider";
@@ -46,6 +47,7 @@ const navLinks = [
 const adminLinks = [
     { href: "/dashboard/admin/packages", label: "Packages", icon: Package },
     { href: "/dashboard/admin/manage-refunds", label: "Manage Refunds", icon: ShieldAlert },
+    { href: "/dashboard/admin/activations", label: "Activations", icon: UserCheck },
 ]
 
 export function DashboardSidebar() {

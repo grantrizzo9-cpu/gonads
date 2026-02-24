@@ -1,0 +1,80 @@
+'use client';
+
+import { useState } from 'react';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { UserCheck } from "lucide-react";
+import { platformReferrals as initialReferrals } from "@/lib/mock-data";
+import { useToast } from '@/hooks/use-toast';
+
+export default function AdminActivationsPage() {
+    const [referrals, setReferrals] = useState(initialReferrals);
+    const { toast } = useToast();
+
+    const handleActivate = (email: string) => {
+        setReferrals(currentReferrals =>
+            currentReferrals.map(r =>
+                r.email === email ? { ...r, status: 'activated' } : r
+            )
+        );
+        toast({
+            title: "User Activated",
+            description: `The account for ${email} has been successfully activated.`,
+        });
+    };
+
+    const pendingReferrals = referrals.filter(r => r.status === 'pending');
+
+    return (
+        <Card>
+            <CardHeader>
+                <CardTitle className="font-headline flex items-center gap-2">
+                    <UserCheck />
+                    Manual Account Activations
+                </CardTitle>
+                <CardDescription>
+                    Review and manually activate new user accounts that are pending.
+                </CardDescription>
+            </CardHeader>
+            <CardContent>
+                {pendingReferrals.length > 0 ? (
+                    <Table>
+                        <TableHeader>
+                            <TableRow>
+                                <TableHead>Referred User</TableHead>
+                                <TableHead>Email</TableHead>
+                                <TableHead>Plan</TableHead>
+                                <TableHead>Status</TableHead>
+                                <TableHead className="text-right">Action</TableHead>
+                            </TableRow>
+                        </TableHeader>
+                        <TableBody>
+                            {pendingReferrals.map((referral) => (
+                                <TableRow key={referral.email}>
+                                    <TableCell className="font-medium">{referral.referredUser}</TableCell>
+                                    <TableCell>{referral.email}</TableCell>
+                                    <TableCell>{referral.plan}</TableCell>
+                                    <TableCell>
+                                        <Badge variant="secondary">{referral.status}</Badge>
+                                    </TableCell>
+                                    <TableCell className="text-right">
+                                        <Button
+                                            size="sm"
+                                            onClick={() => handleActivate(referral.email)}
+                                        >
+                                            Activate
+                                        </Button>
+                                    </TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                ) : (
+                    <p className="text-center text-muted-foreground py-8">No accounts are currently pending activation.</p>
+                )}
+            </CardContent>
+        </Card>
+    );
+}
