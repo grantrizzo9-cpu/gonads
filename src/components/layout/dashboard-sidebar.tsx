@@ -44,6 +44,11 @@ const navLinks = [
   { href: "/dashboard/request-refund", label: "Request Refund", icon: CircleHelp },
 ];
 
+const adminNavLinks = [
+  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/strategy-center", label: "Marketing Guides", icon: BookOpen },
+];
+
 const adminLinks = [
     { href: "/dashboard/admin/packages", label: "Packages", icon: Package },
     { href: "/dashboard/admin/manage-refunds", label: "Manage Refunds", icon: ShieldAlert },
@@ -58,6 +63,8 @@ export function DashboardSidebar() {
   const isActive = (href: string) => {
     return pathname === href || (href !== '/dashboard' && pathname.startsWith(href));
   }
+
+  const linksToDisplay = isAdmin ? adminNavLinks : navLinks;
 
   return (
     <Sidebar collapsible="icon">
@@ -75,7 +82,7 @@ export function DashboardSidebar() {
 
         <SidebarContent>
             <SidebarMenu>
-                {navLinks.map(link => (
+                {linksToDisplay.map(link => (
                     <SidebarMenuItem key={link.href}>
                         <SidebarMenuButton asChild isActive={isActive(link.href)} tooltip={link.label}>
                             <Link href={link.href}>
