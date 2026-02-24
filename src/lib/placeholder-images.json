@@ -77,6 +77,12 @@
       "description": "A modern dashboard showing affiliate tracking analytics",
       "imageUrl": "https://images.unsplash.com/photo-1759661966728-4a02e3c6ed91?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHw1fHxkYXNoYm9hcmQlMjBhbmFseXRpY3N8ZW58MHx8fHwxNzcxNTQwMDExfDA&ixlib=rb-4.1.0&q=80&w=1080",
       "imageHint": "dashboard analytics"
+    },
+    {
+      "id": "dns-correct-www",
+      "description": "Example of adding a www subdomain correctly",
+      "imageUrl": "https://picsum.photos/seed/dns-correct-www/800/250",
+      "imageHint": "dns settings"
     }
   ]
 }

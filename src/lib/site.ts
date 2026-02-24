@@ -15,12 +15,12 @@ export const strategyArticles: Article[] = [
     description: 'A complete walkthrough for purchasing and connecting a custom domain to your website.',
     image: 'strategy-2',
     content: `
-      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Introduction: Your Professional Online Address</h2>
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Introduction: Your Professional Online Address</h2>
       <p class="mb-4">Once you've activated your Host Pro Ai account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.yourbusiness.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with our system. Following these steps will make your site live to the world on your own branded domain.</p>
       
       <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Understanding Your Unique CNAME Value</h2>
-      <p class="mb-4">In the records below, you will see a value like <code>[USER_CNAME_VALUE]</code>. This unique address is automatically generated from your account username. For example, if your username is "fdwy", your unique address will be <code>fdwy.hostproai.com</code>.</p>
-      <p class="mb-4"><strong>If you would prefer a different address</strong>, you can! Simply go to your <a href="/dashboard/settings" target="_blank" class="font-bold text-primary hover:underline">Account Settings</a> page and change your username. Your CNAME value will update automatically. We recommend choosing a username that reflects your brand, as it will be part of your hosting address.</p>
+      <p class="mb-4">In the records below, you will see a value like <code>[USER_CNAME_VALUE]</code>. This unique address is automatically generated from your account username. For example, if your username is "rizzosaipro", your unique address will be <code>rizzosaipro.hostproai.com</code>.</p>
+      <p class="mb-4"><strong>If you would prefer a different username</strong>, you can change it in your <a href="/dashboard/settings" target="_blank" class="font-bold text-primary hover:underline">Account Settings</a> page. Your CNAME value will update automatically.</p>
       
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Required DNS Records</h3>
       <p class="mb-4">You will need to add the following records at your domain registrar:</p>
@@ -35,42 +35,36 @@ export const strategyArticles: Article[] = [
           <li><strong>CNAME Record:</strong> Type: CNAME, Host: www, Value: [USER_CNAME_VALUE]</li>
       </ul>
 
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Adding the 'A' Records for the Root Domain</h3>
-      <p class="mb-4">You have already completed this step correctly, as shown in your screenshots. These records point your main domain (<code>rizzosaipro.com</code>) to our IP addresses.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Adding the 'A' Records</h3>
+      <p class="mb-4">You have already completed this step correctly. Your 'A' records are pointing to our servers.</p>
 
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Adding the 'CNAME' Record for 'www'</h3>
-      <p class="mb-4">This is the final step. Based on your screenshot, your DNS panel requires a special process for subdomains like 'www'.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Adding the 'CNAME' Record (The Correct Way)</h3>
+      <p class="mb-4">This is the final step. Based on your screenshot, your DNS panel requires a special process for the 'www' subdomain.</p>
+      
+      <div class="my-6 p-4 border-2 border-primary rounded-lg bg-primary/10">
+        <h4 class="font-headline text-lg font-semibold mb-2">Your Action:</h4>
+        <p class="mb-2">In the text box next to the "Add Sub-Domain" button, type only this:</p>
+        <div class="bg-card p-3 rounded-md font-mono text-lg text-center tracking-widest">www</div>
+        <p class="mt-2 text-sm text-muted-foreground"><strong>Do NOT enter the full address here.</strong> Just type 'www' and click 'Add Sub-Domain'.</p>
+      </div>
 
-      <h4 class="font-headline text-lg font-semibold mt-4 mb-2">Part A: Create the Sub-Domain</h4>
-      <ol class="list-decimal list-inside mb-4 space-y-2">
-          <li>In your DNS panel, find the button that says <strong>'Add Sub-Domain'</strong>. Do NOT use the main 'Add Record' dropdown for this.</li>
-          <li>In the input box that appears, type <strong>www</strong>.</li>
-          <li>Click the 'Save DNS Settings' or 'Add' button to create the subdomain.</li>
-      </ol>
        <div class="my-4 p-2 border border-border rounded-lg bg-muted">
-            <img src="https://picsum.photos/seed/dns-add-subdomain/800/250" alt="Example of adding a www subdomain" class="rounded-md w-full" data-ai-hint="dns settings"/>
-            <p class="text-xs text-center p-2 text-muted-foreground">Use the 'Add Sub-Domain' button and enter 'www'.</p>
+            <img src="https://picsum.photos/seed/dns-correct-www/800/250" alt="Example of adding a www subdomain correctly" class="rounded-md w-full" data-ai-hint="dns settings"/>
+            <p class="text-xs text-center p-2 text-muted-foreground">Your screen should look like this before you click the button.</p>
        </div>
       
-       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">Part B: Add the CNAME Record to the New Subdomain</h4>
-       <p class="mb-2">After adding the 'www' subdomain, your page will likely reload or take you to a new section to manage it. Now you can add the CNAME record.</p>
+       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">What Happens Next</h4>
+       <p class="mb-2">After adding the 'www' subdomain, your page will likely reload or take you to a new section to manage it. In that new section, you will then add the CNAME record.</p>
        <ol class="list-decimal list-inside mb-4 space-y-2">
-           <li>Find the new section for your <code>www.rizzosaipro.com</code> subdomain.</li>
+           <li>Find the new management section for your <code>www.rizzosaipro.com</code> subdomain.</li>
            <li>In this section, click 'Add Record'.</li>
            <li>Select <strong>CNAME</strong> as the 'Record Type'.</li>
-           <li>In the 'Hostname' or 'Value' field, enter your unique hosting address: <strong>[USER_CNAME_VALUE]</strong>. (e.g., <code>rizzosaipro.hostproai.com</code>).</li>
+           <li>In the 'Hostname' or 'Value' field, enter your unique hosting address: <strong>[USER_CNAME_VALUE]</strong>.</li>
            <li>Save the record.</li>
        </ol>
-       <p class="mb-4"><strong>What this does:</strong> You are telling the internet that when someone visits <code>www.rizzosaipro.com</code>, it should load the content from your unique address.</p>
       
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation & Verify</h3>
-      <p class="mb-4">DNS changes can take up to 48 hours to take effect. You can use an online tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">DNS Checker</a> to monitor the status.</p>
-      <p class="mb-2">There are two checks to perform:</p>
-      <ol class="list-decimal list-inside mb-4 space-y-2">
-        <li>Enter your main domain (e.g., <code>rizzosaipro.com</code>), select 'A' from the dropdown, and click Search. You should see green checkmarks next to the IP addresses <code>199.36.158.100</code> and <code>199.36.158.101</code>.</li>
-        <li>Enter the 'www' version of your domain (e.g., <code>www.rizzosaipro.com</code>), select 'CNAME' from the dropdown, and click Search. You should see it pointing to your unique value: [USER_CNAME_VALUE].</li>
-      </ol>
-      <p>Once both of these checks show green checkmarks worldwide, your domain is fully connected!</p>
+      <p class="mb-4">DNS changes can take some time. Once you've completed the steps above, go to the <a href="/dashboard/hosting" class="font-bold text-primary hover:underline">Hosting Manager</a> page in your dashboard and use the verifier tool to check if your domain is fully connected.</p>
     `,
   },
   {
@@ -218,7 +212,7 @@ Page speed literally changes everything. If you run an online store, you NEED th
   {
     slug: 'linkedin-b2b-lead-gen',
     title: 'LinkedIn B2B Lead Gen',
-    description: "Target professionals and businesses with precision on the world's largest professional network.",
+    description: 'Target professionals and businesses with precision on the world\'s largest professional network.',
     image: 'strategy-4',
     content: `
       <h2 class="font-headline text-2xl font-bold mb-4 text-accent">LinkedIn B2B Domination</h2>
