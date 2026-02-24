@@ -82,22 +82,15 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     };
 
     const onError = (err: any) => {
-        // The PayPal script logs an error to the console when the popup is closed by the user.
-        // This is expected behavior. We check for this specific error message and ignore it
-        // to prevent it from being treated as a real application error.
         const message = err.toString();
         if (message.includes('Window closed')) {
             return;
         }
-
-        // For all other actual errors, we display an error message to the user.
         console.error('PayPal Checkout onError', err);
         setError('An unexpected error occurred with PayPal. This could be due to your sandbox account setup. Please check your browser console for more details and verify your sandbox seller account can receive payments.');
     };
     
     const onCancel = (data: Record<string, unknown>) => {
-        // This callback is fired when the user clicks the "Cancel and return to merchant" link
-        // from within the PayPal popup. We can show a simple notification.
         toast({
             title: 'Payment Canceled',
             description: 'You canceled the payment process.',
@@ -105,42 +98,15 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         });
     };
 
-    if (isLoading || isPending) {
+    if (isLoading) {
         return <div className="flex justify-center items-center h-20"><Loader2 className="h-6 w-6 animate-spin" /></div>
-    }
-    
-    if (isRejected) {
-         return (
-            <div className="space-y-4">
-                <div className="text-center p-4 border rounded-lg bg-destructive/10 text-destructive">
-                    <h3 className="font-semibold text-sm mb-2">Error Loading PayPal</h3>
-                    <p className="text-xs">Could not load the payment buttons. Please check your PayPal Client ID and network connection.</p>
-                </div>
-                <Button variant="outline" className="w-full" onClick={handleSimulatePayment}>
-                    Simulate Successful Payment
-                 </Button>
-            </div>
-        )
     }
 
     return (
         <div className="w-full">
-            {error && (
-                 <div className="flex items-start gap-2 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive mb-4">
-                    <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
-                    <div>{error}</div>
-                </div>
-            )}
-            
-            <PayPalButtons
-                style={{ layout: 'vertical', label: 'pay' }}
-                forceReRender={[tier, error]}
-                createOrder={createOrder}
-                onApprove={onApprove}
-                onError={onError}
-                onCancel={onCancel}
-                onClick={() => setError(null)}
-            />
+             <Button className="w-full mb-4" onClick={handleSimulatePayment}>
+                Simulate Successful Payment
+            </Button>
             
             <div className="relative my-4">
                 <div className="absolute inset-0 flex items-center">
@@ -148,13 +114,36 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
-                        Or
+                        Or test with
                     </span>
                 </div>
             </div>
-            <Button variant="outline" className="w-full" onClick={handleSimulatePayment}>
-                Simulate Successful Payment
-            </Button>
+
+            {isPending ? (
+                 <div className="flex justify-center items-center h-10"><Loader2 className="h-6 w-6 animate-spin" /></div>
+            ) : isRejected ? (
+                <div className="text-center p-3 border rounded-lg bg-destructive/10 text-destructive text-sm">
+                    Could not load PayPal. Please check your Client ID.
+                </div>
+            ) : (
+                <>
+                    {error && (
+                        <div className="flex items-start gap-2 rounded-md border border-destructive/50 bg-destructive/10 p-3 text-sm text-destructive mb-4">
+                            <AlertCircle className="h-4 w-4 flex-shrink-0 mt-0.5" />
+                            <div>{error}</div>
+                        </div>
+                    )}
+                    <PayPalButtons
+                        style={{ layout: 'vertical', label: 'pay', color: 'black', shape: 'rect', tagline: false }}
+                        forceReRender={[tier, error]}
+                        createOrder={createOrder}
+                        onApprove={onApprove}
+                        onError={onError}
+                        onCancel={onCancel}
+                        onClick={() => setError(null)}
+                    />
+                </>
+            )}
         </div>
     );
 }
