@@ -1,7 +1,10 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
-import { format, startOfWeek, addDays, getMonth } from 'date-fns';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
+import { format, startOfWeek, getMonth } from 'date-fns';
+import { useAuth } from '@/components/auth/auth-provider';
+import { useReferrals } from '@/components/referrals/referral-provider';
+import { pricingTiers } from '@/lib/site';
 
 // Data types
 export interface Referral {
@@ -42,30 +45,63 @@ interface EarningsContextType {
 const EarningsContext = createContext<EarningsContextType | undefined>(undefined);
 
 export const EarningsProvider = ({ children }: { children: ReactNode }) => {
+  const { user } = useAuth();
+  const { referrals: platformReferrals } = useReferrals();
+
   const [referrals, setReferrals] = useState<Referral[]>([]);
   const [earnings, setEarnings] = useState<Earning[]>([]);
 
-  const addEarning = useCallback((tierPrice: number) => {
-    const commission = tierPrice * 0.70; // 70% commission
-    const newReferral: Referral = {
-        id: `ref_${Date.now()}`,
-        email: `customer${Math.floor(Math.random() * 10000)}@example.com`,
-        plan: tierPrice > 50 ? 'Pro' : 'Starter',
-        status: 'Active',
-        commission,
-        date: new Date(),
-    };
-    const newEarning: Earning = {
-        amount: commission,
-        date: new Date(),
+  useEffect(() => {
+    if (!user?.username || !platformReferrals) {
+      setReferrals([]);
+      setEarnings([]);
+      return;
     };
 
-    setReferrals(prev => [...prev, newReferral]);
-    setEarnings(prev => [...prev, newEarning]);
-  }, []);
+    // Filter platform referrals to find ones made by the current logged-in user
+    const myPlatformReferrals = platformReferrals.filter(
+      (r) => r.affiliate === user.username
+    );
+
+    // Calculate commission rate based on *activated* referrals
+    const activeReferralCount = myPlatformReferrals.filter(r => r.status === 'activated').length;
+    const commissionRate = activeReferralCount >= 10 ? 0.75 : 0.70;
+
+    // Process only activated referrals for earnings
+    const activatedReferrals = myPlatformReferrals.filter(r => r.status === 'activated');
+
+    const processedReferrals: Referral[] = activatedReferrals.map(pr => {
+      const planDetails = pricingTiers.find(p => p.name === pr.plan);
+      const dailyCommission = planDetails ? planDetails.price * commissionRate : 0;
+      
+      return {
+        id: pr.email,
+        email: pr.email,
+        plan: pr.plan,
+        // The user dashboard expects 'Active', 'Trial', or 'Canceled'. We only have 'activated'.
+        // Mapping 'activated' to 'Active' for display.
+        status: 'Active',
+        commission: dailyCommission,
+        date: new Date(), // Mock date, not available in platform referral data
+      };
+    });
+    
+    const processedEarnings: Earning[] = processedReferrals.map(r => ({
+      amount: r.commission,
+      date: r.date,
+    }));
+    
+    setReferrals(processedReferrals);
+    setEarnings(processedEarnings);
+
+  }, [user, platformReferrals]);
+  
+  // This function is the source of the original bug. 
+  // It is no longer needed but kept to prevent breaking the payment button component signature.
+  // It correctly does nothing now.
+  const addEarning = () => {};
 
   const processEarningsForChart = (): DailyEarning[] => {
-    const weekStart = startOfWeek(new Date(), { weekStartsOn: 1 }); // Monday
     const dailyTotals: { [key: string]: number } = { Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0, Sun: 0 };
     
     earnings.forEach(earning => {
@@ -77,7 +113,7 @@ export const EarningsProvider = ({ children }: { children: ReactNode }) => {
 
     return ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'].map(day => ({
         date: day,
-        earnings: dailyTotals[day]
+        earnings: dailyTotals[day] || 0
     }));
   };
   
