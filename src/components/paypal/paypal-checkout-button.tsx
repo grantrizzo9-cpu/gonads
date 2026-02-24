@@ -7,11 +7,13 @@ import type { OnApproveData, CreateOrderData } from '@paypal/react-paypal-js';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
 import { type PricingTier } from '@/lib/site';
+import { useEarnings } from '@/components/earnings/earnings-provider';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount } = useAuth();
+    const { addEarning } = useEarnings();
     const { toast } = useToast();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
@@ -20,6 +22,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
 
     const handleSuccessfulPayment = () => {
         activateAccount();
+        addEarning(tier.price);
         toast({
             title: "Account Activated!",
             description: `Your ${tier.name} plan is now active. Welcome aboard!`,
@@ -33,13 +36,11 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         // Simulate network delay
         setTimeout(() => {
             handleSuccessfulPayment();
+            setIsLoading(false);
         }, 500);
     }
 
     const createOrder = (data: CreateOrderData, actions: any) => {
-        // IMPORTANT: In a production environment, you should create the order on your server
-        // to prevent users from manipulating the price on the client side.
-        // This is a client-side example for demonstration purposes only.
         return actions.order.create({
             purchase_units: [
                 {
@@ -59,8 +60,6 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const onApprove = (data: OnApproveData, actions: any) => {
         setIsLoading(true);
         setError(null);
-        // IMPORTANT: In a production environment, you should capture the order on your server
-        // to securely validate the payment. This ensures the correct amount was paid.
         return actions.order.capture().then((details: any) => {
             handleSuccessfulPayment();
         }).catch((err: any) => {
@@ -98,13 +97,18 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         });
     };
 
+    if (isPending) {
+        return <div className="flex justify-center items-center h-20"><Loader2 className="h-6 w-6 animate-spin" /></div>
+    }
+
     if (isLoading) {
         return <div className="flex justify-center items-center h-20"><Loader2 className="h-6 w-6 animate-spin" /></div>
     }
 
+
     return (
         <div className="w-full">
-             <Button className="w-full mb-4" onClick={handleSimulatePayment}>
+            <Button className="w-full" onClick={handleSimulatePayment}>
                 Simulate Successful Payment
             </Button>
             
@@ -114,14 +118,12 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 </div>
                 <div className="relative flex justify-center text-xs uppercase">
                     <span className="bg-card px-2 text-muted-foreground">
-                        Or test with
+                        Or pay with
                     </span>
                 </div>
             </div>
 
-            {isPending ? (
-                 <div className="flex justify-center items-center h-10"><Loader2 className="h-6 w-6 animate-spin" /></div>
-            ) : isRejected ? (
+            {isRejected ? (
                 <div className="text-center p-3 border rounded-lg bg-destructive/10 text-destructive text-sm">
                     Could not load PayPal. Please check your Client ID.
                 </div>

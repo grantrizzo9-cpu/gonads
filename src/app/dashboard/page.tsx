@@ -5,9 +5,10 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription, CardFooter }
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { AreaChart, Area, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } from "recharts";
-import { earningsData, referralsData, recentReferrals, platformReferrals } from "@/lib/mock-data";
+import { platformReferrals } from "@/lib/mock-data";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { useAuth } from "@/components/auth/auth-provider";
+import { useEarnings } from "@/components/earnings/earnings-provider";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -178,8 +179,9 @@ function ActivationCard() {
 function UserDashboard() {
   const { user } = useAuth();
   const { toast } = useToast();
-  const totalEarnings = earningsData.reduce((acc, item) => acc + item.earnings, 0);
-  const activeReferrals = recentReferrals.filter(r => r.status === 'Active').length;
+  // Use live data from context instead of mock data
+  const { referrals, dailyEarnings, monthlyReferrals, totalEarnings, activeReferrals } = useEarnings();
+
   const commissionRate = activeReferrals >= 10 ? 75 : 70;
 
   const affiliateLink = user?.username ? `https://affiliateaihost.com/ref/${user.username}` : '';
@@ -212,12 +214,12 @@ function UserDashboard() {
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Earnings (7d)</CardTitle>
+            <CardTitle className="text-sm font-medium">Total Earnings</CardTitle>
             <DollarSign className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">${totalEarnings.toFixed(2)} AUD</div>
-            <p className="text-xs text-muted-foreground">+20.1% from last week</p>
+            <p className="text-xs text-muted-foreground">All earnings from your referrals.</p>
           </CardContent>
         </Card>
         <Card>
@@ -237,7 +239,7 @@ function UserDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{commissionRate}%</div>
-            <p className="text-xs text-muted-foreground">{10 - activeReferrals} more referrals to next tier</p>
+            <p className="text-xs text-muted-foreground">{10 - activeReferrals > 0 ? `${10 - activeReferrals} more referrals to next tier` : 'Top tier unlocked!'}</p>
           </CardContent>
         </Card>
       </div>
@@ -245,11 +247,11 @@ function UserDashboard() {
       <div className="grid gap-4 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline flex items-center gap-2"><AreaChartIcon className="h-5 w-5" />Daily Earnings</CardTitle>
+            <CardTitle className="font-headline flex items-center gap-2"><AreaChartIcon className="h-5 w-5" />Daily Earnings (This Week)</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-64 w-full">
-              <AreaChart data={earningsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+              <AreaChart data={dailyEarnings} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
                 <YAxis tickLine={false} axisLine={false} tickMargin={8} />
@@ -261,11 +263,11 @@ function UserDashboard() {
         </Card>
         <Card>
           <CardHeader>
-            <CardTitle className="font-headline flex items-center gap-2"><BarChartIcon className="h-5 w-5" />New Referrals (6m)</CardTitle>
+            <CardTitle className="font-headline flex items-center gap-2"><BarChartIcon className="h-5 w-5" />New Referrals (This Year)</CardTitle>
           </CardHeader>
           <CardContent>
             <ChartContainer config={chartConfig} className="h-64 w-full">
-              <BarChart data={referralsData} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
+              <BarChart data={monthlyReferrals} margin={{ top: 5, right: 20, left: -10, bottom: 0 }}>
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
                 <YAxis tickLine={false} axisLine={false} tickMargin={8} />
@@ -282,28 +284,32 @@ function UserDashboard() {
           <CardTitle className="font-headline">Recent Referrals</CardTitle>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Customer</TableHead>
-                <TableHead>Plan</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Daily Commission</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {recentReferrals.map((referral) => (
-                <TableRow key={referral.id}>
-                  <TableCell>{referral.email}</TableCell>
-                  <TableCell>{referral.plan}</TableCell>
-                  <TableCell>
-                    <Badge variant={referral.status === 'Active' ? 'default' : referral.status === 'Trial' ? 'secondary' : 'destructive'}>{referral.status}</Badge>
-                  </TableCell>
-                  <TableCell className="text-right">${referral.commission.toFixed(2)}</TableCell>
+          {referrals.length === 0 ? (
+            <p className="text-muted-foreground text-center py-8">No referrals yet. Share your link to get started!</p>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Customer</TableHead>
+                  <TableHead>Plan</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Daily Commission</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {referrals.map((referral) => (
+                  <TableRow key={referral.id}>
+                    <TableCell>{referral.email}</TableCell>
+                    <TableCell>{referral.plan}</TableCell>
+                    <TableCell>
+                      <Badge variant={referral.status === 'Active' ? 'default' : referral.status === 'Trial' ? 'secondary' : 'destructive'}>{referral.status}</Badge>
+                    </TableCell>
+                    <TableCell className="text-right">${referral.commission.toFixed(2)}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>
