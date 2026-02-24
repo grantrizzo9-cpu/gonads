@@ -7,22 +7,21 @@ import type { OnApproveData, CreateOrderData } from '@paypal/react-paypal-js';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
 import { type PricingTier } from '@/lib/site';
-import { useEarnings } from '@/components/earnings/earnings-provider';
 import { Loader2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount } = useAuth();
-    const { addEarning } = useEarnings();
     const { toast } = useToast();
     const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | React.ReactNode | null>(null);
-    const [{ isPending, isRejected }] = usePayPalScriptReducer();
+    const [{ isPending, isRejected, options: paypalOptions }] = usePayPalScriptReducer();
 
     const handleSuccessfulPayment = () => {
         activateAccount();
-        addEarning(tier.price);
+        // NOTE: The addEarning() call was removed here. The activation fee is
+        // platform revenue and should not generate a commission for the user paying it.
         toast({
             title: "Account Activated!",
             description: `Your ${tier.name} plan is now active. Welcome aboard!`,
@@ -39,6 +38,8 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
             setIsLoading(false);
         }, 500);
     }
+
+    const isPayPalConfigured = paypalOptions.clientId && !paypalOptions.clientId.includes('YOUR_') && paypalOptions.clientId !== 'sb';
 
     const createOrder = (data: CreateOrderData, actions: any) => {
         return actions.order.create({
@@ -123,9 +124,9 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 </div>
             </div>
 
-            {isRejected ? (
+            {isRejected || !isPayPalConfigured ? (
                 <div className="text-center p-3 border rounded-lg bg-destructive/10 text-destructive text-sm">
-                    Could not load PayPal. Please check your Client ID.
+                    {isRejected ? "Could not load PayPal." : "PayPal is not configured."} Please check your Client ID or use the simulation button.
                 </div>
             ) : (
                 <>
