@@ -168,7 +168,7 @@ function ActivationCard() {
           </CardContent>
           <CardFooter>
               <Button asChild className="w-full">
-                  <Link href="/pricing">Activate Your Plan</Link>
+                  <Link href="/dashboard/upgrade">Activate Your Plan</Link>
               </Button>
           </CardFooter>
       </Card>

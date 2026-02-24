@@ -8,12 +8,10 @@ import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
 import { cn } from "@/lib/utils";
 import { useAuth } from "@/components/auth/auth-provider";
-import { useRouter } from "next/navigation";
-import { PayPalCheckoutButton } from "@/components/paypal/paypal-checkout-button";
+import Link from "next/link";
 
 export default function PricingPage() {
   const { user } = useAuth();
-  const router = useRouter();
 
   return (
     <>
@@ -56,18 +54,11 @@ export default function PricingPage() {
                   </ul>
                 </CardContent>
                 <CardFooter>
-                  <div className="w-full">
-                    {user && !user.isPaid ? (
-                        <PayPalCheckoutButton tier={tier} />
-                    ) : (
-                      <Button
-                        className="w-full"
-                        onClick={() => router.push(user ? '/dashboard' : '/signup')}
-                      >
-                        {user ? 'Go to Dashboard' : 'Sign Up to Start'}
-                      </Button>
-                    )}
-                  </div>
+                    <Button asChild className="w-full">
+                        <Link href={user ? '/dashboard/upgrade' : '/signup'}>
+                            {user ? 'Upgrade in Dashboard' : 'Sign Up to Start'}
+                        </Link>
+                    </Button>
                 </CardFooter>
               </Card>
             ))}
