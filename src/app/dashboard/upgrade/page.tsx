@@ -37,7 +37,7 @@ export default function UpgradePage() {
     return null; // Or a loading spinner
   }
   
-  const isAdmin = user?.email === 'renntapog@gmail.com';
+  const isAdmin = user?.email === 'rentapog@gmail.com';
   let visibleTiers: PricingTier[] = [];
 
   if (isAdmin) {

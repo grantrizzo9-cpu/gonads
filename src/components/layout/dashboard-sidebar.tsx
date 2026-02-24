@@ -53,7 +53,7 @@ const adminLinks = [
 export function DashboardSidebar() {
   const pathname = usePathname();
   const { user } = useAuth();
-  const isAdmin = user?.email === 'renntapog@gmail.com';
+  const isAdmin = user?.email === 'rentapog@gmail.com';
 
   const isActive = (href: string) => {
     return pathname === href || (href !== '/dashboard' && pathname.startsWith(href));
