@@ -17,6 +17,10 @@ export const strategyArticles: Article[] = [
       <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Introduction: Your Professional Online Address</h2>
       <p class="mb-4">Once you've activated your Host Pro Ai account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.yourbusiness.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with your high-speed hosting. Following these steps will make your site live to the world on your own branded domain.</p>
       
+      <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Your Domain vs. Your Affiliate Link: Why It Matters</h2>
+      <p class="mb-4">Before we dive in, it's important to know that you don't <strong>have</strong> to buy a custom domain to start earning. You can always give your affiliate link directly to anyone. However, there's a reason why top affiliates always use their own domain.</p>
+      <p class="mb-4">Raw affiliate links can look long, complicated, and can sometimes be perceived as less trustworthy. They don't help you build a unique brand. This is why having a custom domain is so important. A short, memorable domain name (like <code>www.BobsBestHosting.com</code>) is far more professional and builds instant credibility. It acts as a simple, trustworthy entry point that forwards customers to your offer, making your marketing efforts significantly more effective. Think of it as the digital storefront for your affiliate business. Picking a good domain is one of the most crucial steps in building your brand online.</p>
+
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: Purchase Your Domain Name</h3>
       <p class="mb-4">If you don't already own a domain name, you'll need to purchase one. A domain is your unique address on the internet. We recommend using a reputable registrar that provides easy-to-use DNS management tools.</p>
       <p class="mb-4">To purchase your domain, <a href="https://rizzosai.shopco.com/" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">go to this recommended domain registrar</a> to find and buy the perfect domain name for your business.</p>
@@ -81,6 +85,7 @@ export const strategyArticles: Article[] = [
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation</h3>
       <p>DNS changes can take anywhere from a few minutes to 48 hours to take effect across the internet. This is called propagation. Once it's complete, your website will be live at your custom domain. You can use an online tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer">DNS Checker</a> to monitor the status of your 'A' and 'CNAME' records.</p>
       <p class="mt-4">If you have any trouble, please do not hesitate to contact us at our support email after trying these steps. We are here to help!</p>
+      <p class="mt-8">We're excited to have you on board. <strong>Good luck with your promotions!</strong></p>
     `,
   },
   {
