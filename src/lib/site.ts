@@ -85,13 +85,19 @@ export const strategyArticles: Article[] = [
             <p class="text-xs text-center p-2 text-muted-foreground">Example of a 'CNAME' Record configuration panel for a subdomain.</p>
        </div>
 
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation</h3>
-      <p>DNS changes can take anywhere from a few minutes to 48 hours to take effect across the internet. This is called propagation. Once it's complete, your website will be live at your custom domain. You can use an online tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer">DNS Checker</a> to monitor the status of your 'A' and 'CNAME' records.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation & Verify</h3>
+      <p class="mb-4">DNS changes can take anywhere from a few minutes to 48 hours to take effect across the internet. This is called propagation. Once it's complete, your website will be live at your custom domain. You can use an online tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">DNS Checker</a> to monitor the status.</p>
+      <p class="mb-2">There are two checks to perform:</p>
+      <ol class="list-decimal list-inside mb-4 space-y-2">
+        <li>Enter your main domain (e.g., <code>yourbusiness.com</code>), select 'A' from the dropdown, and click Search. You should see green checkmarks next to the IP addresses <code>199.36.158.100</code> and <code>199.36.158.101</code> across the globe. This is what your screenshot shows - great job!</li>
+        <li>Enter the 'www' version of your domain (e.g., <code>www.yourbusiness.com</code>), select 'CNAME' from the dropdown, and click Search. You should see it pointing to your unique value: [USER_CNAME_VALUE].</li>
+      </ol>
+      <p>Once both of these checks show green checkmarks worldwide, your domain is fully connected and ready to use!</p>
       <p class="mt-4">If you have any trouble, please do not hesitate to contact us at our support email after trying these steps. We are here to help!</p>
       <p class="mt-8">We're excited to have you on board. <strong>Good luck with your promotions!</strong></p>
     `,
   },
-  {
+   {
     slug: 'facebook-ads-playbook',
     title: 'Facebook Ads Playbook',
     description: 'A guide to creating high-converting Facebook ads for your affiliate business.',
@@ -236,7 +242,7 @@ Page speed literally changes everything. If you run an online store, you NEED th
   {
     slug: 'linkedin-b2b-lead-gen',
     title: 'LinkedIn B2B Lead Gen',
-    description: "Target professionals and businesses with precision on the world's largest professional network.",
+    description: 'Target professionals and businesses with precision on the world\'s largest professional network.',
     image: 'strategy-4',
     content: `
       <h2 class="font-headline text-2xl font-bold mb-4 text-accent">LinkedIn B2B Domination</h2>
