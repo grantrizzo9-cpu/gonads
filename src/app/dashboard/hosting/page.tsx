@@ -1,9 +1,8 @@
-
 'use client';
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { HardDrive, ExternalLink, Globe, Loader2, CheckCircle, XCircle, Trash2, AlertCircle } from "lucide-react";
+import { HardDrive, ExternalLink, Globe, Loader2, CheckCircle, XCircle, Trash2, AlertCircle, Info } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,7 @@ import { cn } from "@/lib/utils";
 import { useDomains } from "@/components/domains/domain-provider";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { format } from 'date-fns';
-import { useToast } from "@/hooks/use-toast";
+import { useToast } from '@/hooks/use-toast';
 import { useAuth } from "@/components/auth/auth-provider";
 import { Badge } from "@/components/ui/badge";
 
@@ -106,7 +105,7 @@ export default function HostingPage() {
                     <CardTitle className="font-headline text-2xl flex items-center gap-2"><HardDrive />Hosting Manager</CardTitle>
                     <CardDescription>Connect and manage your custom domains for your websites.</CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-6">
                     <Alert>
                         <HardDrive className="h-4 w-4" />
                         <AlertTitle>New to Connecting a Domain?</AlertTitle>
@@ -120,17 +119,31 @@ export default function HostingPage() {
                         </AlertDescription>
                     </Alert>
 
-                     <Alert variant="destructive" className="mt-6">
+                     <Alert variant="destructive">
                         <AlertCircle className="h-4 w-4" />
                         <AlertTitle>Seeing a "Fastly error: unknown domain"?</AlertTitle>
                         <AlertDescription>
-                            <p>This is expected and is actually good news! It means your DNS is working correctly.</p>
-                            <p className="mt-2">The final step is to add your custom domain to your Firebase project so our servers recognize it. Click the button below to go to the Firebase console and complete the setup.</p>
+                            <p>This is expected! It means your DNS is working correctly, but you haven't told Firebase about your domain yet.</p>
+                            <p className="mt-2">The next step is to add your custom domain in your Firebase project. Click the button below to go to the Firebase console and complete the setup.</p>
                             <Button asChild className="mt-4">
-                                <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+                                <a href="https://console.firebase.google.com/project/_/hosting/main" target="_blank" rel="noopener noreferrer">
                                     Go to Firebase Console <ExternalLink className="ml-2 h-4 w-4" />
                                 </a>
                             </Button>
+                        </AlertDescription>
+                    </Alert>
+
+                    <Alert>
+                        <Info className="h-4 w-4" />
+                        <AlertTitle>Seeing a "Site Not Found" page?</AlertTitle>
+                        <AlertDescription>
+                            <p>This is the final step and means you've correctly added your domain in Firebase! This page appears because Firebase is finishing the setup.</p>
+                             <p className="mt-2">This can happen for two reasons:</p>
+                            <ul className="list-disc pl-5 mt-2 space-y-1 text-xs">
+                                <li><strong>Propagation:</strong> It can take from a few minutes up to an hour for Firebase to provision the SSL certificate and connect your domain worldwide.</li>
+                                <li><strong>App Not Deployed:</strong> Your app needs to be built and deployed. This usually happens automatically in Firebase Studio after you commit your code.</li>
+                            </ul>
+                            <p className="mt-3">Your setup is correct. Please wait a bit for the process to complete. If it takes longer than an hour, check the build logs in your Firebase project.</p>
                         </AlertDescription>
                     </Alert>
                 </CardContent>
@@ -261,7 +274,7 @@ export default function HostingPage() {
                                         <TableCell>{format(new Date(domain.connectedAt), "PPP")}</TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Button asChild variant="outline" size="sm">
-                                               <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+                                               <a href="https://console.firebase.google.com/project/_/hosting/main" target="_blank" rel="noopener noreferrer">
                                                    <ExternalLink className="mr-2 h-4 w-4" />
                                                    Complete Setup
                                                </a>
