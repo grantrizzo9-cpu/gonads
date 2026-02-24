@@ -1,4 +1,5 @@
 
+
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
@@ -13,8 +14,8 @@ import { Footer } from "@/components/layout/footer";
 const whyPartnerFeatures = [
   {
     icon: DollarSign,
-    title: "Generous 75% Commissions",
-    description: "Earn substantial recurring commissions on every sale. Super affiliates who refer over 10 customers unlock our top-tier 75% rate.",
+    title: "Generous 70-75% Commissions",
+    description: "Start at a 70% recurring commission rate. Refer 10 active customers to permanently unlock our top-tier 75% rate.",
   },
   {
     icon: WalletCards,
