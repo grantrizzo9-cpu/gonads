@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
 import { platformReferrals as initialReferrals } from '@/lib/mock-data';
 
 export interface PlatformReferral {
@@ -18,9 +18,32 @@ interface ReferralContextType {
 }
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
+const LOCAL_STORAGE_KEY = 'platformReferrals';
 
 export const ReferralProvider = ({ children }: { children: ReactNode }) => {
   const [referrals, setReferrals] = useState<PlatformReferral[]>(initialReferrals);
+
+  // Load from localStorage on initial client-side mount
+  useEffect(() => {
+    try {
+      const storedReferrals = localStorage.getItem(LOCAL_STORAGE_KEY);
+      if (storedReferrals) {
+        setReferrals(JSON.parse(storedReferrals));
+      }
+    } catch (error) {
+      console.error("Failed to read from localStorage", error);
+    }
+  }, []);
+
+  // Save to localStorage whenever referrals change
+  useEffect(() => {
+    try {
+      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(referrals));
+    } catch (error) {
+      console.error("Failed to write to localStorage", error);
+    }
+  }, [referrals]);
+
 
   const addReferral = useCallback((newReferralData: Omit<PlatformReferral, 'plan' | 'status'>) => {
     const newReferral: PlatformReferral = {
@@ -28,7 +51,7 @@ export const ReferralProvider = ({ children }: { children: ReactNode }) => {
       plan: 'Starter', // Default plan for new signups
       status: 'pending',
     };
-    setReferrals(prev => [newReferral, ...prev]);
+    setReferrals(prev => [newReferral, ...prev.filter(r => r.email !== newReferral.email)]);
   }, []);
   
   const activateReferral = useCallback((email: string) => {
