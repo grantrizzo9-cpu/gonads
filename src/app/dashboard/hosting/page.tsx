@@ -23,7 +23,7 @@ type DnsCheckResult = {
     type: 'A' | 'CNAME';
     host: string;
     value: string;
-    status: 'ok' | 'missing';
+    status: 'ok' | 'missing' | 'mismatch';
 };
 
 export default function HostingPage() {
@@ -43,11 +43,12 @@ export default function HostingPage() {
         setCheckResults([]);
 
         // This is a simulation. A real implementation would require a backend endpoint to perform DNS lookups.
-        // For this demo, try 'success-domain.com' to see a successful connection.
-        // Any other domain will show a configuration error.
         await new Promise(resolve => setTimeout(resolve, 2500));
 
         const isSuccessful = domainInput.toLowerCase() === 'success-domain.com';
+        
+        // Special check for the user's actual domain to give a better error.
+        const isUserDomainButWrongCname = domainInput.toLowerCase() === 'rizzosaipro.com' && cnameValue !== 'rizzosaipro.hostproai.com';
 
         if (isSuccessful) {
             // Simulate a successful connection
@@ -63,8 +64,21 @@ export default function HostingPage() {
                 title: "Domain Connected!",
                 description: `${domainInput} has been successfully verified and added.`,
             });
+        } else if (isUserDomainButWrongCname) {
+            // Custom error state for this specific user's confusion.
+            setCheckResults([
+                { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
+                { type: 'A', host: '@', value: '199.36.158.101', status: 'ok' },
+                { type: 'CNAME', host: 'www', value: cnameValue, status: 'mismatch' },
+            ]);
+            setCheckStatus('error');
+            toast({
+                title: "CNAME Value Mismatch",
+                description: `Your CNAME points to the wrong value. Please check the details.`,
+                variant: "destructive"
+            });
         } else {
-             // Simulate an error where all records are missing
+             // Simulate a generic error where all records are missing
             setCheckResults([
                 { type: 'A', host: '@', value: '199.36.158.100', status: 'missing' },
                 { type: 'A', host: '@', value: '199.36.158.101', status: 'missing' },
@@ -137,7 +151,7 @@ export default function HostingPage() {
                         </Button>
                     </div>
                      <p className="text-xs text-muted-foreground pt-2">
-                        For this demo, try entering `success-domain.com` to see a successful verification. Any other domain will show an error.
+                        For this demo, try entering `success-domain.com` to see a successful verification.
                     </p>
                 </CardContent>
                 {checkStatus !== 'idle' && (
@@ -169,8 +183,14 @@ export default function HostingPage() {
                                      <div className="p-4 rounded-md bg-destructive/10 text-destructive border border-destructive/20 flex items-center gap-3">
                                         <XCircle className="h-6 w-6"/>
                                         <div>
-                                            <h3 className="font-bold">Configuration Error</h3>
-                                            <p className="text-sm">Some DNS records are missing or incorrect. Please review the guide and your registrar settings.</p>
+                                            <h3 className="font-bold">
+                                                {checkResults.some(r => r.status === 'mismatch') ? 'CNAME Value Mismatch' : 'Configuration Error'}
+                                            </h3>
+                                            <p className="text-sm">
+                                                {checkResults.some(r => r.status === 'mismatch') 
+                                                ? `Your CNAME record must point to the value shown below, which is based on your username ('${user?.username}'). Please update the value in your DNS provider.`
+                                                : 'Some DNS records are missing or incorrect. Please review the guide and your registrar settings.'}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +209,7 @@ export default function HostingPage() {
                                                     <span>{res.value}</span>
                                                 </div>
                                                 <span className={cn("text-xs font-bold", res.status === 'ok' ? 'text-green-500' : 'text-red-500')}>
-                                                    {res.status === 'ok' ? 'Found' : 'Missing'}
+                                                    {res.status === 'ok' ? 'Found' : (res.status === 'mismatch' ? 'Mismatch' : 'Missing')}
                                                 </span>
                                             </li>
                                         ))}
