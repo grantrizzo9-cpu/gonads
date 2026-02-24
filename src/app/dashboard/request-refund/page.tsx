@@ -1,5 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { CircleHelp } from "lucide-react";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import { CircleHelp, Hourglass } from "lucide-react";
 
 export default function RequestRefundPage() {
   return (
@@ -10,12 +11,28 @@ export default function RequestRefundPage() {
             Request a Refund
         </CardTitle>
         <CardDescription>
-            Information about our refund policy.
+            Our refund policy and how to request one.
         </CardDescription>
       </CardHeader>
-      <CardContent className="space-y-4">
-        <p>We offer a no-questions-asked refund on your one-time activation fee if you request it within 24 hours of joining, with one important condition: to be eligible for a refund, you must not have received any commission payouts from your referrals. If you have been paid out, a refund is not possible.</p>
-        <p>If you decide it's not for you and meet the condition above, please contact our support team to request your refund. Please note that if you choose to receive a refund, your account will be closed, and you will no longer be able to log in.</p>
+      <CardContent className="space-y-6">
+        <div>
+            <h3 className="font-semibold mb-2">Eligibility</h3>
+            <p className="text-muted-foreground">We offer a no-questions-asked refund on your one-time activation fee if you request it within 24 hours of joining, with one important condition: to be eligible for a refund, you must not have received any commission payouts from your referrals. If you have been paid out, a refund is not possible.</p>
+        </div>
+        
+        <Alert>
+            <Hourglass className="h-4 w-4" />
+            <AlertTitle>How to Request a Refund</AlertTitle>
+            <AlertDescription>
+                <p className="mb-2">All refund requests are handled manually by our team. If you meet the eligibility criteria, please send an email to our support team to start the process.</p>
+                <p>We do our best to process requests quickly, but please **allow us up to 24 hours** to respond before filing a payment dispute. If your request is approved, the refund will be sent directly to your account, and your affiliate account will be closed.</p>
+            </AlertDescription>
+        </Alert>
+
+        <div>
+            <h3 className="font-semibold mb-2">Important Note</h3>
+            <p className="text-muted-foreground">Please note that if you choose to receive a refund, your account will be permanently closed, and you will no longer be able to log in or earn commissions.</p>
+        </div>
       </CardContent>
     </Card>
   );
