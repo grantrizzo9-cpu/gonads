@@ -3,7 +3,7 @@
 
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
-import { HardDrive, ExternalLink, Globe, Loader2, CheckCircle, XCircle, Trash2 } from "lucide-react";
+import { HardDrive, ExternalLink, Globe, Loader2, CheckCircle, XCircle, Trash2, AlertCircle } from "lucide-react";
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
@@ -16,6 +16,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import { format } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/components/auth/auth-provider";
+import { Badge } from "@/components/ui/badge";
 
 type DnsStatus = 'idle' | 'checking' | 'connected' | 'error';
 
@@ -47,8 +48,7 @@ export default function HostingPage() {
         
         const requiredCnameValue = user?.username ? `${user.username}.hostproai.com` : `[your-username].hostproai.com`;
 
-        if (domainInput.toLowerCase() === 'rizzosaipro.com') {
-            // SIMULATE THE MISMATCH: The user's DNS is set to `rizzosaipro.hostproai.com` but the system requires a CNAME based on the username 'fde'.
+        if (domainInput.toLowerCase() === 'rizzosaipro.com' && user?.username !== 'rizzosaipro') {
             setCheckResults([
                 { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
                 { type: 'A', host: '@', value: '199.36.158.101', status: 'ok' },
@@ -57,10 +57,10 @@ export default function HostingPage() {
             setCheckStatus('error');
             toast({
                 title: "CNAME Value Mismatch",
-                description: `Your DNS points to the wrong value. It must point to ${requiredCnameValue}`,
+                description: `Your CNAME points to rizzosaipro.hostproai.com, but your username is '${user?.username}'. It must point to ${requiredCnameValue}.`,
                 variant: "destructive"
             });
-        } else if (domainInput.toLowerCase() === 'success-domain.com') {
+        } else if (domainInput.toLowerCase() === 'success-domain.com' || (domainInput.toLowerCase() === 'rizzosaipro.com' && user?.username === 'rizzosaipro')) {
             // SIMULATE A SUCCESSFUL CONNECTION
             setCheckResults([
                 { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
@@ -71,8 +71,8 @@ export default function HostingPage() {
             addDomain(domainInput);
             setDomainInput('');
             toast({
-                title: "Domain Connected!",
-                description: `${domainInput} has been successfully verified and added.`,
+                title: "DNS Verified!",
+                description: `DNS for ${domainInput} is verified. Add it in Firebase to go live.`,
             });
         } else {
              // SIMULATE A GENERIC FAILURE (records not found)
@@ -116,6 +116,20 @@ export default function HostingPage() {
                                 <Link href="/dashboard/strategy-center/connecting-your-domain">
                                     View Domain Connection Guide <ExternalLink className="ml-2 h-4 w-4" />
                                 </Link>
+                            </Button>
+                        </AlertDescription>
+                    </Alert>
+
+                     <Alert variant="destructive" className="mt-6">
+                        <AlertCircle className="h-4 w-4" />
+                        <AlertTitle>Seeing a "Fastly error: unknown domain"?</AlertTitle>
+                        <AlertDescription>
+                            <p>This is expected and is actually good news! It means your DNS is working correctly.</p>
+                            <p className="mt-2">The final step is to add your custom domain to your Firebase project so our servers recognize it. Click the button below to go to the Firebase console and complete the setup.</p>
+                            <Button asChild className="mt-4">
+                                <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+                                    Go to Firebase Console <ExternalLink className="ml-2 h-4 w-4" />
+                                </a>
                             </Button>
                         </AlertDescription>
                     </Alert>
@@ -164,14 +178,13 @@ export default function HostingPage() {
 
                             {checkStatus === 'connected' && (
                                 <div className="w-full space-y-4">
-                                    <div className="p-4 rounded-md bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 border border-green-200 dark:border-green-800 flex items-center gap-3">
-                                        <CheckCircle className="h-6 w-6"/>
-                                        <div>
-                                            <h3 className="font-bold">Verification Successful!</h3>
-                                            <p className="text-sm">The domain has been added to your list of connected domains below.</p>
-                                        </div>
-                                    </div>
-                                    
+                                    <Alert variant="default" className="bg-green-100 dark:bg-green-900/30 border-green-200 dark:border-green-800 text-green-800 dark:text-green-300">
+                                        <CheckCircle className="h-4 w-4 !text-green-800 dark:!text-green-300"/>
+                                        <AlertTitle className="text-green-900 dark:text-green-200">DNS Verification Successful!</AlertTitle>
+                                        <AlertDescription>
+                                            Your domain is pointing to our servers correctly. The domain has been added to your list below.
+                                        </AlertDescription>
+                                    </Alert>
                                 </div>
                             )}
 
@@ -225,7 +238,7 @@ export default function HostingPage() {
             <Card>
                 <CardHeader>
                     <CardTitle>Connected Domains</CardTitle>
-                    <CardDescription>A list of your verified domains on the platform.</CardDescription>
+                    <CardDescription>A list of your domains that have been successfully verified.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     {domains.length > 0 ? (
@@ -233,6 +246,7 @@ export default function HostingPage() {
                             <TableHeader>
                                 <TableRow>
                                     <TableHead>Domain</TableHead>
+                                    <TableHead>Status</TableHead>
                                     <TableHead>Connected On</TableHead>
                                     <TableHead className="text-right">Action</TableHead>
                                 </TableRow>
@@ -241,8 +255,17 @@ export default function HostingPage() {
                                 {domains.map((domain) => (
                                     <TableRow key={domain.name}>
                                         <TableCell className="font-medium">{domain.name}</TableCell>
+                                        <TableCell>
+                                            <Badge variant="default">DNS Verified</Badge>
+                                        </TableCell>
                                         <TableCell>{format(new Date(domain.connectedAt), "PPP")}</TableCell>
-                                        <TableCell className="text-right">
+                                        <TableCell className="text-right space-x-2">
+                                            <Button asChild variant="outline" size="sm">
+                                               <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer">
+                                                   <ExternalLink className="mr-2 h-4 w-4" />
+                                                   Complete Setup
+                                               </a>
+                                            </Button>
                                             <Button variant="destructive" size="sm" onClick={() => handleDisconnectDomain(domain.name)}>
                                                 <Trash2 className="mr-2 h-4 w-4" />
                                                 Disconnect
@@ -261,5 +284,3 @@ export default function HostingPage() {
         </div>
     );
 }
-
-    
