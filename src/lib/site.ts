@@ -40,14 +40,15 @@ export const strategyArticles: Article[] = [
       <p class="mb-4">If you don't already own a domain name, you'll need to purchase one. A domain is your unique address on the internet. We recommend using a reputable registrar that provides easy-to-use DNS management tools.</p>
       <p class="mb-4">To purchase your domain, <a href="https://rizzosai.shopco.com/" target="_blank" rel="noopener noreferrer" class="font-bold text-primary hover:underline">go to this recommended domain registrar</a> to find and buy the perfect domain name for your business.</p>
       
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Add Your Domain in the Hosting Manager</h3>
-      <p class="mb-4">Once you have a domain, our system (powered by Firebase Hosting) will provide you with the specific DNS records you need to connect it. You do not need to use the "Connect a new domain" button, as the required records are standard for all users.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Find Your DNS Records</h3>
+      <p class="mb-4">Our system (powered by Firebase Hosting) provides standard DNS records that you will need to connect your domain. You can find these values listed below. You do not need to use the "Connect a new domain" button in the Hosting Manager, as these records are the same for all users on our platform.</p>
+      
       <p class="mb-4">You will need to add the following records at your domain registrar:</p>
       <ul class="list-disc list-inside mb-4 space-y-2">
         <li><strong>Two 'A' Records:</strong> These point your root domain (e.g., <code>yourbusiness.com</code>) to specific IP addresses.</li>
         <li><strong>One 'CNAME' Record:</strong> This points a subdomain, usually 'www' (e.g., <code>www.yourbusiness.com</code>), to your hosted content.</li>
       </ul>
-      <p class="mb-4">For your convenience, here are the exact values you will need. These are the same for all users on our platform:</p>
+      <p class="mb-4">Here are the exact values you will need:</p>
       <ul class="list-none mb-4 space-y-2 bg-muted p-4 rounded-lg">
           <li><strong>A Record 1:</strong> Type: A, Host: @, Value: 199.36.158.100</li>
           <li><strong>A Record 2:</strong> Type: A, Host: @, Value: 199.36.158.101</li>
@@ -55,31 +56,38 @@ export const strategyArticles: Article[] = [
       </ul>
 
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Configure DNS Records at Your Registrar (OpenSRS Example)</h3>
-      <p class="mb-4">This is the most technical step, but it's straightforward if you follow the instructions. You need to log in to where you purchased your domain (your registrar) and find the DNS Management or DNS Settings area.</p>
-      <p class="mb-4">The following instructions are specifically for <strong>OpenSRS</strong>, based on their control panel. The principles are the same for all registrars.</p>
+      <p class="mb-4">This is the most technical step, but it's straightforward if you follow the instructions. You need to log in to where you purchased your domain (your registrar) and find the DNS Management or DNS Settings area. The principles are the same for all registrars.</p>
       
       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">Important Note on CNAMEs and Root Domains</h4>
       <p class="mb-4">You may see an error like <code>CNAME hostname(label) must be unique for zone</code> if you try to add a CNAME record for your main (root) domain. This is normal! The root domain (e.g., <code>yourbusiness.com</code>) cannot be a CNAME; it must use 'A' records. Only subdomains (like <code>www</code>) should use CNAMEs.</p>
 
       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">Adding the 'A' Records for the Root Domain:</h4>
+      <p class="mb-2">Follow these steps to add the required 'A' records:</p>
       <ol class="list-decimal list-inside mb-4 space-y-2">
-        <li>In your OpenSRS DNS panel, look for a section like "DNS" or "Manage DNS Records".</li>
-        <li>You will want to edit the records for the root domain (sometimes represented by an '@' symbol).</li>
-        <li>Find the area to add a new record. Leave the 'Sub-Domain' or 'Host' field **blank** or use **@**.</li>
-        <li>In the 'Record Type' dropdown, select **A**.</li>
-        <li>In the 'IP Address' or 'Value' field that appears, enter the first IP address: <strong>199.36.158.100</strong>.</li>
-        <li>Save the record.</li>
-        <li>Repeat the process to add a second 'A' record, using the second IP address: <strong>199.36.158.101</strong>.</li>
+        <li>In your registrar's DNS panel, find the option to add a new record.</li>
+        <li>Leave the 'Sub-Domain' or 'Host' field **blank** or use **@**. This targets your root domain.</li>
+        <li>Select **A** as the 'Record Type'.</li>
+        <li>In the 'IP Address' or 'Value' field, enter the first IP address: <strong>199.36.158.100</strong>. Save the record.</li>
+        <li>Repeat the process to add a second 'A' record with the IP address: <strong>199.36.158.101</strong>.</li>
       </ol>
+       <div class="my-4 p-2 border border-border rounded-lg bg-muted">
+            <img src="https://picsum.photos/seed/dns-a-record/800/250" alt="Example of setting up A records" class="rounded-md w-full" data-ai-hint="dns settings"/>
+            <p class="text-xs text-center p-2 text-muted-foreground">Example of an 'A' Record configuration panel. Your interface may look different.</p>
+       </div>
       
       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">Adding the 'CNAME' Record for 'www':</h4>
+       <p class="mb-2">Now, add the 'CNAME' record to direct 'www' traffic:</p>
       <ol class="list-decimal list-inside mb-4 space-y-2">
-        <li>In the DNS panel, you will add another record.</li>
+        <li>In the DNS panel, add another new record.</li>
         <li>In the 'Sub-Domain' or 'Host' field, type **www**.</li>
-        <li>In the 'Record Type' dropdown, select **CNAME**.</li>
-        <li>In the 'Hostname' or 'Value' field, enter your unique hosting address: <code>[YOUR_USERNAME].hostproai.com</code>. Make sure to replace `[YOUR_USERNAME]` with your actual username.</li>
+        <li>Select **CNAME** as the 'Record Type'.</li>
+        <li>In the 'Hostname' or 'Value' field, enter your unique hosting address: <code>[YOUR_USERNAME].hostproai.com</code>. Make sure to replace \\\`[YOUR_USERNAME]\\\` with your actual username.</li>
         <li>Save the record.</li>
       </ol>
+      <div class="my-4 p-2 border border-border rounded-lg bg-muted">
+            <img src="https://picsum.photos/seed/dns-cname-record/800/250" alt="Example of setting up a CNAME record" class="rounded-md w-full" data-ai-hint="dns settings"/>
+            <p class="text-xs text-center p-2 text-muted-foreground">Example of a 'CNAME' Record configuration panel.</p>
+       </div>
 
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation</h3>
       <p>DNS changes can take anywhere from a few minutes to 48 hours to take effect across the internet. This is called propagation. Once it's complete, your website will be live at your custom domain. You can use an online tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer">DNS Checker</a> to monitor the status of your 'A' and 'CNAME' records.</p>
