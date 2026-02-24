@@ -11,7 +11,8 @@ import { PayPalCheckoutButton } from "@/components/paypal/paypal-checkout-button
 const getAffiliatePlanIndex = (username: string | undefined | null): number => {
     if (!username) {
         // Default for direct signups: they can see up to Gold.
-        return pricingTiers.findIndex(t => t.name === 'Gold');
+        const goldIndex = pricingTiers.findIndex(t => t.name === 'Gold');
+        return goldIndex > -1 ? goldIndex : pricingTiers.length -1;
     }
 
     // Mock affiliate plans.
@@ -25,7 +26,8 @@ const getAffiliatePlanIndex = (username: string | undefined | null): number => {
     };
 
     const planName = mockAffiliates[username.toLowerCase()] || 'Gold'; // Default if affiliate not in mock list
-    return pricingTiers.findIndex(t => t.name === planName);
+    const planIndex = pricingTiers.findIndex(t => t.name === planName);
+    return planIndex > -1 ? planIndex : pricingTiers.length - 1;
 };
 
 export default function UpgradePage() {
@@ -38,21 +40,13 @@ export default function UpgradePage() {
   const isAdmin = user?.email === 'renntapog@gmail.com';
   let visibleTiers: PricingTier[] = [];
 
+  // Admins and existing paid affiliates see all tiers to allow them to upgrade.
   if (isAdmin || user.isPaid) {
-    // Admins and existing paid affiliates see all tiers to allow them to upgrade.
     visibleTiers = pricingTiers;
   } else {
     // This is a new, unpaid user. Their view is determined by their referrer.
     const affiliatePlanIndex = getAffiliatePlanIndex(user.referrer);
-    
-    if (affiliatePlanIndex !== -1) {
-      // Show plans up to and including the referrer's plan level.
-      visibleTiers = pricingTiers.slice(0, affiliatePlanIndex + 1);
-    } else {
-      // Fallback: This case shouldn't be hit with the current logic, but as a safeguard.
-      const goldIndex = pricingTiers.findIndex(t => t.name === 'Gold');
-      visibleTiers = pricingTiers.slice(0, goldIndex + 1);
-    }
+    visibleTiers = pricingTiers.slice(0, affiliatePlanIndex + 1);
   }
 
   return (
