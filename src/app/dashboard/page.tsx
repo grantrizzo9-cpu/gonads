@@ -154,6 +154,11 @@ function AdminDashboard() {
                 </Table>
             </CardContent>
         </Card>
+        
+        <div className="pt-8 mt-8 border-t">
+          <h2 className="text-2xl font-bold font-headline mb-4">Friends &amp; Family View</h2>
+          <FriendsAndFamilyDashboard />
+        </div>
     </div>
   );
 }
@@ -164,7 +169,7 @@ function FriendsAndFamilyDashboard() {
             <CardHeader>
                 <CardTitle className="font-headline text-2xl flex items-center gap-2">
                     <Heart className="text-destructive" />
-                    Friends & Family Dashboard
+                    Friends &amp; Family Dashboard
                 </CardTitle>
                 <CardDescription>
                     Welcome! We've given you a special dashboard with full access to all features.
