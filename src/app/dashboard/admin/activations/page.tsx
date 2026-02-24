@@ -13,11 +13,14 @@ export default function AdminActivationsPage() {
     const { toast } = useToast();
 
     const handleActivate = (email: string) => {
-        activateReferral(email); // Call context function
-        toast({
-            title: "User Activated",
-            description: `The account for ${email} has been successfully activated.`,
-        });
+        const referral = referrals.find(r => r.email === email);
+        if (referral) {
+            activateReferral(email, referral.plan);
+            toast({
+                title: "User Activated",
+                description: `The account for ${email} has been successfully activated.`,
+            });
+        }
     };
 
     const pendingReferrals = referrals.filter(r => r.status === 'pending');

@@ -23,7 +23,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const handleSuccessfulPayment = () => {
         activateAccount(tier.name);
         if (user?.email) {
-          activateReferral(user.email);
+          activateReferral(user.email, tier.name);
         }
         toast({
             title: "Account Activated!",
@@ -39,7 +39,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         setTimeout(() => {
             activateAccount(tier.name);
             if (user?.email) {
-              activateReferral(user.email);
+              activateReferral(user.email, tier.name);
             }
             setIsLoading(false);
             toast({

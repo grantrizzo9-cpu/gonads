@@ -14,7 +14,7 @@ export interface PlatformReferral {
 interface ReferralContextType {
   referrals: PlatformReferral[];
   addReferral: (referral: Omit<PlatformReferral, 'plan' | 'status'>) => void;
-  activateReferral: (email: string) => void;
+  activateReferral: (email: string, planName: string) => void;
 }
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
@@ -58,10 +58,10 @@ export const ReferralProvider = ({ children }: { children: ReactNode }) => {
     setReferrals(prev => [newReferral, ...prev.filter(r => r.email !== newReferral.email)]);
   }, []);
   
-  const activateReferral = useCallback((email: string) => {
+  const activateReferral = useCallback((email: string, planName: string) => {
     setReferrals(currentReferrals =>
         currentReferrals.map(r =>
-            r.email === email ? { ...r, status: 'activated' } : r
+            r.email === email ? { ...r, status: 'activated', plan: planName } : r
         )
     );
   }, []);
