@@ -14,6 +14,7 @@ import { useDomains } from "@/components/domains/domain-provider";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { format } from 'date-fns';
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/components/auth/auth-provider";
 
 type DnsStatus = 'idle' | 'checking' | 'connected' | 'error';
 
@@ -31,6 +32,9 @@ export default function HostingPage() {
 
     const { domains, addDomain, removeDomain } = useDomains();
     const { toast } = useToast();
+    const { user } = useAuth();
+    
+    const cnameValue = user?.username ? `${user.username}.hostproai.com` : `[your-username].hostproai.com`;
 
     const handleCheckDomain = async () => {
         if (!domainInput) return;
@@ -38,29 +42,40 @@ export default function HostingPage() {
         setCheckResults([]);
 
         // This is a simulation. A real implementation would require a backend endpoint to perform DNS lookups.
+        // For this demo, try 'success-domain.com' to see a successful connection.
+        // Any other domain will show a configuration error.
         await new Promise(resolve => setTimeout(resolve, 2500));
 
-        // Simulate a successful connection
-        setCheckResults([
-            { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
-            { type: 'A', host: '@', value: '199.36.158.101', status: 'ok' },
-            { type: 'CNAME', host: 'www', value: '[your-username].hostproai.com', status: 'ok' },
-        ]);
-        setCheckStatus('connected');
-        addDomain(domainInput);
-        setDomainInput(''); // Clear input after successful connection
-        toast({
-            title: "Domain Connected!",
-            description: `${domainInput} has been successfully verified and added.`,
-        });
+        const isSuccessful = domainInput.toLowerCase() === 'success-domain.com';
 
-        // To simulate an error, you could do something like this:
-        // setCheckResults([
-        //     { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
-        //     { type: 'A', host: '@', value: '199.36.158.101', status: 'missing' },
-        //     { type: 'CNAME', host: 'www', value: '[your-username].hostproai.com', status: 'ok' },
-        // ]);
-        // setCheckStatus('error');
+        if (isSuccessful) {
+            // Simulate a successful connection
+            setCheckResults([
+                { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
+                { type: 'A', host: '@', value: '199.36.158.101', status: 'ok' },
+                { type: 'CNAME', host: 'www', value: cnameValue, status: 'ok' },
+            ]);
+            setCheckStatus('connected');
+            addDomain(domainInput);
+            setDomainInput(''); // Clear input after successful connection
+            toast({
+                title: "Domain Connected!",
+                description: `${domainInput} has been successfully verified and added.`,
+            });
+        } else {
+             // Simulate an error
+            setCheckResults([
+                { type: 'A', host: '@', value: '199.36.158.100', status: 'ok' },
+                { type: 'A', host: '@', value: '199.36.158.101', status: 'missing' },
+                { type: 'CNAME', host: 'www', value: cnameValue, status: 'ok' },
+            ]);
+            setCheckStatus('error');
+            toast({
+                title: "Verification Failed",
+                description: `Could not verify DNS records for ${domainInput}. Please check your settings.`,
+                variant: "destructive"
+            });
+        }
     };
     
     const handleDisconnectDomain = (domainName: string) => {
@@ -86,7 +101,7 @@ export default function HostingPage() {
                         <AlertDescription>
                             <p>Our step-by-step guide will walk you through purchasing and connecting a domain in minutes.</p>
                             <Button asChild className="mt-4">
-                                <Link href="/strategy-center/connecting-your-domain">
+                                <Link href="/dashboard/strategy-center/connecting-your-domain">
                                     View Domain Connection Guide <ExternalLink className="ml-2 h-4 w-4" />
                                 </Link>
                             </Button>
@@ -120,6 +135,9 @@ export default function HostingPage() {
                             Verify Domain
                         </Button>
                     </div>
+                     <p className="text-xs text-muted-foreground pt-2">
+                        For this demo, try entering `success-domain.com` to see a successful verification. Any other domain will show an error.
+                    </p>
                 </CardContent>
                 {checkStatus !== 'idle' && (
                     <>
