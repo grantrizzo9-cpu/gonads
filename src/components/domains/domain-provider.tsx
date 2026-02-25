@@ -7,12 +7,14 @@ import { useAuth } from '@/components/auth/auth-provider';
 export interface ConnectedDomain {
   name: string;
   connectedAt: string;
+  status: 'pending' | 'active';
 }
 
 interface DomainContextType {
   domains: ConnectedDomain[];
   addDomain: (name: string) => void;
   removeDomain: (name: string) => void;
+  activateDomain: (name: string) => void;
 }
 
 const DomainContext = createContext<DomainContextType | undefined>(undefined);
@@ -21,26 +23,27 @@ export const DomainProvider = ({ children }: { children: ReactNode }) => {
   const { user } = useAuth();
   const [domains, setDomains] = useState<ConnectedDomain[]>([]);
   
-  // Create a user-specific key for local storage
   const userStorageKey = user ? `connectedDomains_${user.uid}` : null;
 
-  // Load domains from local storage when the user changes
   useEffect(() => {
     if (userStorageKey) {
       try {
         const item = window.localStorage.getItem(userStorageKey);
-        setDomains(item ? JSON.parse(item) : []);
+        const storedDomains = item ? JSON.parse(item) : [];
+        const migratedDomains = storedDomains.map((d: any) => ({
+            ...d,
+            status: d.status || 'active'
+        }));
+        setDomains(migratedDomains);
       } catch (error) {
         console.error("Failed to read domains from localStorage.", error);
         setDomains([]);
       }
     } else {
-      // If there's no user, clear the domains list
       setDomains([]);
     }
   }, [userStorageKey]);
 
-  // Save domains to local storage whenever they change
   useEffect(() => {
     if (userStorageKey) {
       try {
@@ -57,6 +60,7 @@ export const DomainProvider = ({ children }: { children: ReactNode }) => {
       const newDomain: ConnectedDomain = {
         name,
         connectedAt: new Date().toISOString(),
+        status: 'pending',
       };
       return [newDomain, ...prev];
     });
@@ -66,7 +70,12 @@ export const DomainProvider = ({ children }: { children: ReactNode }) => {
     setDomains(prev => prev.filter(d => d.name !== name));
   }, []);
 
-  const value = { domains, addDomain, removeDomain };
+  const activateDomain = useCallback((name: string) => {
+    setDomains(prev => prev.map(d => d.name === name ? { ...d, status: 'active' } : d));
+  }, []);
+
+
+  const value = { domains, addDomain, removeDomain, activateDomain };
 
   return (
     <DomainContext.Provider value={value}>

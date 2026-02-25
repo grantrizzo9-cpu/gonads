@@ -1,10 +1,9 @@
-
 'use client';
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { ExternalLink, Globe, Trash2, Info, Search } from "lucide-react";
+import { Globe, Trash2, Search, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -29,7 +28,7 @@ import {
 
 export default function HostingPage() {
     const [domainInput, setDomainInput] = useState('');
-    const { domains, addDomain, removeDomain } = useDomains();
+    const { domains, addDomain, removeDomain, activateDomain } = useDomains();
     const { toast } = useToast();
     const { user } = useAuth();
     const router = useRouter();
@@ -47,6 +46,14 @@ export default function HostingPage() {
         router.push('/dashboard/strategy-center/connecting-your-domain');
     };
     
+    const handleActivateDomain = (domainName: string) => {
+        activateDomain(domainName);
+        toast({
+            title: "Domain Activated",
+            description: `${domainName} is now marked as active.`,
+        });
+    };
+
     const handleDisconnectDomain = (domainName: string) => {
         removeDomain(domainName);
         toast({
@@ -72,7 +79,7 @@ export default function HostingPage() {
                         <div className="p-4 border rounded-lg bg-muted space-y-3 text-sm font-mono">
                            <p><strong>A Record 1:</strong> Host: @ Value: 199.36.158.100</p>
                            <p><strong>A Record 2:</strong> Host: @ Value: 199.36.158.101</p>
-                           <p><strong>CNAME Record:</strong> Host: www, Value: {cnameValue}</p>
+                           <p><strong>CNAME Record:</strong> Host: www Value: {cnameValue}</p>
                         </div>
                     </div>
                     
@@ -135,7 +142,7 @@ export default function HostingPage() {
                                     <TableRow key={domain.name}>
                                         <TableCell className="font-medium">{domain.name}</TableCell>
                                         <TableCell>
-                                            <Badge variant="secondary">Added</Badge>
+                                            <Badge variant={domain.status === 'active' ? 'default' : 'secondary'}>{domain.status}</Badge>
                                         </TableCell>
                                         <TableCell>{format(new Date(domain.connectedAt), "PPP")}</TableCell>
                                         <TableCell className="text-right space-x-2">
@@ -145,6 +152,12 @@ export default function HostingPage() {
                                                    Check Status
                                                </a>
                                             </Button>
+                                            {domain.status === 'pending' && (
+                                                <Button size="sm" onClick={() => handleActivateDomain(domain.name)}>
+                                                    <CheckCircle className="mr-2 h-4 w-4" />
+                                                    Activate
+                                                </Button>
+                                            )}
                                             <Button variant="destructive" size="sm" onClick={() => handleDisconnectDomain(domain.name)}>
                                                 <Trash2 className="mr-2 h-4 w-4" />
                                                 Disconnect
