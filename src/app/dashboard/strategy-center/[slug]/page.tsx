@@ -1,10 +1,9 @@
-
 'use client';
 
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, use } from "react";
+import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
 import { strategyArticles } from "@/lib/site";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
@@ -18,7 +17,7 @@ type ArticlePageProps = {
 };
 
 export default function ArticlePage({ params }: ArticlePageProps) {
-  const { slug } = use(params);
+  const { slug } = params;
   const { user } = useAuth();
   
   const article = strategyArticles.find((a) => a.slug === slug);
