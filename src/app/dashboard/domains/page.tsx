@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useState } from 'react';
@@ -14,6 +15,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { Badge } from '@/components/ui/badge';
 import { HardDrive, PlusCircle, ChevronRight, ServerOff } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
 
 const addDomainSchema = z.object({
     domainName: z.string().min(3, { message: "Domain name must be at least 3 characters."})
@@ -23,6 +25,7 @@ const addDomainSchema = z.object({
 export default function DomainsPage() {
     const { domains, addDomain } = useDomains();
     const { toast } = useToast();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof addDomainSchema>>({
         resolver: zodResolver(addDomainSchema),
@@ -38,6 +41,7 @@ export default function DomainsPage() {
             description: `${values.domainName} is now pending configuration.`,
         });
         form.reset();
+        router.push(`/dashboard/domains/${values.domainName}`);
     }
     
     return (

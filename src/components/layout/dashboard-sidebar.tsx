@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from "next/link";
@@ -35,7 +36,7 @@ import {
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/dashboard/domains", label: "Domains", icon: HardDrive },
-  { href: "/dashboard/website", label: "Website", icon: Globe },
+  { href: "/dashboard/website", label: "My Websites", icon: Globe },
   { href: "/dashboard/ai-content", label: "AI Content", icon: Bot },
   { href: "/dashboard/strategy-center", label: "Marketing Guides", icon: BookOpen },
   { href: "/dashboard/upgrade", label: "Upgrade", icon: ArrowUpCircle },
