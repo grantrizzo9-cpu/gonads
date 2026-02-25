@@ -65,11 +65,6 @@ const GenerateWebsiteJsonOutputSchema = z.object({
       buttonText: z.string(),
     }),
   }),
-  legal: z.object({
-    terms: z.string().describe('Full boilerplate text for Terms & Conditions, at least 400 words long.'),
-    privacy: z.string().describe('Full boilerplate text for a Privacy Policy, at least 400 words long.'),
-    disclaimer: z.string().describe('Full boilerplate text for an Earnings Disclaimer, at least 200 words long.'),
-  }),
 });
 
 export type GenerateWebsiteJsonOutput = z.infer<
