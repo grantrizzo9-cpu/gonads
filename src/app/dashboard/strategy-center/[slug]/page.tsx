@@ -11,12 +11,6 @@ import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 
-type ArticlePageProps = {
-  params: {
-    slug: string;
-  };
-};
-
 export default function ArticlePage() {
   const params = useParams();
   const slug = typeof params.slug === 'string' ? params.slug : '';

@@ -16,17 +16,17 @@ export const strategyArticles: Article[] = [
     image: 'strategy-2',
     content: `
       <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Introduction: Your Professional Online Address</h2>
-      <p class="mb-4">Once you've activated your Host Pro Ai account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.yourbusiness.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with our system. Following these steps will make your site live to the world on your own branded address.</p>
+      <p class="mb-4">Once you've activated your Host Pro Ai account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.your-domain.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with our system. Following these steps will make your site live to the world on your own branded address.</p>
       
       <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Understanding Your Unique CNAME Value</h2>
-      <p class="mb-4">In the records below, you will see a value like <code>[USER_CNAME_VALUE]</code>. This unique address is automatically generated from your account username. For example, if your username is "rizzosaipro", your unique address will be <code>rizzosaipro.hostproai.com</code>.</p>
+      <p class="mb-4">In the records below, you will see a value like <code>[USER_CNAME_VALUE]</code>. This unique address is automatically generated from your account username. For example, if your username is "topaffiliate", your unique address will be <code>topaffiliate.hostproai.com</code>.</p>
       <p class="mb-4"><strong>If you would prefer a different username</strong>, you can change it on your <a href="/dashboard/settings">Account Settings</a> page. Your CNAME value will update automatically.</p>
       
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Required DNS Records</h3>
       <p class="mb-4">You will need to add the following records at your domain registrar:</p>
       <ul class="list-disc list-inside mb-4 space-y-2">
-        <li><strong>Two 'A' Records:</strong> These point your root domain (e.g., <code>yourbusiness.com</code>) to our servers.</li>
-        <li><strong>One 'CNAME' Record:</strong> This points the 'www' version of your domain (e.g., <code>www.yourbusiness.com</code>) to your unique hosting address.</li>
+        <li><strong>Two 'A' Records:</strong> These point your root domain (e.g., <code>your-domain.com</code>) to our servers.</li>
+        <li><strong>One 'CNAME' Record:</strong> This points the 'www' version of your domain (e.g., <code>www.your-domain.com</code>) to your unique hosting address.</li>
       </ul>
       <p class="mb-4">Here are the exact values you will need:</p>
       <ul class="list-none mb-4 space-y-2 bg-muted p-4 rounded-lg">
@@ -36,40 +36,19 @@ export const strategyArticles: Article[] = [
       </ul>
 
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Adding the 'A' Records</h3>
-      <p class="mb-4">You have already completed this step correctly. Your 'A' records are pointing to our servers.</p>
+       <p class="mb-4">Log in to your domain registrar (e.g., GoDaddy, Namecheap) and navigate to the DNS management section. Create two 'A' records with the host/name set to '@' (or your root domain) and point them to the IP addresses provided above.</p>
 
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Adding the 'CNAME' Record (The Correct Way)</h3>
-      <p class="mb-4">This is the final step. Based on your screenshot, your DNS panel requires a special process for the 'www' subdomain.</p>
+
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Adding the 'CNAME' Record</h3>
+      <p class="mb-4">In the same DNS management panel, you will add a CNAME record. Set the host/name to 'www' and point it to your unique CNAME value from above.</p>
       
-      <div class="my-6 p-4 border-2 border-primary rounded-lg bg-primary/10">
-        <h4 class="font-headline text-lg font-semibold mb-2">Your Action:</h4>
-        <p class="mb-2">In the text box next to the "Add Sub-Domain" button, type only this:</p>
-        <div class="bg-card p-3 rounded-md font-mono text-lg text-center tracking-widest">www</div>
-        <p class="mt-2 text-sm text-muted-foreground"><strong>Do NOT enter the full address here.</strong> Just type 'www' and click 'Add Sub-Domain'.</p>
-      </div>
-
        <div class="my-4 p-2 border border-border rounded-lg bg-muted">
-            <img src="https://placehold.co/800x250/e2e8f0/2d3748/png?text=Enter%20'www'%20and%20click%20Add%20Sub-Domain" alt="Instructional placeholder showing where to type www" class="rounded-md w-full" data-ai-hint="dns settings"/>
-            <p class="text-xs text-center p-2 text-muted-foreground">This is the first step: add 'www' as a subdomain.</p>
+            <img src="https://images.unsplash.com/photo-1585184381599-f316a3a4a753?q=80&w=1080&auto=format&fit=crop" alt="DNS settings example" class="rounded-md w-full" data-ai-hint="dns settings"/>
+            <p class="text-xs text-center p-2 text-muted-foreground">Example of DNS settings panel at a domain registrar.</p>
        </div>
-      
-       <h4 class="font-headline text-lg font-semibold mt-4 mb-2">What Happens Next</h4>
-       <p class="mb-2">After adding the 'www' subdomain, your page will likely reload or take you to a new section where you can manage its DNS records. There, you will add the CNAME record.</p>
-       <ol class="list-decimal list-inside mb-4 space-y-2">
-           <li>Find the new management section for your <code>www.rizzosaipro.com</code> subdomain.</li>
-           <li>In this section, click 'Add Record'.</li>
-           <li>Select <strong>CNAME</strong> as the 'Record Type'.</li>
-           <li>In the 'Hostname' or 'Value' field, enter your unique hosting address: <strong>[USER_CNAME_VALUE]</strong>.</li>
-           <li>Save the record.</li>
-       </ol>
-       
-       <div class="my-4 p-2 border border-border rounded-lg bg-muted">
-        <img src="https://placehold.co/800x300/e2e8f0/2d3748/png?text=For%20'www',%20add%20CNAME%20record%0Apointing%20to%20[your-username].hostproai.com" alt="Instructional placeholder showing how to add a CNAME record" class="rounded-md w-full" data-ai-hint="dns cname"/>
-        <p class="text-xs text-center p-2 text-muted-foreground">This is the second step: point the 'www' subdomain to your unique value.</p>
-      </div>
 
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation & Verify</h3>
-      <p class="mb-4">DNS changes can take some time. Once you've completed the steps above, go to the <a href="/dashboard/domains" class="font-bold text-primary hover:underline">Domain Manager</a> page in your dashboard and use the verifier tool to check if your domain is fully connected.</p>
+      <p class="mb-4">DNS changes can take some time to propagate across the internet. Once you've completed the steps above, go to the <a href="/dashboard/domains" class="font-bold text-primary hover:underline">Hosting</a> page in your dashboard and use the verifier tool to check if your domain is fully connected.</p>
     `,
   },
   {

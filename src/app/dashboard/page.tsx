@@ -398,7 +398,10 @@ function UserDashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="date" tickLine={false} axisLine={false} tickMargin={8} />
                 <YAxis tickLine={false} axisLine={false} tickMargin={8} tickFormatter={(value) => `$${value as number}`} />
-                <ChartTooltipContent indicator="dot" />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent indicator="dot" />}
+                />
                 {pricingTiers.map((tier) => (
                     <Area
                         key={tier.id}
@@ -430,7 +433,10 @@ function UserDashboard() {
                 <CartesianGrid strokeDasharray="3 3" vertical={false} />
                 <XAxis dataKey="month" tickLine={false} axisLine={false} tickMargin={8} />
                 <YAxis tickLine={false} axisLine={false} tickMargin={8} />
-                <ChartTooltipContent indicator="dot" />
+                <ChartTooltip
+                  cursor={false}
+                  content={<ChartTooltipContent indicator="dot" />}
+                />
                 <Bar dataKey="referrals" fill="var(--color-referrals)" radius={4} />
               </BarChart>
             </ChartContainer>
