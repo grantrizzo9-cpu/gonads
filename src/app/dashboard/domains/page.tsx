@@ -2,12 +2,20 @@
 'use client';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { HardDrive, ServerOff } from 'lucide-react';
+import { HardDrive, ServerOff, PlusCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { PlusCircle } from "lucide-react";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+
 
 export default function DomainsPage() {
+    // In a real app, this would be fetched from your backend
+    const domains = [
+      { name: 'rizzosaipro.com', status: 'Pending' }
+    ];
+
     return (
         <div className="space-y-8">
             <Card>
@@ -32,11 +40,40 @@ export default function DomainsPage() {
                     <CardDescription>A list of all domains you've added to your account.</CardDescription>
                 </CardHeader>
                  <CardContent>
-                    <div className="text-center text-muted-foreground py-16">
-                        <ServerOff className="mx-auto h-12 w-12 mb-4"/>
-                        <h3 className="text-lg font-semibold">No Domains Added Yet</h3>
-                        <p>Use the form above to add your first domain and get it connected.</p>
-                    </div>
+                    {domains.length > 0 ? (
+                       <Table>
+                            <TableHeader>
+                                <TableRow>
+                                    <TableHead>Domain</TableHead>
+                                    <TableHead>Status</TableHead>
+                                    <TableHead className="text-right">Action</TableHead>
+                                </TableRow>
+                            </TableHeader>
+                            <TableBody>
+                                {domains.map((domain) => (
+                                    <TableRow key={domain.name}>
+                                        <TableCell className="font-medium">{domain.name}</TableCell>
+                                        <TableCell>
+                                            <Badge variant={domain.status === 'Active' ? 'default' : 'secondary'}>{domain.status}</Badge>
+                                        </TableCell>
+                                        <TableCell className="text-right">
+                                            <Button variant="outline" size="sm" asChild>
+                                                <Link href={`/dashboard/domains/${encodeURIComponent(domain.name)}`}>
+                                                    Manage
+                                                </Link>
+                                            </Button>
+                                        </TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    ) : (
+                        <div className="text-center text-muted-foreground py-16">
+                            <ServerOff className="mx-auto h-12 w-12 mb-4"/>
+                            <h3 className="text-lg font-semibold">No Domains Added Yet</h3>
+                            <p>Use the form above to add your first domain and get it connected.</p>
+                        </div>
+                    )}
                  </CardContent>
             </Card>
         </div>

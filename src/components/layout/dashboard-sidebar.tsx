@@ -15,7 +15,8 @@ import {
   Globe,
   Package,
   ShieldAlert,
-  UserCheck
+  UserCheck,
+  Webhook
 } from "lucide-react";
 import { Logo } from "@/components/icons/logo";
 import { useAuth } from "../auth/auth-provider";
@@ -34,8 +35,9 @@ import {
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
-  { href: "/dashboard/hosting", label: "Hosting", icon: Globe },
   { href: "/dashboard/ai-content", label: "AI Content", icon: Bot },
+  { href: "/dashboard/website", label: "My Websites", icon: Webhook },
+  { href: "/dashboard/domains", label: "Domains", icon: Globe },
   { href: "/dashboard/strategy-center", label: "Marketing Guides", icon: BookOpen },
   { href: "/dashboard/upgrade", label: "Upgrade", icon: ArrowUpCircle },
   { href: "/dashboard/referrals", label: "Referrals", icon: Users },
