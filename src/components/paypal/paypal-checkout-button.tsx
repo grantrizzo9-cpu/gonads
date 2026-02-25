@@ -1,6 +1,7 @@
+
 'use client';
 
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import type { OnApproveData, CreateOrderData } from '@paypal/react-paypal-js';
@@ -20,39 +21,35 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const [error, setError] = useState<string | React.ReactNode | null>(null);
     const [{ isPending, isRejected, options: paypalOptions }] = usePayPalScriptReducer();
 
-    const handleSuccessfulPayment = () => {
-        activateAccount(tier.name);
-        if (user?.email) {
-          activateReferral(user.email, tier.name);
-        }
-        toast({
-            title: "Account Activated!",
-            description: `Your ${tier.name} plan is now active. Welcome aboard!`,
-        });
-        router.push('/dashboard/strategy-center/connecting-your-domain');
-    };
-
-    const handleSimulatePayment = () => {
-        setIsLoading(true);
-        setError(null);
-        // Simulate network delay
-        setTimeout(() => {
+    const handleSuccessfulPayment = useCallback(() => {
+        try {
             activateAccount(tier.name);
             if (user?.email) {
               activateReferral(user.email, tier.name);
             }
-            setIsLoading(false);
             toast({
                 title: "Account Activated!",
                 description: `Your ${tier.name} plan is now active. Welcome aboard!`,
             });
             router.push('/dashboard/strategy-center/connecting-your-domain');
+        } catch (e) {
+            console.error("Error during post-payment processing:", e);
+            setError("Your payment was successful, but we failed to activate your account. Please contact support.");
+        }
+    }, [activateAccount, tier.name, user?.email, activateReferral, toast, router]);
+
+    const handleSimulatePayment = useCallback(() => {
+        setIsLoading(true);
+        setError(null);
+        setTimeout(() => {
+            handleSuccessfulPayment();
+            setIsLoading(false);
         }, 500);
-    }
+    }, [handleSuccessfulPayment]);
 
     const isPayPalConfigured = paypalOptions.clientId && !paypalOptions.clientId.includes('YOUR_') && paypalOptions.clientId !== 'sb';
 
-    const createOrder = (data: CreateOrderData, actions: any) => {
+    const createOrder = useCallback((data: CreateOrderData, actions: any) => {
         return actions.order.create({
             purchase_units: [
                 {
@@ -67,9 +64,9 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 shipping_preference: 'NO_SHIPPING'
             }
         });
-    };
+    }, [tier]);
 
-    const onApprove = (data: OnApproveData, actions: any) => {
+    const onApprove = useCallback((data: OnApproveData, actions: any) => {
         setIsLoading(true);
         setError(null);
         return actions.order.capture().then((details: any) => {
@@ -90,24 +87,26 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
             );
             setIsLoading(false);
         });
-    };
+    }, [handleSuccessfulPayment]);
 
-    const onError = (err: any) => {
+    const onError = useCallback((err: any) => {
         const message = err.toString();
-        if (message.includes('Window closed')) {
+        // Ignore the error if the user closes the PayPal popup window.
+        if (message.includes('Window closed') || message.includes('Unknown error')) {
             return;
         }
         console.error('PayPal Checkout onError', err);
         setError('An unexpected error occurred with PayPal. This could be due to your sandbox account setup. Please check your browser console for more details and verify your sandbox seller account can receive payments.');
-    };
+        setIsLoading(false);
+    }, []);
     
-    const onCancel = (data: Record<string, unknown>) => {
+    const onCancel = useCallback((data: Record<string, unknown>) => {
         toast({
             title: 'Payment Canceled',
             description: 'You canceled the payment process.',
             variant: 'default'
         });
-    };
+    }, [toast]);
 
     if (isPending) {
         return <div className="flex justify-center items-center h-20"><Loader2 className="h-6 w-6 animate-spin" /></div>
@@ -148,6 +147,7 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                         </div>
                     )}
                     <PayPalButtons
+                        key={tier.id}
                         style={{ layout: 'vertical', label: 'pay', color: 'black', shape: 'rect', tagline: false }}
                         forceReRender={[tier, error]}
                         createOrder={createOrder}
