@@ -137,6 +137,13 @@ export default function HostingPage() {
                                         </AlertDescription>
                                     </Alert>
                                 )}
+                                <Alert variant="default" className="mt-4">
+                                    <Info className="h-4 w-4" />
+                                    <AlertTitle>About This Check</AlertTitle>
+                                    <AlertDescription>
+                                        This is a quick check to see if your records look correct. DNS changes can take several hours to update worldwide. For a real-time, global check, we recommend using an external tool like <a href={`https://dnschecker.org/#A/${domainName}`} target="_blank" rel="noopener noreferrer" className="font-bold underline">DNS Checker</a>.
+                                    </AlertDescription>
+                                </Alert>
                              </div>
                         )}
                     </CardFooter>

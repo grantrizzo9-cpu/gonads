@@ -4,7 +4,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { PayPalProvider } from '@/components/paypal/paypal-provider';
 import { EarningsProvider } from '@/components/earnings/earnings-provider';
 import { ReferralProvider } from '@/components/referrals/referral-provider';
-import { ClientProviders } from '@/components/providers/client-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -26,12 +25,18 @@ export default function RootLayout({
         <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
       </head>
       <body className="font-body bg-background text-foreground antialiased">
-        <ClientProviders>
-            <div className="flex min-h-screen flex-col">
-              {children}
-            </div>
-            <Toaster />
-        </ClientProviders>
+        <PayPalProvider>
+            <AuthProvider>
+                <ReferralProvider>
+                    <EarningsProvider>
+                        <div className="flex min-h-screen flex-col">
+                            {children}
+                        </div>
+                        <Toaster />
+                    </EarningsProvider>
+                </ReferralProvider>
+            </AuthProvider>
+        </PayPalProvider>
       </body>
     </html>
   );
