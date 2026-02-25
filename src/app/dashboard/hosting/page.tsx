@@ -109,13 +109,6 @@ export default function HostingPage() {
                             </AlertDialog>
                         </div>
                     </div>
-                     <Alert>
-                        <Info className="h-4 w-4" />
-                        <AlertTitle>Check Your Propagation</AlertTitle>
-                        <AlertDescription>
-                            You can use a free tool like <a href="https://dnschecker.org" target="_blank" rel="noopener noreferrer" className="font-semibold underline">dnschecker.org</a> to see if your new records are live across the world.
-                        </AlertDescription>
-                    </Alert>
                 </CardContent>
             </Card>
 
