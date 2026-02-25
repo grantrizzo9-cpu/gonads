@@ -30,7 +30,7 @@ function generateLegalPage(
             <div class="container mx-auto px-4">
                  <h2 class="text-3xl font-bold mb-4">Ready to Get Started?</h2>
                  <p class="text-lg opacity-90 mb-8 max-w-2xl mx-auto">Join today and start building your income stream.</p>
-                 <a href="${affiliateLink}" class="btn bg-background text-primary-foreground hover:opacity-90 text-lg">${ctaButtonText}</a>
+                 <a href="${affiliateLink}" target="_blank" rel="noopener noreferrer" class="btn bg-background text-primary-foreground hover:opacity-90 text-lg">${ctaButtonText}</a>
             </div>
         </section>
         <footer class="border-t border-border">
@@ -50,7 +50,7 @@ export function generateHtmlForWebsite(
   username: string
 ): string {
   const { homepage, legal } = data;
-  const affiliateLink = `https://hostproai.com/signup?ref=${username}&theme=${encodeURIComponent(theme.name)}`;
+  const affiliateLink = `/signup?ref=${username}&theme=${encodeURIComponent(theme.name)}`;
 
   const themeStyles = Object.entries(theme.colors)
     .map(([key, value]) => `${key}: ${value};`)
@@ -119,7 +119,7 @@ export function generateHtmlForWebsite(
                 <nav class="hidden md:flex items-center gap-6">
                     ${navLinks.map(link => `<a href="${link.href}" class="text-sm font-medium hover:text-primary transition-colors">${link.text}</a>`).join('')}
                 </nav>
-                <a href="${affiliateLink}" class="btn btn-primary hidden md:inline-block">${homepage.ctaButtonText}</a>
+                <a href="${affiliateLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary hidden md:inline-block">${homepage.ctaButtonText}</a>
             </div>
         </header>
 
@@ -129,7 +129,7 @@ export function generateHtmlForWebsite(
                 <div class="container mx-auto px-4">
                     <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight mb-4">${homepage.headline}</h1>
                     <p class="text-lg md:text-xl max-w-3xl mx-auto opacity-80 mb-8">${homepage.subheadline}</p>
-                    <a href="${affiliateLink}" class="btn btn-primary text-lg">${homepage.ctaButtonText}</a>
+                    <a href="${affiliateLink}" target="_blank" rel="noopener noreferrer" class="btn btn-primary text-lg">${homepage.ctaButtonText}</a>
                 </div>
             </section>
 
@@ -240,7 +240,7 @@ export function generateHtmlForWebsite(
                 <div class="container mx-auto px-4">
                      <h2 class="text-3xl font-bold mb-4">${homepage.finalCta.headline}</h2>
                      <p class="text-lg opacity-90 mb-8 max-w-2xl mx-auto">${homepage.finalCta.subheadline}</p>
-                     <a href="${affiliateLink}" class="btn bg-background text-primary-foreground hover:opacity-90 text-lg">${homepage.finalCta.buttonText}</a>
+                     <a href="${affiliateLink}" target="_blank" rel="noopener noreferrer" class="btn bg-background text-primary-foreground hover:opacity-90 text-lg">${homepage.finalCta.buttonText}</a>
                 </div>
             </section>
         </main>
@@ -274,5 +274,4 @@ export function generateHtmlForWebsite(
     </script>
 </body>
 </html>
-`;
-}
+`)
