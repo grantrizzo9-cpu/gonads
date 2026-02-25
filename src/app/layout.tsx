@@ -5,7 +5,6 @@ import { Toaster } from '@/components/ui/toaster';
 import { PayPalProvider } from '@/components/paypal/paypal-provider';
 import { EarningsProvider } from '@/components/earnings/earnings-provider';
 import { ReferralProvider } from '@/components/referrals/referral-provider';
-import { DomainsProvider } from '@/contexts/domains-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -31,12 +30,10 @@ export default function RootLayout({
             <AuthProvider>
                 <ReferralProvider>
                     <EarningsProvider>
-                      <DomainsProvider>
                         <div className="flex min-h-screen flex-col">
                             {children}
                         </div>
                         <Toaster />
-                      </DomainsProvider>
                     </EarningsProvider>
                 </ReferralProvider>
             </AuthProvider>
