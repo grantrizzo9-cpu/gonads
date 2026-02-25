@@ -60,24 +60,24 @@ export default function HostingPage() {
                 </div>
                 <div>
                     <h3 className="font-semibold text-lg mb-2">Step 3: Link Domain in Firebase</h3>
-                     <Alert variant="default">
-                        <Info className="h-4 w-4" />
-                        <AlertTitle>Important Final Step</AlertTitle>
+                     <Alert variant="default" className="border-primary border-2">
+                        <Info className="h-4 w-4 text-primary" />
+                        <AlertTitle className="font-bold text-lg text-primary">This is the Final Step!</AlertTitle>
                         <AlertDescription>
-                           <p>If you see a "Site Not Found" page when visiting your domain, it means your DNS is working correctly! This is a normal and expected part of the process.</p>
-                           <p className="mt-2">The final action is to add your domain to your Firebase project:</p>
-                           <ol className="list-decimal list-inside my-3 space-y-1.5 pl-2">
+                           <p className="font-bold text-base text-foreground">Seeing the "Site Not Found" page is a GOOD thing. It means your domain is pointing to Firebase correctly.</p>
+                           <p className="mt-2">You now need to tell Firebase to use your domain. This is a one-time setup that I can't do for you, but it's quick:</p>
+                           <ol className="list-decimal list-inside my-4 space-y-2 font-medium">
                                 <li>
-                                    Go to the 
-                                    <a href="https://console.firebase.google.com/" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline px-1">
-                                        Firebase Console
+                                    Click here to open the 
+                                    <a href="https://console.firebase.google.com/project/_/hosting/main" target="_blank" rel="noopener noreferrer" className="font-bold text-primary hover:underline px-1">
+                                        Firebase Hosting Console
                                     </a>.
                                 </li>
-                                <li>Navigate to the <strong>Hosting</strong> section within your project.</li>
-                                <li>Click the <strong>"Add custom domain"</strong> button.</li>
-                                <li>Enter your domain name (e.g., <strong>{domainName || 'your-domain.com'}</strong>) and follow the on-screen instructions.</li>
+                                <li>Click the big <strong>"Add custom domain"</strong> button.</li>
+                                <li>In the box that appears, type: <strong>{domainName || 'your-domain.com'}</strong></li>
+                                <li>Follow the simple steps to verify. Firebase will then connect your site.</li>
                            </ol>
-                           <p>Firebase will then provision an SSL certificate and start serving your site from that domain. This can take a few minutes to complete.</p>
+                           <p>This will make your website live. It can sometimes take a few minutes for the SSL certificate to be ready.</p>
                         </AlertDescription>
                     </Alert>
                 </div>
