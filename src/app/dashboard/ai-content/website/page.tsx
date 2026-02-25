@@ -6,11 +6,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import {
   generateWebsiteJson,
-  type GenerateWebsiteJsonOutput,
 } from '@/ai/flows/website-generator';
 import { generateHtmlForWebsite } from '@/lib/website-html-generator';
 import { saveWebsite } from '@/lib/firestore';
-import { themes, type Theme } from '@/lib/data';
+import { themes } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import {
   Card,
