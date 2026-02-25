@@ -52,7 +52,11 @@ export default function DomainsPage() {
                             <TableBody>
                                 {domains.map((domain) => (
                                     <TableRow key={domain.name}>
-                                        <TableCell className="font-medium">{domain.name}</TableCell>
+                                        <TableCell className="font-medium">
+                                            <Link href={`/dashboard/domains/${encodeURIComponent(domain.name)}`} className="hover:underline">
+                                                {domain.name}
+                                            </Link>
+                                        </TableCell>
                                         <TableCell>
                                             <Badge variant={domain.status === 'Active' ? 'default' : 'secondary'}>{domain.status}</Badge>
                                         </TableCell>
