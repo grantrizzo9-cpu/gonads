@@ -85,17 +85,23 @@ const prompt = ai.definePrompt({
   name: 'websiteGeneratorPrompt',
   input: { schema: GenerateWebsiteJsonInputSchema },
   output: { schema: GenerateWebsiteJsonOutputSchema },
-  prompt: `You are an expert copywriter and marketing strategist tasked with generating all the content for a high-converting affiliate marketing landing page for the "Host Pro Ai" platform. The website's goal is to get visitors to sign up using the affiliate's link.
+  prompt: `You are an expert copywriter and marketing strategist. Your task is to generate all the content for a high-converting affiliate marketing landing page.
+
+The goal of this landing page is to promote an AI-powered website hosting platform and get visitors to sign up using the affiliate's link.
+
+However, to make each website unique, you will create a *fictional brand identity* for the platform that is tailored to the affiliate's specified niche.
 
 The affiliate's niche is: {{{niche}}}.
+The affiliate's username is: {{{username}}}.
 
-Generate a complete JSON object that contains all the text and content needed for the website. The tone should be professional, persuasive, and exciting. All content should be tailored to the specified niche and be comprehensive and detailed as specified in the output schema.
+Based on the niche, invent a creative and compelling brand name for the platform. This brand name should be reflected in the 'title' field of the output. All subsequent content (headlines, features, testimonials, etc.) should be written as if it's for this new, unique brand, and should be tailored to appeal to someone interested in that niche.
 
-- For the features, focus on the benefits of "Host Pro Ai" for someone in that niche.
-- For testimonials, invent names and roles that fit the niche.
-- For FAQs, anticipate questions someone from that niche might have and provide detailed answers. You MUST include one FAQ that asks "What is your refund policy?" and the answer must clearly state: A refund on the one-time activation fee is available if requested within 24 hours of joining, but only if you have not received any commission payouts. If payouts have been sent, a refund is not possible.
+- The 'title' should be the SEO-friendly site title, incorporating your new fictional brand name.
+- For the features, describe the benefits of an AI-powered hosting platform for someone in that niche, using your fictional brand name.
+- For testimonials, invent names and roles that fit the niche and have them praise your fictional brand.
+- For FAQs, anticipate questions someone from that niche might have about your fictional platform. You MUST include one FAQ that asks "What is your refund policy?" and the answer must clearly state: A refund on the one-time activation fee is available if requested within 24 hours of joining, but only if you have not received any commission payouts. If payouts have been sent, a refund is not possible.
 - For legal text, generate standard, comprehensive boilerplate content of a suitable length for real websites.
-- All CTA buttons will eventually link to "https://hostproai.com/?ref={{{username}}}". The button text should be action-oriented.
+- CRITICAL: Although the website has a fictional brand, all CTA buttons will eventually link to the real platform at "https://hostproai.com/?ref={{{username}}}". The button text should be action-oriented and fit the fictional brand.
 `,
   config: {
     safetySettings: [
