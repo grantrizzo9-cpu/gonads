@@ -9,7 +9,6 @@ import { strategyArticles } from "@/lib/site";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
-import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
 
 type ArticlePageProps = {
@@ -20,7 +19,6 @@ type ArticlePageProps = {
 
 export default function ArticlePage({ params }: ArticlePageProps) {
   const { slug } = params;
-  const { user } = useAuth();
   
   const article = strategyArticles.find((a) => a.slug === slug);
 
@@ -33,13 +31,13 @@ export default function ArticlePage({ params }: ArticlePageProps) {
     let content = article.content;
     
     if (slug === 'connecting-your-domain') {
-      const cnameValue = user?.username ? `${user.username}.hostproai.com` : `[your-username].hostproai.com`;
+      const cnameValue = `[your-username].hostproai.com`;
       const cnameHtml = `<code class="bg-muted p-1 rounded font-mono">${cnameValue}</code>`;
       content = content.replace(/\[USER_CNAME_VALUE\]/g, cnameHtml);
     }
     
     return content;
-  }, [article, user, slug]);
+  }, [article, slug]);
 
   const image = PlaceHolderImages.find(img => img.id === article.image);
 

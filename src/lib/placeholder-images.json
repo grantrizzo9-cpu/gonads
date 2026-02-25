@@ -83,6 +83,12 @@
       "description": "Example of adding a www subdomain correctly",
       "imageUrl": "https://placehold.co/800x250/e2e8f0/2d3748/png?text=Enter%20'www'%20and%20click%20Add%20Sub-Domain",
       "imageHint": "dns settings"
+    },
+    {
+      "id": "dns-cname",
+      "description": "Example of adding a CNAME record",
+      "imageUrl": "https://placehold.co/800x300/e2e8f0/2d3748/png?text=For%20'www',%20add%20CNAME%20record%0Apointing%20to%20[your-username].hostproai.com",
+      "imageHint": "dns cname"
     }
   ]
 }
