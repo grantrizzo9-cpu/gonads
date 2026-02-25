@@ -13,6 +13,7 @@ import { z } from 'zod';
 const GenerateWebsiteJsonInputSchema = z.object({
   username: z.string().describe("The affiliate's username."),
   niche: z.string().describe('The niche topic for the affiliate website.'),
+  domainName: z.string().optional().describe('An optional domain name to use for the website brand. If not provided, a fictional brand will be invented.'),
 });
 export type GenerateWebsiteJsonInput = z.infer<
   typeof GenerateWebsiteJsonInputSchema
@@ -89,19 +90,20 @@ const prompt = ai.definePrompt({
 
 The goal of this landing page is to promote an AI-powered website hosting platform and get visitors to sign up using the affiliate's link.
 
-However, to make each website unique, you will create a *fictional brand identity* for the platform that is tailored to the affiliate's specified niche.
-
 The affiliate's niche is: {{{niche}}}.
 The affiliate's username is: {{{username}}}.
 
-Based on the niche, invent a creative and compelling brand name for the platform. This brand name should be reflected in the 'title' field of the output. All subsequent content (headlines, features, testimonials, etc.) should be written as if it's for this new, unique brand, and should be tailored to appeal to someone interested in that niche.
+{{#if domainName}}
+You MUST use the provided domain name '{{{domainName}}}' as the brand for the website. The 'title' of the website should be an SEO-friendly title that incorporates this domain name. All subsequent content (headlines, features, testimonials, etc.) should be written as if it's for the '{{{domainName}}}' brand, and should be tailored to appeal to someone interested in the niche '{{{niche}}}'.
+{{else}}
+To make each website unique, you will create a *fictional brand identity* for the platform that is tailored to the affiliate's specified niche. Invent a creative and compelling brand name for the platform. This brand name should be reflected in the 'title' field of the output. All subsequent content (headlines, features, testimonials, etc.) should be written as if it's for this new, unique brand, and should be tailored to appeal to someone interested in that niche.
+{{/if}}
 
-- The 'title' should be the SEO-friendly site title, incorporating your new fictional brand name.
-- For the features, describe the benefits of an AI-powered hosting platform for someone in that niche, using your fictional brand name.
-- For testimonials, invent names and roles that fit the niche and have them praise your fictional brand.
-- For FAQs, anticipate questions someone from that niche might have about your fictional platform. You MUST include one FAQ that asks "What is your refund policy?" and the answer must clearly state: A refund on the one-time activation fee is available if requested within 24 hours of joining, but only if you have not received any commission payouts. If payouts have been sent, a refund is not possible.
-- For legal text, generate standard, comprehensive boilerplate content of a suitable length for real websites.
-- CRITICAL: Although the website has a fictional brand, all CTA buttons will eventually link to the real platform at "https://hostproai.com/?ref={{{username}}}". The button text should be action-oriented and fit the fictional brand.
+- The 'title' should be the SEO-friendly site title, incorporating the brand name.
+- For the features, describe the benefits of an AI-powered hosting platform for someone in that niche, using the brand name.
+- For testimonials, invent names and roles that fit the niche and have them praise the brand.
+- For FAQs, anticipate questions someone from that niche might have about the platform. You MUST include one FAQ that asks "What is your refund policy?" and the answer must clearly state: A refund on the one-time activation fee is available if requested within 24 hours of joining, but only if you have not received any commission payouts. If payouts have been sent, a refund is not possible.
+- CRITICAL: Although the website has its own brand, all CTA buttons will eventually link to the real platform at "https://hostproai.com/?ref={{{username}}}". The button text should be action-oriented and fit the brand.
 `,
   config: {
     safetySettings: [

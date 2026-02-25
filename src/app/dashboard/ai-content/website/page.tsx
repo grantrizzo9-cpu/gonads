@@ -21,6 +21,7 @@ import {
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -36,6 +37,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { useAuth } from '@/components/auth/auth-provider';
+import { useDomains } from '@/contexts/domains-provider';
 import { Loader2, Wand2, Eye, UploadCloud } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
@@ -45,6 +47,7 @@ const formSchema = z.object({
   themeName: z.string({
     required_error: 'Please select a theme.',
   }),
+  domainName: z.string().optional(),
 });
 
 type FormValues = z.infer<typeof formSchema>;
@@ -55,12 +58,16 @@ export default function WebsiteBuilderPage() {
   const [isPublished, setIsPublished] = useState(false);
   const { toast } = useToast();
   const { user } = useAuth();
+  const { domains } = useDomains();
+  const verifiedDomains = domains.filter(d => d.status === 'verified');
+
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       niche: '',
       themeName: 'Midnight Glow',
+      domainName: '',
     },
   });
 
@@ -81,6 +88,7 @@ export default function WebsiteBuilderPage() {
       const jsonContent = await generateWebsiteJson({
         niche: values.niche,
         username: user.username,
+        domainName: values.domainName,
       });
 
       // 2. Find the selected theme
@@ -152,6 +160,33 @@ export default function WebsiteBuilderPage() {
                     <FormControl>
                       <Input placeholder="e.g., 'Cold brew coffee makers'" {...field} />
                     </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="domainName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Domain Name (Optional)</FormLabel>
+                     <Select onValueChange={field.onChange} defaultValue={field.value} disabled={verifiedDomains.length === 0}>
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a verified domain" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {verifiedDomains.map(domain => (
+                          <SelectItem key={domain.id} value={domain.name}>
+                            {domain.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                        Use one of your verified domains for branding. If left blank, a fictional brand will be created.
+                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
