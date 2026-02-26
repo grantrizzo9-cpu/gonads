@@ -9,4 +9,4 @@ runConfig:
 customDomains:
  - rizzosa.com
 
-# Triggering a redeploy to link the custom domain.
+# Forcing a new deployment to ensure the custom domain is fully linked.
