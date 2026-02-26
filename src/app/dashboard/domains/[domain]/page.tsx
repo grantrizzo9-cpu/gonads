@@ -7,7 +7,7 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Globe, ArrowLeft, ExternalLink, RefreshCw, CheckCircle2, AlertCircle, Loader2, Link2, Clock } from 'lucide-react';
+import { Globe, ArrowLeft, ExternalLink, RefreshCw, CheckCircle2, AlertCircle, Loader2, Link2, Clock, Info } from 'lucide-react';
 import { useDomains, type DnsRecord } from "@/contexts/domains-provider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from "@/hooks/use-toast";
@@ -205,6 +205,17 @@ export default function ManageDomainPage() {
                                </div>
                            ))}
                         </div>
+                        <Alert variant="default" className="mt-4">
+                            <Info className="h-4 w-4" />
+                            <AlertTitle>Why are there three records?</AlertTitle>
+                            <AlertDescription>
+                                <ul className="list-disc list-inside space-y-2">
+                                    <li>The <strong>A records</strong> point your main domain (the part without 'www') directly to our server's physical IP addresses.</li>
+                                    <li>The <strong>CNAME record</strong> tells the internet that your 'www' subdomain is just an alias for your main domain.</li>
+                                </ul>
+                                <p className="mt-2">This ensures that visitors arrive at your site correctly whether they type <strong>{domain.name}</strong> or <strong>www.{domain.name}</strong> into their browser.</p>
+                            </AlertDescription>
+                        </Alert>
                     </div>
                      <div>
                         <h3 className="font-semibold text-lg mb-2">Step 2: Wait for DNS Propagation</h3>
@@ -288,3 +299,5 @@ export default function ManageDomainPage() {
         </div>
     );
 }
+
+    
