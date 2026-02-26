@@ -8,7 +8,6 @@ backend:
     timeoutSeconds: 600
 
 hosting:
-  site: hostproai
   customDomains:
     - rizzosa.com
     - www.rizzosa.com
