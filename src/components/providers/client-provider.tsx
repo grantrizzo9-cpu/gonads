@@ -5,26 +5,23 @@ import { AuthProvider } from '@/components/auth/auth-provider';
 import { PayPalProvider } from '@/components/paypal/paypal-provider';
 import { EarningsProvider } from '@/components/earnings/earnings-provider';
 import { ReferralProvider } from '@/components/referrals/referral-provider';
-import { ReactNode, useState, useEffect } from 'react';
+import { DomainsProvider } from '@/contexts/domains-provider';
+import { Toaster } from '@/components/ui/toaster';
+import { ReactNode } from 'react';
 
 export function ClientProviders({ children }: { children: ReactNode }) {
-  const [isClient, setIsClient] = useState(false);
-
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
-
-  if (!isClient) {
-    return null; // Or a loading skeleton
-  }
-
   return (
     <PayPalProvider>
       <AuthProvider>
         <ReferralProvider>
-          <EarningsProvider>
-            {children}
-          </EarningsProvider>
+          <DomainsProvider>
+            <EarningsProvider>
+              <div className="flex min-h-screen flex-col">
+                {children}
+              </div>
+              <Toaster />
+            </EarningsProvider>
+          </DomainsProvider>
         </ReferralProvider>
       </AuthProvider>
     </PayPalProvider>
