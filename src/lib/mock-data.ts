@@ -1,3 +1,4 @@
+
 export const payoutHistory = [
     { id: 'pay_1', date: '2024-07-28', amount: 60.10, transactionId: 'TXN123456789', status: 'Completed' },
     { id: 'pay_2', date: '2024-07-27', amount: 55.00, transactionId: 'TXN123456788', status: 'Completed' },
@@ -7,6 +8,9 @@ export const payoutHistory = [
 ];
 
 export const platformReferrals = [
+  // Referral for rentariz to make testing easier
+  { referredUser: 'Initial Follower', email: 'initial.follower@example.com', affiliate: 'rentariz', plan: 'Business', status: 'activated' },
+
   // Referrals for admin's affiliate username 'hostproai'
   { referredUser: 'Alice', email: 'alice@example.com', affiliate: 'hostproai', plan: 'Gold', status: 'activated' },
   { referredUser: 'Bob', email: 'bob@example.com', affiliate: 'hostproai', plan: 'Starter', status: 'pending' },

@@ -43,11 +43,51 @@ const defaultMockUser: User = {
   referrer: null,
 };
 
+
+// --- Mock DB Functions for Testing ---
+const MOCK_USER_DB_KEY = 'mock_user_db';
+
+const getMockUserDB = (): User[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const db = window.localStorage.getItem(MOCK_USER_DB_KEY);
+    return db ? JSON.parse(db) : [];
+  } catch {
+    return [];
+  }
+};
+
+const saveMockUserDB = (db: User[]) => {
+  if (typeof window === 'undefined') return;
+  window.localStorage.setItem(MOCK_USER_DB_KEY, JSON.stringify(db));
+};
+// --- End Mock DB Functions ---
+
+
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // --- PRE-SEED MOCK DATA FOR TESTING ---
+    const db = getMockUserDB();
+    const rentarizUserExists = db.some(u => u.email === 'rentariz@example.com');
+    if (!rentarizUserExists) {
+        const rentarizUser: User = {
+            uid: 'mock-rentariz-user-456',
+            email: 'rentariz@example.com',
+            displayName: 'Rentariz',
+            username: 'rentariz',
+            isPaid: true,
+            plan: 'Enterprise',
+            isFriendAndFamily: false,
+            referrer: null,
+        };
+        db.push(rentarizUser);
+        saveMockUserDB(db);
+    }
+    // --- END PRE-SEED ---
+
     // In a real app, you'd use Firebase's onAuthStateChanged here.
     const authState = localStorage.getItem('authed');
     if (authState === 'true') {
