@@ -282,4 +282,5 @@ export function generateHtmlForWebsite(
     </script>
 </body>
 </html>
-`)
+`;
+}
