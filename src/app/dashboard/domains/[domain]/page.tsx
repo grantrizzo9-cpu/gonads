@@ -7,10 +7,19 @@ import Link from "next/link";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from "@/components/ui/card";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Globe, ArrowLeft, Info, ExternalLink, RefreshCw, CheckCircle2, AlertCircle, Loader2, Link2 } from 'lucide-react';
+import { Globe, ArrowLeft, ExternalLink, RefreshCw, CheckCircle2, AlertCircle, Loader2, Link2, Film } from 'lucide-react';
 import { useDomains, type DnsRecord } from "@/contexts/domains-provider";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useToast } from "@/hooks/use-toast";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { generateDeploymentVideo } from '@/ai/flows/generate-deployment-video';
+
 
 const getStatusIcon = (status: DnsRecord['status']) => {
     switch (status) {
@@ -35,7 +44,11 @@ export default function ManageDomainPage() {
     const [isVerifying, setIsVerifying] = useState(false);
     const [selectedWebsite, setSelectedWebsite] = useState<string>('');
     const [isDeploying, setIsDeploying] = useState(false);
-    const [deploymentInitiated, setDeploymentInitiated] = useState(false);
+    
+    // State for deployment video
+    const [isGeneratingVideo, setIsGeneratingVideo] = useState(false);
+    const [deploymentVideoUrl, setDeploymentVideoUrl] = useState<string | null>(null);
+    const [publishedDomain, setPublishedDomain] = useState<string>('');
     
     const domain = getDomainById(domainId);
 
@@ -69,25 +82,36 @@ export default function ManageDomainPage() {
         setIsVerifying(false);
     };
 
-    const handleDeploy = () => {
+    const handleDeploy = async () => {
         if (!selectedWebsite) {
             toast({ title: "No website selected", description: "Please choose a website to deploy.", variant: "destructive"});
             return;
         }
         setIsDeploying(true);
-        setDeploymentInitiated(true);
+        setIsGeneratingVideo(true);
+        setDeploymentVideoUrl(null);
+        setPublishedDomain(domain.name);
 
-        deployWebsiteToDomain(domain.id, selectedWebsite);
 
-        toast({ 
-            title: "Deployment Initiated", 
-            description: `We've started linking your website to ${domain.name}. It may take a few minutes for changes to go live.` 
-        });
+        try {
+            deployWebsiteToDomain(domain.id, selectedWebsite);
+            
+            toast({ 
+                title: "Deployment Initiated", 
+                description: `Now generating a live deployment log for ${domain.name}. This may take a moment.` 
+            });
 
-        // The button will stop spinning, but the status box will show the "in progress" state.
-        setTimeout(() => {
+            // Generate the video
+            const result = await generateDeploymentVideo({ domainName: domain.name });
+            setDeploymentVideoUrl(result.videoUrl);
+
+        } catch (error) {
+           console.error('Error deploying website or generating video:', error);
+           toast({ title: 'Error During Deployment', description: 'Could not complete the deployment or generate the deployment log.', variant: 'destructive'});
+        } finally {
             setIsDeploying(false);
-        }, 3000);
+            setIsGeneratingVideo(false);
+        }
     };
     
     const allRecordsFound = domain.dnsRecords.every(r => r.status === 'found');
@@ -178,7 +202,7 @@ export default function ManageDomainPage() {
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
-                        <Select onValueChange={setSelectedWebsite} defaultValue={selectedWebsite} disabled={!allRecordsFound || isDeploying}>
+                        <Select onValueChange={setSelectedWebsite} defaultValue={selectedWebsite} disabled={!allRecordsFound || isDeploying || isGeneratingVideo}>
                             <SelectTrigger>
                                 <SelectValue placeholder={loadingWebsites ? "Loading websites..." : "Select a generated website"} />
                             </SelectTrigger>
@@ -196,30 +220,39 @@ export default function ManageDomainPage() {
                                 )}
                             </SelectContent>
                         </Select>
-                        <Button onClick={handleDeploy} disabled={!allRecordsFound || !selectedWebsite || isDeploying}>
-                           {isDeploying ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <Globe className="mr-2"/> }
-                           {isDeploying ? 'Deploying...' : 'Deploy'}
+                        <Button onClick={handleDeploy} disabled={!allRecordsFound || !selectedWebsite || isDeploying || isGeneratingVideo}>
+                           {isDeploying || isGeneratingVideo ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <Film className="mr-2"/> }
+                           {isDeploying || isGeneratingVideo ? 'Deploying...' : 'Deploy & View Log'}
                         </Button>
                     </div>
                 </CardContent>
-                <CardFooter className="flex-col items-start gap-4 pt-6">
-                    {deploymentInitiated && (
-                         <Alert variant="default">
-                            <Loader2 className="h-4 w-4 animate-spin" />
-                            <AlertTitle>Deployment in Progress...</AlertTitle>
-                            <AlertDescription>
-                                It can take <strong>5-10 minutes</strong> for your site to become live at <a href={`http://${domain.name}`} target="_blank" rel="noopener noreferrer" className="font-bold underline">{domain.name}</a>.
-                                If you still see an error after 10 minutes, please re-verify your DNS settings.
-                            </AlertDescription>
-                        </Alert>
-                    )}
-                    {domain.deployedWebsiteId && !deploymentInitiated && (
-                         <div className="text-sm text-muted-foreground">
+                <CardFooter>
+                    {domain.deployedWebsiteId && (
+                         <div className="text-sm text-muted-foreground pt-4">
                            Currently, website <span className="font-mono text-xs">{domain.deployedWebsiteId}</span> is linked to this domain. Re-deploying will link a different site.
                          </div>
                     )}
                 </CardFooter>
             </Card>
+            
+            <Dialog open={!!deploymentVideoUrl} onOpenChange={(isOpen) => !isOpen && setDeploymentVideoUrl(null)}>
+                <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                    <DialogTitle>Live Deployment Log: {publishedDomain}</DialogTitle>
+                    <DialogDescription>
+                    This is a visualization of the backend deployment process. Your site is now live, but global propagation can take 5-10 minutes.
+                    </DialogDescription>
+                </DialogHeader>
+                {deploymentVideoUrl && (
+                    <div className="relative aspect-video w-full overflow-hidden rounded-lg border mt-4">
+                    <video controls autoPlay loop className="w-full h-full bg-black">
+                        <source src={deploymentVideoUrl} type="video/mp4" />
+                        Your browser does not support the video tag.
+                    </video>
+                    </div>
+                )}
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }
