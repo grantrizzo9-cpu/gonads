@@ -9,5 +9,5 @@ const googleAiPlugin = googleAI();
 
 export const ai = genkit({
   plugins: [googleAiPlugin],
-  model: 'googleai/gemini-2.5-flash',
+  model: googleAI.model('gemini-2.5-flash'),
 });
