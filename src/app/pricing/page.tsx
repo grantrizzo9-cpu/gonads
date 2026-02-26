@@ -3,47 +3,6 @@ import { Suspense } from 'react';
 import { Header } from '@/components/layout/header';
 import { Footer } from '@/components/layout/footer';
 import { PricingClientPage } from './pricing-client-page';
-import { Skeleton } from '@/components/ui/skeleton';
-
-function PricingPageSkeleton() {
-    return (
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
-                <Skeleton className="h-8 w-2/3" />
-                <Skeleton className="h-10 w-1/2" />
-                <Skeleton className="h-5 w-full" />
-                <div className="flex-grow space-y-3 pt-4">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-3/4" />
-                </div>
-                <Skeleton className="h-10 w-full mt-4" />
-            </div>
-             <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
-                <Skeleton className="h-8 w-2/3" />
-                <Skeleton className="h-10 w-1/2" />
-                <Skeleton className="h-5 w-full" />
-                <div className="flex-grow space-y-3 pt-4">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-3/4" />
-                </div>
-                <Skeleton className="h-10 w-full mt-4" />
-            </div>
-             <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
-                <Skeleton className="h-8 w-2/3" />
-                <Skeleton className="h-10 w-1/2" />
-                <Skeleton className="h-5 w-full" />
-                <div className="flex-grow space-y-3 pt-4">
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-full" />
-                    <Skeleton className="h-5 w-3/4" />
-                </div>
-                <Skeleton className="h-10 w-full mt-4" />
-            </div>
-        </div>
-    );
-}
 
 export default function PricingPage() {
   return (
@@ -60,7 +19,7 @@ export default function PricingPage() {
                 </p>
             </div>
 
-            <Suspense fallback={<PricingPageSkeleton />}>
+            <Suspense fallback={<div className="text-center p-8">Loading pricing plans...</div>}>
                 <PricingClientPage />
             </Suspense>
 
