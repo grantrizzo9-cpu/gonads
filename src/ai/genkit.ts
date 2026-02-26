@@ -9,8 +9,8 @@ if (!geminiApiKey) {
 }
 
 // The googleAI() plugin will find the key from the environment if the apiKey property is omitted.
-// If the key is not present in the production environment, this will now initialize without crashing the server.
-const googleAiPlugin = googleAI(geminiApiKey ? { apiKey: geminiApiKey } : {});
+// Passing 'undefined' instead of '{}' allows the plugin to use its default key-finding behavior.
+const googleAiPlugin = googleAI(geminiApiKey ? { apiKey: geminiApiKey } : undefined);
 
 export const ai = genkit({
   plugins: [googleAiPlugin],
