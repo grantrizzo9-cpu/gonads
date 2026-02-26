@@ -45,7 +45,8 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
         }, 500);
     }, [handleSuccessfulPayment]);
 
-    const isPayPalConfigured = paypalOptions.clientId && !paypalOptions.clientId.includes('YOUR_') && paypalOptions.clientId !== 'sb';
+    // Check if PayPal client ID is a real value and not a placeholder.
+    const isPayPalConfigured = paypalOptions.clientId && !paypalOptions.clientId.includes('your_') && paypalOptions.clientId !== 'sb';
 
     const createOrder = useCallback((data: CreateOrderData, actions: any) => {
         return actions.order.create({

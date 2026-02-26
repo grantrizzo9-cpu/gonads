@@ -8,9 +8,10 @@ const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_SANDBOX_CLIENT_ID || pro
 
 export function PayPalProvider({ children }: { children: ReactNode }) {
   // A more robust check to ensure the Client ID is not a placeholder.
-  // If no ID is provided, use PayPal's 'sb' default for sandbox which shows buttons but with a warning.
-  // This prevents the app from crashing if the .env variable is missing.
-  const clientId = (PAYPAL_CLIENT_ID && !PAYPAL_CLIENT_ID.includes('YOUR_PAYPAL_')) ? PAYPAL_CLIENT_ID : 'sb';
+  // If no ID is provided, or if it contains a placeholder value, use PayPal's 'sb' default for sandbox.
+  // This prevents the app from crashing if the .env variable is missing or not configured.
+  const isPlaceholder = !PAYPAL_CLIENT_ID || PAYPAL_CLIENT_ID.includes('your_');
+  const clientId = isPlaceholder ? 'sb' : PAYPAL_CLIENT_ID;
   
   if (clientId === 'sb' && process.env.NODE_ENV !== 'production') {
       console.warn(`
