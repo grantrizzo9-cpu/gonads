@@ -1,11 +1,36 @@
+'use client';
+
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { strategyArticles } from "@/lib/site";
+import { strategyArticles, pricingTiers } from "@/lib/site";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { BookOpen } from "lucide-react";
+import { useAuth } from "@/components/auth/auth-provider";
+import { useMemo } from "react";
 
 export default function DashboardStrategyCenterPage() {
+  const { user } = useAuth();
+
+  const accessibleArticles = useMemo(() => {
+    if (!user?.plan) {
+        // If user has no plan (e.g. pending but somehow got here), show no guides.
+        return [];
+    }
+
+    const userTier = pricingTiers.find(tier => tier.name === user.plan);
+    if (!userTier) {
+        return [];
+    }
+
+    // The features array contains the guide titles.
+    const accessibleGuideTitles = userTier.features;
+
+    return strategyArticles.filter(article => 
+        accessibleGuideTitles.includes(article.title)
+    );
+  }, [user]);
+
   return (
     <div className="space-y-8">
         <div className="space-y-2">
@@ -19,7 +44,7 @@ export default function DashboardStrategyCenterPage() {
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-        {strategyArticles.map((article) => {
+        {accessibleArticles.map((article) => {
             const image = PlaceHolderImages.find(img => img.id === article.image);
             return (
             <Link href={`/dashboard/strategy-center/${article.slug}`} key={article.slug}>

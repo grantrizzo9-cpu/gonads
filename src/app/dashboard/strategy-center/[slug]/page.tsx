@@ -1,4 +1,3 @@
-
 'use client';
 
 import { notFound, useParams } from "next/navigation";
@@ -6,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useMemo } from "react";
 import { ArrowRight } from "lucide-react";
-import { strategyArticles } from "@/lib/site";
+import { strategyArticles, pricingTiers } from "@/lib/site";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
 import { useAuth } from "@/components/auth/auth-provider";
 import { Button } from "@/components/ui/button";
@@ -18,7 +17,18 @@ export default function ArticlePage() {
   
   const article = strategyArticles.find((a) => a.slug === slug);
 
-  if (!article) {
+  const hasAccess = useMemo(() => {
+    if (!user?.plan || !article) {
+        return false;
+    }
+    const userTier = pricingTiers.find(tier => tier.name === user.plan);
+    if (!userTier) {
+        return false;
+    }
+    return userTier.features.includes(article.title);
+  }, [user, article]);
+
+  if (!article || !hasAccess) {
     notFound();
   }
 
