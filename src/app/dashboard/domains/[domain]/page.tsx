@@ -185,7 +185,7 @@ export default function ManageDomainPage() {
                     <div>
                         <h3 className="font-semibold text-lg mb-2">Step 1: Configure Your DNS Records</h3>
                         <p className="text-muted-foreground mb-4">
-                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following three DNS records. If your registrar uses '@' for the root domain, use that for the 'Host' field of the A records.
+                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following <strong>three</strong> DNS records. If your registrar uses '@' for the root domain, use that for the 'Host' field of the A records.
                         </p>
                         <div className="space-y-3 rounded-lg bg-muted p-4 border">
                            {domain.dnsRecords.map((record, index) => (
@@ -210,10 +210,10 @@ export default function ManageDomainPage() {
                             <AlertTitle>Why are there three records?</AlertTitle>
                             <AlertDescription>
                                 <ul className="list-disc list-inside space-y-2">
-                                    <li>The <strong>A records</strong> point your main domain (the part without 'www') directly to our server's physical IP addresses.</li>
-                                    <li>The <strong>CNAME record</strong> tells the internet that your 'www' subdomain is just an alias for your main domain.</li>
+                                    <li>The <strong>two 'A' records</strong> point your main domain (the part without 'www') directly to our server's physical IP addresses for reliability.</li>
+                                    <li>The <strong>one 'CNAME' record</strong> tells the internet that your 'www' subdomain is just an alias for your main domain.</li>
                                 </ul>
-                                <p className="mt-2">This ensures that visitors arrive at your site correctly whether they type <strong>{domain.name}</strong> or <strong>www.{domain.name}</strong> into their browser.</p>
+                                <p className="mt-2">This setup ensures that visitors arrive at your site correctly whether they type <strong>{domain.name}</strong> or <strong>www.{domain.name}</strong> into their browser.</p>
                             </AlertDescription>
                         </Alert>
                     </div>
