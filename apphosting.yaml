@@ -3,7 +3,7 @@
 
 runConfig:
   maxInstances: 1
-  timeoutSeconds: 300
+  timeoutSeconds: 600
 
 sites:
   hostproai:
