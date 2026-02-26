@@ -1,7 +1,7 @@
 
 'use client';
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
 
 // Mock user type, replace with your actual User type from Firebase
 interface User {
@@ -22,6 +22,8 @@ interface AuthContextType {
   signOut: () => void;
   activateAccount: (planName: string) => void;
   updateUser: (data: Partial<User>) => void;
+  allUsers: User[];
+  toggleFamilyStatus: (email: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -35,6 +37,7 @@ const defaultMockUser: User = {
   isPaid: true,
   plan: 'Diamond',
   referrer: null,
+  isFriendAndFamily: true,
 };
 
 
@@ -60,7 +63,12 @@ const saveMockUserDB = (db: User[]) => {
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [allUsers, setAllUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const loadAllUsers = useCallback(() => {
+    setAllUsers(getMockUserDB());
+  }, []);
 
   useEffect(() => {
     // --- PRE-SEED MOCK DATA FOR TESTING ---
@@ -85,6 +93,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     }
     saveMockUserDB(db);
     // --- END PRE-SEED ---
+    
+    loadAllUsers();
 
     // In a real app, you'd use Firebase's onAuthStateChanged here.
     const authState = localStorage.getItem('authed');
@@ -93,44 +103,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
        setUser(storedUser ? JSON.parse(storedUser) : defaultMockUser);
     }
     setLoading(false);
-  }, []);
+  }, [loadAllUsers]);
 
   const signIn = (userToSignIn?: User, isNewUser = false, referrerUsername?: string) => {
     setLoading(true);
     let userToSet: User;
 
     if (userToSignIn) {
-      const existingUser = getMockUserDB().find(u => u.email === userToSignIn.email);
-
-      // If it's a new user, they automatically become "Family" but require activation
-      if (isNewUser) {
-          userToSet = { 
-              ...userToSignIn, 
-              isPaid: false, // Requires manual activation by admin
-              plan: 'Diamond', // They will get the top plan upon activation
-              isFriendAndFamily: true, // Mark as family
-              referrer: referrerUsername || null,
-          };
-      } else {
-        // This is a returning user. Load their existing data.
-        userToSet = { 
-            ...userToSignIn, 
-            isFriendAndFamily: userToSignIn.isFriendAndFamily ?? false,
-            // Preserve existing referrer from the DB if it exists
-            referrer: existingUser?.referrer ?? userToSignIn.referrer ?? null,
-        };
-      }
+      userToSet = { 
+        ...userToSignIn,
+        referrer: userToSignIn.referrer || referrerUsername || null,
+      };
     } else {
-      // This is the special admin login case for rentapog@gmail.com
       userToSet = defaultMockUser;
     }
     
-    // Save updated user to mock DB as well
     if (userToSet.email) {
       const db = getMockUserDB();
       const userIndex = db.findIndex(u => u.email === userToSet.email);
       if (userIndex > -1) {
-        db[userIndex] = userToSet;
+        db[userIndex] = { ...db[userIndex], ...userToSet };
       } else {
         db.push(userToSet);
       }
@@ -140,6 +132,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem('authed', 'true');
     localStorage.setItem('user', JSON.stringify(userToSet));
     setUser(userToSet);
+    loadAllUsers();
     setLoading(false);
   };
 
@@ -156,13 +149,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const updatedUser = { ...user, isPaid: true, plan: planName };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
-       // Also update the mock DB
       const db = getMockUserDB();
       const userIndex = db.findIndex(u => u.email === user.email);
       if (userIndex > -1) {
         db[userIndex] = updatedUser;
         saveMockUserDB(db);
       }
+      loadAllUsers();
     }
   };
 
@@ -171,18 +164,37 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const updatedUser = { ...user, ...data };
       localStorage.setItem('user', JSON.stringify(updatedUser));
       setUser(updatedUser);
-      // Also update the mock DB
       const db = getMockUserDB();
       const userIndex = db.findIndex(u => u.email === user.email);
       if (userIndex > -1) {
         db[userIndex] = updatedUser;
         saveMockUserDB(db);
       }
+      loadAllUsers();
     }
   };
 
+  const toggleFamilyStatus = (email: string) => {
+    if (!email) return;
+    const db = getMockUserDB();
+    const updatedDb = db.map(u => {
+        if (u.email === email) {
+            const isNowFamily = !u.isFriendAndFamily;
+            return {
+                ...u,
+                isFriendAndFamily: isNowFamily,
+                isPaid: isNowFamily, // isPaid is true if they are family (free access)
+                plan: isNowFamily ? 'Diamond' : undefined,
+            };
+        }
+        return u;
+    });
+    saveMockUserDB(updatedDb);
+    loadAllUsers();
+  };
 
-  const value = { user, loading, signIn, signOut, activateAccount, updateUser };
+
+  const value = { user, loading, signIn, signOut, activateAccount, updateUser, allUsers, toggleFamilyStatus };
 
   return (
     <AuthContext.Provider value={value}>

@@ -8,12 +8,9 @@ import {
   Users,
   Percent,
   Link as LinkIcon,
-  Info,
-  TrendingUp,
-  CreditCard,
   Heart,
-  ReceiptText,
   Hourglass,
+  CreditCard,
 } from 'lucide-react';
 import {
   Card,
@@ -36,11 +33,9 @@ import { AreaChart, Area, BarChart, Bar, CartesianGrid, XAxis, YAxis, Tooltip } 
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from '@/components/ui/chart';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useEarnings } from '@/components/earnings/earnings-provider';
-import { useReferrals } from '@/components/referrals/referral-provider';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import Link from 'next/link';
 import { pricingTiers } from '@/lib/site';
 
@@ -58,67 +53,59 @@ const chartConfig = {
 };
 
 function AdminDashboard() {
-  const { referrals: platformReferrals, activateReferral } = useReferrals();
+  const { allUsers, toggleFamilyStatus } = useAuth();
   const { toast } = useToast();
 
-  const handleActivate = (email: string, plan: string) => {
-    activateReferral(email, plan);
+  const handleActivate = (email: string, displayName: string) => {
+    toggleFamilyStatus(email);
     toast({
-        title: "User Activated",
-        description: `The account for ${email} has been successfully activated.`,
+        title: "Family Member Activated!",
+        description: `${displayName} has been granted free Diamond plan access.`,
     });
   };
+
+  // Don't show the admin in their own activation list
+  const usersToDisplay = allUsers.filter(u => u.email !== 'rentapog@gmail.com');
 
   return (
     <div className="space-y-8">
       <div className="space-y-2">
         <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
-        <p className="text-muted-foreground">Platform-wide affiliate activity summary.</p>
+        <p className="text-muted-foreground">Platform-wide user management.</p>
       </div>
-
-      <Alert>
-        <Info className="h-4 w-4" />
-        <AlertTitle>You are the Platform Owner</AlertTitle>
-        <AlertDescription>
-          This Admin section shows platform-wide revenue. The first payment from every new user is a
-          100% platform fee. Commissions are earned on subsequent recurring payments.
-        </AlertDescription>
-      </Alert>
 
       <Card>
         <CardHeader>
-          <CardTitle className="font-headline">Recent Platform-Wide Referrals</CardTitle>
-          <CardDescription>The latest sign-ups from all affiliates. Manually activate pending accounts here.</CardDescription>
+          <CardTitle className="font-headline">All Registered Users</CardTitle>
+          <CardDescription>Activate users here to grant them free "Family" status and a Diamond plan.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Referred User</TableHead>
+                <TableHead>Display Name</TableHead>
                 <TableHead>Email</TableHead>
-                <TableHead>Affiliate</TableHead>
-                <TableHead>Plan</TableHead>
                 <TableHead>Status</TableHead>
+                <TableHead>Referred By</TableHead>
                 <TableHead className="text-right">Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {platformReferrals.map((referral, index) => (
-                <TableRow key={index}>
-                  <TableCell className="font-medium">{referral.referredUser}</TableCell>
-                  <TableCell>{referral.email}</TableCell>
-                  <TableCell className="font-mono text-xs">{referral.affiliate}</TableCell>
-                  <TableCell>{referral.plan}</TableCell>
+              {usersToDisplay.map((user) => (
+                <TableRow key={user.uid}>
+                  <TableCell className="font-medium">{user.displayName}</TableCell>
+                  <TableCell>{user.email}</TableCell>
                   <TableCell>
-                    <Badge variant={referral.status === 'activated' ? 'default' : 'secondary'}>
-                      {referral.status}
+                    <Badge variant={user.isFriendAndFamily ? 'default' : 'secondary'}>
+                      {user.isFriendAndFamily ? 'Family' : 'Standard'}
                     </Badge>
                   </TableCell>
+                  <TableCell className="font-mono text-xs">{user.referrer || 'Direct'}</TableCell>
                   <TableCell className="text-right">
-                      {referral.status === 'pending' && (
+                      {!user.isFriendAndFamily && user.email && (
                           <Button
                               size="sm"
-                              onClick={() => handleActivate(referral.email, referral.plan)}
+                              onClick={() => handleActivate(user.email!, user.displayName || user.email!)}
                           >
                               Activate
                           </Button>
@@ -140,18 +127,39 @@ function FriendsAndFamilyDashboard() {
       <CardHeader>
         <CardTitle className="font-headline text-2xl flex items-center gap-2">
           <Heart className="text-destructive" />
-          Friends &amp; Family Dashboard
+          Welcome to the Family!
         </CardTitle>
         <CardDescription>
-          Welcome! We've given you a special dashboard with full access to all features.
+          Your account is fully activated with our top-tier Diamond plan, completely free.
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Enjoy the platform! We appreciate you being part of our journey.</p>
+        <p>Enjoy full access to all features, including the AI Video Studio and unlimited website hosting. We appreciate you being part of our journey!</p>
       </CardContent>
     </Card>
   );
 }
+
+function PendingFamilyCard() {
+    return (
+      <Card className="max-w-2xl mx-auto">
+        <CardHeader>
+          <CardTitle className="font-headline text-2xl flex items-center gap-2">
+            <Hourglass />
+            Account Pending Activation
+          </CardTitle>
+          <CardDescription>
+            Welcome! An administrator needs to manually activate your account.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>
+            Please notify the platform owner that you have registered. Once activated, you will be granted full, free access to all features.
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
 
 function ActivationCard() {
   return (
@@ -181,26 +189,6 @@ function ActivationCard() {
   );
 }
 
-function PendingFamilyCard() {
-  return (
-    <Card className="max-w-2xl mx-auto">
-      <CardHeader>
-        <CardTitle className="font-headline text-2xl flex items-center gap-2">
-          <Hourglass />
-          Account Pending Activation
-        </CardTitle>
-        <CardDescription>
-          Welcome! Your account has been created with Friends & Family status.
-        </CardDescription>
-      </CardHeader>
-      <CardContent>
-        <p>
-          An administrator needs to manually activate your account to grant you full, free access. Please notify them that you have registered. Once activated, you will see your full dashboard here.
-        </p>
-      </CardContent>
-    </Card>
-  );
-}
 
 function UserDashboard() {
   const { user } = useAuth();
@@ -388,26 +376,23 @@ function UserDashboard() {
 
 export default function DashboardOverviewPage() {
   const { user } = useAuth();
+  
   const isAdmin = user?.email === 'rentapog@gmail.com';
-  const isFriendsAndFamily = user?.isFriendAndFamily;
 
   if (isAdmin) {
     return <AdminDashboard />;
   }
 
   // Handle "Family" users
-  if (isFriendsAndFamily) {
-    // If they are family but not yet "paid" (activated by admin), show pending card
-    if (!user.isPaid) {
-      return <PendingFamilyCard />;
-    }
-    // If they are family and activated, show the special dashboard
+  if (user?.isFriendAndFamily) {
+    // If family and activated, show the special dashboard
     return <FriendsAndFamilyDashboard />;
   }
-
+  
   // Handle regular users
-  // If they are a regular user and not paid, show activation card
   if (!user?.isPaid) {
+    // If not family and not paid, show activation card.
+    // This is also the default for new signups who aren't family.
     return <ActivationCard />;
   }
   

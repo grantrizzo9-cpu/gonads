@@ -126,7 +126,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
           username: username,
           isPaid: false,
           plan: undefined,
-          isFriendAndFamily: true,
+          isFriendAndFamily: false, // New users start as standard, not family
           referrer: effectiveReferrer,
       };
       
@@ -140,7 +140,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
 
       // The `as any` cast is necessary because MockUser is defined locally.
       signIn(newUser as any, true, effectiveReferrer);
-      router.push('/dashboard/upgrade');
+      router.push('/dashboard');
 
     } else { // Login mode
       if (email.toLowerCase() === 'rentapog@gmail.com') {
