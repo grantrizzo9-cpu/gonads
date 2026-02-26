@@ -18,7 +18,7 @@ interface ReferralContextType {
 }
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
-const LOCAL_STORAGE_KEY = 'platformReferrals';
+const LOCAL_STORAGE_KEY = 'platformReferrals_v2';
 
 const getInitialState = () => {
   // This function runs only on the client, once, to get the initial state.
