@@ -1,3 +1,4 @@
+
 import {genkit} from 'genkit';
 import {googleAI} from '@genkit-ai/google-genai';
 import {config} from 'dotenv';
@@ -5,15 +6,17 @@ import {config} from 'dotenv';
 // Explicitly load environment variables from .env file
 config();
 
-// Explicitly pass the API key to the plugin to ensure it's loaded correctly.
-// This prevents a server crash if the key isn't found automatically in the environment.
 const geminiApiKey = process.env.GEMINI_API_KEY;
 
 if (!geminiApiKey) {
-    console.warn("GEMINI_API_KEY is not set. Some AI features may not work.");
+    console.warn("GEMINI_API_KEY is not set in .env file. AI features may not function correctly if the key is not set in the hosting environment.");
 }
 
+// The googleAI() plugin will find the key from the environment if the apiKey property is omitted.
+// This change prevents passing `apiKey: undefined`, which was causing a startup crash.
+const googleAiPlugin = googleAI(geminiApiKey ? { apiKey: geminiApiKey } : {});
+
 export const ai = genkit({
-  plugins: [googleAI({apiKey: geminiApiKey})],
+  plugins: [googleAiPlugin],
   model: 'googleai/gemini-2.5-flash',
 });
