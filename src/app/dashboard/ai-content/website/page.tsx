@@ -180,7 +180,7 @@ export default function WebsiteBuilderPage() {
 
       toast({
         title: 'Deployment Initiated',
-        description: `Now generating a live deployment log for ${domainObject.name}. This may take a moment.`,
+        description: `Now generating a deployment log for ${domainObject.name}. This may take a moment.`,
       });
       
       const result = await generateDeploymentLog({ domainName: domainObject.name });
@@ -352,9 +352,9 @@ export default function WebsiteBuilderPage() {
       <Dialog open={isGeneratingLog || !!deploymentLogContent} onOpenChange={(isOpen) => { if (!isOpen) { setDeploymentLogContent(null); setIsGeneratingLog(false); }}}>
         <DialogContent className="max-w-3xl bg-black border-gray-700">
           <DialogHeader>
-            <DialogTitle className="text-white font-mono">Live Deployment Log: {publishedDomain}</DialogTitle>
+            <DialogTitle className="text-white font-mono">Deployment Log: {publishedDomain}</DialogTitle>
             <DialogDescription className="text-gray-400 font-mono">
-              This is a visualization of the backend deployment process. Your site is now live, but global propagation can take 5-10 minutes.
+              This is a simulated visualization of the backend deployment process. The real deployment is running on Google's servers. This log helps you see the steps involved. Global propagation can take 5-10 minutes.
             </DialogDescription>
           </DialogHeader>
            {isGeneratingLog ? (
