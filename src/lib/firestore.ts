@@ -1,4 +1,3 @@
-'use client';
 // This is a mock Firestore implementation.
 // In a real app, you would import from 'firebase/firestore'
 // and use a real Firebase instance.
