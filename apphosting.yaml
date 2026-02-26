@@ -3,3 +3,9 @@
 
 runConfig:
   maxInstances: 1
+
+sites:
+  hostproai:
+    domains:
+      - rizzosa.com
+      - www.rizzosa.com
