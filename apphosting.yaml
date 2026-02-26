@@ -6,4 +6,7 @@ runConfig:
   # more instances in response to increased traffic.
   maxInstances: 1
 
+customDomains:
+ - rizzosa.com
+
 # Triggering a redeploy to link the custom domain.
