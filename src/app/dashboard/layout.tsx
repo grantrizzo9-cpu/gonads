@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, type ReactNode } from 'react';
@@ -13,7 +14,7 @@ import {
 } from '@/components/ui/sidebar';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
-  const { user, loading } = useAuth();
+  const { user, loading, updateUser } = useAuth();
   const router = useRouter();
 
   useEffect(() => {
@@ -21,6 +22,17 @@ export default function DashboardLayout({ children }: { children: ReactNode }) {
       router.push('/login');
     }
   }, [user, loading, router]);
+
+  // One-time redirect for newly activated family members
+  useEffect(() => {
+    if (user?.isNewlyActivatedFamily) {
+      // Immediately update the state to clear the flag and prevent loops
+      updateUser({ isNewlyActivatedFamily: false });
+      // Redirect to the guide
+      router.push('/dashboard/strategy-center/connecting-your-domain');
+    }
+  }, [user, updateUser, router]);
+
 
   if (loading || !user) {
     return (

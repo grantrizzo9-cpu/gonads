@@ -13,6 +13,7 @@ interface User {
   plan?: string;
   isFriendAndFamily?: boolean;
   referrer?: string | null;
+  isNewlyActivatedFamily?: boolean;
 }
 
 interface AuthContextType {
@@ -184,6 +185,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 isFriendAndFamily: isFamily,
                 isPaid: isFamily, // isPaid is true if they are family (free access)
                 plan: isFamily ? 'Diamond' : undefined,
+                isNewlyActivatedFamily: isFamily, // Set flag to true on activation, false on deactivation
             };
         }
         return u;
