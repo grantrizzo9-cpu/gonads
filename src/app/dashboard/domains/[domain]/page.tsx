@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useEffect, useState } from "react";
@@ -221,7 +222,7 @@ export default function ManageDomainPage() {
 
             <Card>
                 <CardHeader>
-                    <CardTitle className="font-headline flex items-center gap-2"><Link2 />Deploy a Website</CardTitle>
+                    <CardTitle className="font-headline flex items-center gap-2"><Link2 />Step 3: Deploy a Website</CardTitle>
                     <CardDescription>Once your domain is verified, select a generated website from your collection to deploy to this domain.</CardDescription>
                 </CardHeader>
                 <CardContent>
