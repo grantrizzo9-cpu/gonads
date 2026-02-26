@@ -36,7 +36,7 @@ const friendsAndFamilyEmails = [
 const defaultMockUser: User = {
   uid: 'mock-admin-user-123',
   email: 'rentapog@gmail.com',
-  displayName: 'Admin',
+  displayName: 'Platform Admin',
   username: 'platform_admin',
   isPaid: true,
   plan: 'Diamond',
@@ -71,6 +71,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     // --- PRE-SEED MOCK DATA FOR TESTING ---
     const db = getMockUserDB();
+    const adminUserExists = db.some(u => u.email === 'rentapog@gmail.com');
+     if (!adminUserExists) {
+        db.push(defaultMockUser);
+    }
     const rentarizUserExists = db.some(u => u.email === 'rentariz@gmail.com');
     if (!rentarizUserExists) {
         const rentarizUser: User = {
@@ -84,8 +88,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             referrer: null,
         };
         db.push(rentarizUser);
-        saveMockUserDB(db);
     }
+    saveMockUserDB(db);
     // --- END PRE-SEED ---
 
     // In a real app, you'd use Firebase's onAuthStateChanged here.
@@ -103,22 +107,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (userToSignIn) {
       const isFriend = userToSignIn.email ? friendsAndFamilyEmails.includes(userToSignIn.email) : false;
-      
+      const existingUser = getMockUserDB().find(u => u.email === userToSignIn.email);
+
       if (isFriend) {
           userToSet = { ...userToSignIn, isPaid: true, plan: 'Diamond', isFriendAndFamily: true, referrer: null };
       } else {
-        const existingUser = getMockUserDB().find(u => u.email === userToSignIn.email);
-
         userToSet = { 
+            // Start with the user object passed to the function
             ...userToSignIn, 
+            // Set payment status based on whether it's a new user
             isPaid: isNewUser ? false : userToSignIn.isPaid ?? false, 
             isFriendAndFamily: false,
-            // When signing in, preserve the referrer from the DB if it exists.
+            // CRITICAL FIX: Preserve the referrer. Use the one from the database if it exists,
+            // otherwise use the one from signup, otherwise use the one from the object passed in.
             referrer: existingUser?.referrer ?? referrerUsername ?? userToSignIn.referrer ?? null,
         };
       }
     } else {
-      // This is the special admin login case
+      // This is the special admin login case for rentapog@gmail.com
       userToSet = defaultMockUser;
     }
     
