@@ -26,12 +26,6 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-// List of special accounts
-const friendsAndFamilyEmails = [
-    'friend@example.com',
-    'family@example.com',
-];
-
 // Mock default user
 const defaultMockUser: User = {
   uid: 'mock-admin-user-123',
@@ -106,21 +100,24 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     let userToSet: User;
 
     if (userToSignIn) {
-      const isFriend = userToSignIn.email ? friendsAndFamilyEmails.includes(userToSignIn.email) : false;
       const existingUser = getMockUserDB().find(u => u.email === userToSignIn.email);
 
-      if (isFriend) {
-          userToSet = { ...userToSignIn, isPaid: true, plan: 'Diamond', isFriendAndFamily: true, referrer: null };
+      // If it's a new user, they automatically become "Family"
+      if (isNewUser) {
+          userToSet = { 
+              ...userToSignIn, 
+              isPaid: true, // Full access
+              plan: 'Diamond', // Top plan
+              isFriendAndFamily: true, // Mark as family
+              referrer: referrerUsername || null,
+          };
       } else {
+        // This is a returning user. Load their existing data.
         userToSet = { 
-            // Start with the user object passed to the function
             ...userToSignIn, 
-            // Set payment status based on whether it's a new user
-            isPaid: isNewUser ? false : userToSignIn.isPaid ?? false, 
-            isFriendAndFamily: false,
-            // CRITICAL FIX: Preserve the referrer. Use the one from the database if it exists,
-            // otherwise use the one from signup, otherwise use the one from the object passed in.
-            referrer: existingUser?.referrer ?? referrerUsername ?? userToSignIn.referrer ?? null,
+            isFriendAndFamily: userToSignIn.isFriendAndFamily ?? false,
+            // Preserve existing referrer from the DB if it exists
+            referrer: existingUser?.referrer ?? userToSignIn.referrer ?? null,
         };
       }
     } else {

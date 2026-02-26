@@ -52,6 +52,7 @@ const adminNavLinks = [
 
 const adminLinks = [
     { href: "/dashboard/admin/packages", label: "Packages", icon: Package },
+    { href: "/dashboard/admin/family", label: "Family", icon: UserCheck },
     { href: "/dashboard/admin/manage-refunds", label: "Manage Refunds", icon: ShieldAlert },
 ]
 
