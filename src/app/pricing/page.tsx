@@ -1,93 +1,46 @@
-"use client";
 
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Check } from "lucide-react";
-import { pricingTiers, type PricingTier } from "@/lib/site";
-import { Header } from "@/components/layout/header";
-import { Footer } from "@/components/layout/footer";
-import { cn } from "@/lib/utils";
-import { useAuth } from "@/components/auth/auth-provider";
-import Link from "next/link";
-import { useSearchParams } from "next/navigation";
+import { Suspense } from 'react';
+import { Header } from '@/components/layout/header';
+import { Footer } from '@/components/layout/footer';
+import { PricingClientPage } from './pricing-client-page';
+import { Skeleton } from '@/components/ui/skeleton';
 
-
-// Mock function to get affiliate's plan index. In a real app, this would be a DB lookup.
-const getAffiliatePlanIndex = (username: string | undefined | null): number => {
-    if (!username) {
-        // Default for direct visitors (no ref link): show all plans.
-        return pricingTiers.length - 1;
-    }
-
-    // Mock affiliate plans.
-    const mockAffiliates: { [key: string]: string } = {
-        'hostproai': 'Diamond',
-        'starter_user': 'Starter',
-        'bronze_user': 'Bronze',
-        'silver_user': 'Silver',
-        'gold_user': 'Gold',
-        'platinum_user': 'Platinum',
-    };
-
-    const planName = mockAffiliates[username.toLowerCase()] || 'Gold'; // Default if affiliate not in mock list
-    const planIndex = pricingTiers.findIndex(t => t.name === planName);
-    return planIndex > -1 ? planIndex : pricingTiers.length - 1;
-};
-
-// This new component contains the logic that uses the search params.
-function PricingTiersComponent() {
-    const { user } = useAuth();
-    const searchParams = useSearchParams();
-    const ref = searchParams.get('ref');
-    const signupHref = ref ? `/signup?ref=${ref}` : '/signup';
-    
-    let visibleTiers: PricingTier[] = pricingTiers;
-
-    // If a user is not logged in, we check for a referral code to filter plans.
-    if (!user) {
-        const affiliatePlanIndex = getAffiliatePlanIndex(ref);
-        visibleTiers = pricingTiers.slice(0, affiliatePlanIndex + 1);
-    }
-    // If a user is logged in, they are either an affiliate or an admin,
-    // and they will be redirected to the /dashboard/upgrade page, so this page's
-    // filtering is primarily for new, prospective customers.
-
+function PricingPageSkeleton() {
     return (
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {visibleTiers.map((tier) => (
-            <Card key={tier.id} className={cn("flex flex-col", tier.isPopular && visibleTiers.length > 1 && "border-primary ring-2 ring-primary")}>
-                {tier.isPopular && visibleTiers.length > 1 && (
-                <div className="py-1.5 px-4 bg-primary text-center text-sm font-semibold text-primary-foreground rounded-t-lg -mt-px">
-                    Most Popular
+            <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+                <Skeleton className="h-8 w-2/3" />
+                <Skeleton className="h-10 w-1/2" />
+                <Skeleton className="h-5 w-full" />
+                <div className="flex-grow space-y-3 pt-4">
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-3/4" />
                 </div>
-                )}
-                <CardHeader>
-                <CardTitle className="font-headline text-2xl">{tier.name}</CardTitle>
-                <div className="flex items-baseline gap-2">
-                    <span className="text-4xl font-bold tracking-tighter">${tier.price.toFixed(2)}</span>
-                    <span className="text-muted-foreground">/ day (AUD)</span>
+                <Skeleton className="h-10 w-full mt-4" />
+            </div>
+             <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+                <Skeleton className="h-8 w-2/3" />
+                <Skeleton className="h-10 w-1/2" />
+                <Skeleton className="h-5 w-full" />
+                <div className="flex-grow space-y-3 pt-4">
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-3/4" />
                 </div>
-                <CardDescription>{tier.description}</CardDescription>
-                </CardHeader>
-                <CardContent className="flex-grow">
-                <ul className="space-y-3">
-                    {tier.features.map((feature) => (
-                    <li key={feature} className="flex items-center gap-2">
-                        <Check className="h-5 w-5 text-primary" />
-                        <span>{feature}</span>
-                    </li>
-                    ))}
-                </ul>
-                </CardContent>
-                <CardFooter>
-                    <Button asChild className="w-full">
-                        <Link href={user ? '/dashboard/upgrade' : signupHref}>
-                            {user ? 'Manage in Dashboard' : 'Sign Up & Get Started'}
-                        </Link>
-                    </Button>
-                </CardFooter>
-            </Card>
-            ))}
+                <Skeleton className="h-10 w-full mt-4" />
+            </div>
+             <div className="flex flex-col space-y-4 rounded-lg border bg-card text-card-foreground shadow-sm p-6">
+                <Skeleton className="h-8 w-2/3" />
+                <Skeleton className="h-10 w-1/2" />
+                <Skeleton className="h-5 w-full" />
+                <div className="flex-grow space-y-3 pt-4">
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-full" />
+                    <Skeleton className="h-5 w-3/4" />
+                </div>
+                <Skeleton className="h-10 w-full mt-4" />
+            </div>
         </div>
     );
 }
@@ -107,7 +60,9 @@ export default function PricingPage() {
                 </p>
             </div>
 
-            <PricingTiersComponent />
+            <Suspense fallback={<PricingPageSkeleton />}>
+                <PricingClientPage />
+            </Suspense>
 
             <div className="mt-12 text-center text-muted-foreground">
                 <p><strong>Commission Structure:</strong> All plans start at a 70% recurring daily commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 10 active referrals.</p>
