@@ -22,8 +22,7 @@ interface AuthContextType {
   signIn: (userToSignIn?: User, isNewUser?: boolean, referrerUsername?: string) => void;
   signOut: () => void;
   activateAccount: (planName: string) => void;
-  updateUser: (data: Partial<User>) => void;
-  updateUserDetails: (email: string, data: Partial<User>) => void;
+  updateUser: (data: Partial<Omit<User, 'password'>>) => void;
   allUsers: User[];
   setFamilyStatus: (email: string, isFamily: boolean) => void;
 }
@@ -162,14 +161,16 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateUser = (data: Partial<User>) => {
-    if (user) {
+    if (user) { // 'user' is the user from context, holding the *old* state
       const updatedUser = { ...user, ...data };
-      localStorage.setItem('user', JSON.stringify(updatedUser));
-      setUser(updatedUser);
+      localStorage.setItem('user', JSON.stringify(updatedUser)); // Save new state to local storage for current session
+      setUser(updatedUser); // Update react state
+
       const db = getMockUserDB();
-      const userIndex = db.findIndex(u => u.email === user.email);
+      // Find user in DB by the OLD email from context, which is the reliable key before the update
+      const userIndex = db.findIndex(u => u.email === user.email); 
       if (userIndex > -1) {
-        db[userIndex] = updatedUser;
+        db[userIndex] = updatedUser; // Update the DB record with the new data
         saveMockUserDB(db);
       }
       loadAllUsers();
@@ -195,26 +196,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     loadAllUsers();
   };
 
-  const updateUserDetails = (email: string, data: Partial<User>) => {
-    if (!email) return;
-    const db = getMockUserDB();
-    const updatedDb = db.map(u => {
-        if (u.email === email) {
-            const updatedUser = { ...u, ...data };
-            // If the user being edited is the currently logged-in user, update their session too
-            if (user && user.email === email) {
-                localStorage.setItem('user', JSON.stringify(updatedUser));
-                setUser(updatedUser);
-            }
-            return updatedUser;
-        }
-        return u;
-    });
-    saveMockUserDB(updatedDb);
-    loadAllUsers(); // This will refresh the `allUsers` state in components.
-  };
-
-  const value = { user, loading, signIn, signOut, activateAccount, updateUser, updateUserDetails, allUsers, setFamilyStatus };
+  const value = { user, loading, signIn, signOut, activateAccount, updateUser, allUsers, setFamilyStatus };
 
   return (
     <AuthContext.Provider value={value}>

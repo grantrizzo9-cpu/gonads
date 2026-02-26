@@ -1,3 +1,4 @@
+
 'use client';
 
 import { useForm } from 'react-hook-form';
@@ -29,7 +30,8 @@ import { useState } from 'react';
 const settingsFormSchema = z.object({
   displayName: z.string().min(3, 'Display name must be at least 3 characters.'),
   username: z.string().min(3, 'Username must be at least 3 characters.').regex(/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores.'),
-  email: z.string().email(),
+  email: z.string().email('Please enter a valid email address.'),
+  password: z.string().min(6, 'Password must be at least 6 characters.').optional().or(z.literal('')),
 });
 
 type SettingsFormValues = z.infer<typeof settingsFormSchema>;
@@ -45,24 +47,33 @@ export default function SettingsPage() {
       displayName: user?.displayName || '',
       username: user?.username || '',
       email: user?.email || '',
+      password: '',
     },
   });
 
   async function onSubmit(values: SettingsFormValues) {
     setIsLoading(true);
-    // In a real app, you would call a function here to update the user's profile in your database.
-    // e.g., await updateUserProfile(user.uid, values);
-    console.log('Updating settings with:', values);
     
+    // In a real app, you would call a function here to update the user's profile in your database.
+    // The password would be hashed before being sent.
+    if (values.password) {
+      console.log(`Password change requested for ${values.email}. This is a mock action and the password is not stored.`);
+    }
+
     // We'll simulate a network request
     await new Promise(resolve => setTimeout(resolve, 1000));
     
-    updateUser(values);
+    // Create a new object for the update, excluding the password
+    const { password, ...profileData } = values;
+    updateUser(profileData);
 
     toast({
       title: 'Settings Saved',
       description: 'Your profile information has been updated.',
     });
+
+    // Reset password field after submission
+    form.reset({ ...form.getValues(), password: '' });
     setIsLoading(false);
   }
 
@@ -114,7 +125,20 @@ export default function SettingsPage() {
                   <FormItem>
                     <FormLabel>Email Address</FormLabel>
                     <FormControl>
-                      <Input disabled {...field} />
+                      <Input placeholder="your.email@example.com" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+               <FormField
+                control={form.control}
+                name="password"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>New Password (Optional)</FormLabel>
+                    <FormControl>
+                      <Input type="password" placeholder="Leave blank to keep current password" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
