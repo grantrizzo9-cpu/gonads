@@ -119,7 +119,6 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       }
 
       const stableUid = simpleHash(email.toLowerCase());
-      // CORRECT: All new users are standard users by default.
       const newUser: MockUser = {
           uid: stableUid,
           email: email,
@@ -127,7 +126,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
           username: username,
           isPaid: false,
           plan: undefined,
-          isFriendAndFamily: false, 
+          isFriendAndFamily: false,
           referrer: effectiveReferrer,
       };
       
@@ -141,7 +140,8 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
 
       // The `as any` cast is necessary because MockUser is defined locally.
       signIn(newUser as any, true, effectiveReferrer);
-      router.push('/dashboard');
+      // Use a hard navigation to ensure all state is correctly loaded on the next page.
+      window.location.assign('/dashboard');
 
     } else { // Login mode
       if (email.toLowerCase() === 'rentapog@gmail.com') {

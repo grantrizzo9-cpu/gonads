@@ -31,7 +31,8 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 title: "Account Activated!",
                 description: `Your ${tier.name} plan is now active. Welcome aboard!`,
             });
-            router.push('/dashboard');
+            // Use a hard navigation to ensure all state is correctly loaded on the next page.
+            window.location.assign('/dashboard');
         } catch (e) {
             console.error("Error during post-payment processing:", e);
             setError("Your payment was successful, but we failed to activate your account. Please contact support.");
