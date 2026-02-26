@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, ReactNode, useCallback, useEffect } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useCallback } from 'react';
 import { platformReferrals as initialReferrals } from '@/lib/mock-data';
 
 export interface PlatformReferral {
@@ -18,36 +18,12 @@ interface ReferralContextType {
 }
 
 const ReferralContext = createContext<ReferralContextType | undefined>(undefined);
-const LOCAL_STORAGE_KEY = 'platformReferrals_v2';
 
-const getInitialState = () => {
-  // This function runs only on the client, once, to get the initial state.
-  if (typeof window === 'undefined') {
-    return initialReferrals;
-  }
-  try {
-    const item = window.localStorage.getItem(LOCAL_STORAGE_KEY);
-    // If there's something in local storage, use it. Otherwise, use the mock data.
-    return item ? JSON.parse(item) : initialReferrals;
-  } catch (error) {
-    console.error("Failed to read from localStorage, using initial data.", error);
-    return initialReferrals;
-  }
-};
-
+// No more local storage persistence to avoid caching issues.
+// State will be re-initialized from mock-data on every page load/hot-reload.
 
 export const ReferralProvider = ({ children }: { children: ReactNode }) => {
-  const [referrals, setReferrals] = useState<PlatformReferral[]>(getInitialState);
-
-  // This effect now ONLY saves to localStorage when the referrals state changes.
-  useEffect(() => {
-    try {
-      localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(referrals));
-    } catch (error) {
-      console.error("Failed to write to localStorage", error);
-    }
-  }, [referrals]);
-
+  const [referrals, setReferrals] = useState<PlatformReferral[]>(initialReferrals);
 
   const addReferral = useCallback((newReferralData: Omit<PlatformReferral, 'plan' | 'status'>) => {
     const newReferral: PlatformReferral = {
