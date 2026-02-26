@@ -1,8 +1,6 @@
-
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import type { OnApproveData, CreateOrderData } from '@paypal/react-paypal-js';
 import { useAuth } from '@/components/auth/auth-provider';
@@ -16,7 +14,6 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount, user } = useAuth();
     const { activateReferral } = useReferrals();
     const { toast } = useToast();
-    const router = useRouter();
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState<string | React.ReactNode | null>(null);
     const [{ isPending, isRejected, options: paypalOptions }] = usePayPalScriptReducer();
@@ -31,13 +28,13 @@ export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
                 title: "Account Activated!",
                 description: `Your ${tier.name} plan is now active. Welcome aboard!`,
             });
-            // Use a hard navigation to ensure all state is correctly loaded on the next page.
-            window.location.assign('/dashboard');
+            // Redirect to the domain connection guide after successful payment.
+            window.location.assign('/dashboard/strategy-center/connecting-your-domain');
         } catch (e) {
             console.error("Error during post-payment processing:", e);
             setError("Your payment was successful, but we failed to activate your account. Please contact support.");
         }
-    }, [activateAccount, tier.name, user?.email, activateReferral, toast, router]);
+    }, [activateAccount, tier.name, user?.email, activateReferral, toast]);
 
     const handleSimulatePayment = useCallback(() => {
         setIsLoading(true);

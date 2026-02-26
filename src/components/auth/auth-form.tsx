@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useReferrals } from '@/components/referrals/referral-provider';
 import { Button } from '@/components/ui/button';
@@ -72,7 +71,6 @@ const addUserToDB = (user: MockUser) => {
 
 
 export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
-  const router = useRouter();
   const { signIn } = useAuth();
   const { addReferral } = useReferrals();
   const [isLoading, setIsLoading] = useState(false);
@@ -126,7 +124,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
           username: username,
           isPaid: false,
           plan: undefined,
-          isFriendAndFamily: false,
+          isFriendAndFamily: false, // All new users start as standard users
           referrer: effectiveReferrer,
       };
       
@@ -144,20 +142,15 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       window.location.assign('/dashboard');
 
     } else { // Login mode
-      if (email.toLowerCase() === 'rentapog@gmail.com') {
-          signIn(); // Special case for admin login
-          router.push('/dashboard');
+      const existingUser = findUserByEmail(email);
+      if (existingUser) {
+          // In a real app, you would verify the password here.
+          // We pass the full, correct user object from our mock DB.
+          signIn(existingUser as any, false);
+           window.location.assign('/dashboard');
       } else {
-          const existingUser = findUserByEmail(email);
-          if (existingUser) {
-              // In a real app, you would verify the password here.
-              // We pass the full, correct user object from our mock DB.
-              signIn(existingUser as any, false);
-              router.push('/dashboard');
-          } else {
-              alert("No user found with this email. Please sign up first.");
-              setIsLoading(false);
-          }
+          alert("No user found with this email. Please sign up first.");
+          setIsLoading(false);
       }
     }
   };
