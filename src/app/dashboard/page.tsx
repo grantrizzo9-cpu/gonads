@@ -60,40 +60,6 @@ function AdminDashboard() {
   const { referrals: platformReferrals, activateReferral } = useReferrals();
   const { toast } = useToast();
 
-  const activatedReferrals = platformReferrals.filter(r => r.status === 'activated');
-
-  // Business Logic: The first payment from every new user is a 100% platform fee.
-  const totalFirstPaymentsRevenue = activatedReferrals.reduce((total, referral) => {
-    const tier = pricingTiers.find(t => t.name === referral.plan);
-    return total + (tier ? tier.price : 0);
-  }, 0);
-  
-  // Simulate recurring payments for the admin view. Assume half are recurring.
-  const recurringReferrals = activatedReferrals.filter((_, index) => index % 2 !== 0);
-
-  const recurringRevenueDetails = recurringReferrals.reduce((acc, referral) => {
-    const affiliateReferralCount = platformReferrals.filter(r => r.affiliate === referral.affiliate && r.status === 'activated').length;
-    const commissionRate = affiliateReferralCount >= 10 ? 75 : 70;
-    
-    const tier = pricingTiers.find(t => t.name === referral.plan);
-    if (tier) {
-        const dailyPayment = tier.price;
-        acc.affiliatePayout += dailyPayment * (commissionRate / 100);
-        acc.platformShare += dailyPayment * ((100 - commissionRate) / 100);
-    }
-    return acc;
-  }, { platformShare: 0, affiliatePayout: 0 });
-
-  const totalRecurringPlatformShare = recurringRevenueDetails.platformShare;
-  const totalRecurringAffiliatePayouts = recurringRevenueDetails.affiliatePayout;
-  const totalRefundsProcessed = 0.00;
-
-  const totalPlatformEarnings = totalFirstPaymentsRevenue + totalRecurringPlatformShare - totalRefundsProcessed;
-
-  // Calculate total unique users and affiliates
-  const totalUsers = new Set(platformReferrals.map(r => r.email)).size + 1; // +1 for admin
-  const totalAffiliates = new Set(platformReferrals.map(r => r.affiliate)).size;
-
   const handleActivate = (email: string, plan: string) => {
     activateReferral(email, plan);
     toast({
@@ -104,8 +70,10 @@ function AdminDashboard() {
 
   return (
     <div className="space-y-8">
-      <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
-      <p className="text-muted-foreground">Platform-wide affiliate activity summary.</p>
+      <div className="space-y-2">
+        <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
+        <p className="text-muted-foreground">Platform-wide affiliate activity summary.</p>
+      </div>
 
       <Alert>
         <Info className="h-4 w-4" />
@@ -116,102 +84,10 @@ function AdminDashboard() {
         </AlertDescription>
       </Alert>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">First Payment Revenue</CardTitle>
-            <DollarSign className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalFirstPaymentsRevenue.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">100% platform revenue from all initial activations.</p>
-          </CardContent>
-        </Card>
-         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Recurring Platform Share</CardTitle>
-            <Percent className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalRecurringPlatformShare.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">30% share from future recurring payments.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Platform Earnings</CardTitle>
-            <TrendingUp className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalPlatformEarnings.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">Total profit after affiliate payouts & refunds.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Refunds Processed</CardTitle>
-            <ReceiptText className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalRefundsProcessed.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">Total value of all processed refunds.</p>
-          </CardContent>
-        </Card>
-      </div>
-
-       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-         <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Recurring Affiliate Payouts</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">${totalRecurringAffiliatePayouts.toFixed(2)}</div>
-            <p className="text-xs text-muted-foreground">70-75% commissions on recurring payments.</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Platform-Wide Referrals</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">+{platformReferrals.length}</div>
-            <p className="text-xs text-muted-foreground">
-              Total users referred across the entire platform.
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Platform Users</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalUsers}</div>
-            <p className="text-xs text-muted-foreground">
-              Total number of user accounts on the platform.
-            </p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Active Affiliates</CardTitle>
-            <Users className="h-4 w-4 text-muted-foreground" />
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{totalAffiliates}</div>
-            <p className="text-xs text-muted-foreground">
-              Total unique users who have referred someone.
-            </p>
-          </CardContent>
-        </Card>
-       </div>
-
       <Card>
         <CardHeader>
           <CardTitle className="font-headline">Recent Platform-Wide Referrals</CardTitle>
-          <CardDescription>The latest sign-ups from all affiliates.</CardDescription>
+          <CardDescription>The latest sign-ups from all affiliates. Manually activate pending accounts here.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>

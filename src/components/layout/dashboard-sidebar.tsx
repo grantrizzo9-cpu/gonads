@@ -53,7 +53,6 @@ const adminNavLinks = [
 const adminLinks = [
     { href: "/dashboard/admin/packages", label: "Packages", icon: Package },
     { href: "/dashboard/admin/manage-refunds", label: "Manage Refunds", icon: ShieldAlert },
-    { href: "/dashboard/admin/activations", label: "Activations", icon: UserCheck },
 ]
 
 export function DashboardSidebar() {
