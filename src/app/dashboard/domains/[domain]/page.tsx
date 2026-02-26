@@ -84,6 +84,7 @@ export default function ManageDomainPage() {
             description: `We've started linking your website to ${domain.name}. It may take a few minutes for changes to go live.` 
         });
 
+        // The button will stop spinning, but the status box will show the "in progress" state.
         setTimeout(() => {
             setIsDeploying(false);
         }, 3000);
@@ -204,15 +205,15 @@ export default function ManageDomainPage() {
                 <CardFooter className="flex-col items-start gap-4 pt-6">
                     {deploymentInitiated && (
                          <Alert variant="default">
-                            <Info className="h-4 w-4" />
-                            <AlertTitle>Deployment Initiated. What's next?</AlertTitle>
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                            <AlertTitle>Deployment in Progress...</AlertTitle>
                             <AlertDescription>
                                 It can take <strong>5-10 minutes</strong> for your site to become live at <a href={`http://${domain.name}`} target="_blank" rel="noopener noreferrer" className="font-bold underline">{domain.name}</a>.
                                 If you still see an error after 10 minutes, please re-verify your DNS settings.
                             </AlertDescription>
                         </Alert>
                     )}
-                    {domain.deployedWebsiteId && (
+                    {domain.deployedWebsiteId && !deploymentInitiated && (
                          <div className="text-sm text-muted-foreground">
                            Currently, website <span className="font-mono text-xs">{domain.deployedWebsiteId}</span> is linked to this domain. Re-deploying will link a different site.
                          </div>

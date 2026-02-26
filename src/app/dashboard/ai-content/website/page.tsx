@@ -301,8 +301,8 @@ export default function WebsiteBuilderPage() {
                
                {deploymentInitiated && publishedDomain && (
                  <Alert>
-                    <Info className="h-4 w-4" />
-                    <AlertTitle>Deployment Initiated. What's next?</AlertTitle>
+                    <Loader2 className="h-4 w-4 animate-spin" />
+                    <AlertTitle>Deployment in Progress...</AlertTitle>
                     <AlertDescription>
                         It can take <strong>5-10 minutes</strong> for your site to become live at <a href={`http://${publishedDomain}`} target="_blank" rel="noopener noreferrer" className="font-bold underline">{publishedDomain}</a>.
                         If you still see an error after 10 minutes, please re-verify your DNS settings in the 'Hosting' section.
