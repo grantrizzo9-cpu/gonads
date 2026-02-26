@@ -13,6 +13,7 @@ import {
   CreditCard,
   Heart,
   ReceiptText,
+  Hourglass,
 } from 'lucide-react';
 import {
   Card,
@@ -176,6 +177,27 @@ function ActivationCard() {
           <Link href="/dashboard/upgrade">Activate Your Plan</Link>
         </Button>
       </CardFooter>
+    </Card>
+  );
+}
+
+function PendingFamilyCard() {
+  return (
+    <Card className="max-w-2xl mx-auto">
+      <CardHeader>
+        <CardTitle className="font-headline text-2xl flex items-center gap-2">
+          <Hourglass />
+          Account Pending Activation
+        </CardTitle>
+        <CardDescription>
+          Welcome! Your account has been created with Friends & Family status.
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <p>
+          An administrator needs to manually activate your account to grant you full, free access. Please notify them that you have registered. Once activated, you will see your full dashboard here.
+        </p>
+      </CardContent>
     </Card>
   );
 }
@@ -369,17 +391,26 @@ export default function DashboardOverviewPage() {
   const isAdmin = user?.email === 'rentapog@gmail.com';
   const isFriendsAndFamily = user?.isFriendAndFamily;
 
-  if (!user?.isPaid) {
-    return <ActivationCard />;
-  }
-
   if (isAdmin) {
     return <AdminDashboard />;
   }
 
+  // Handle "Family" users
   if (isFriendsAndFamily) {
+    // If they are family but not yet "paid" (activated by admin), show pending card
+    if (!user.isPaid) {
+      return <PendingFamilyCard />;
+    }
+    // If they are family and activated, show the special dashboard
     return <FriendsAndFamilyDashboard />;
   }
 
+  // Handle regular users
+  // If they are a regular user and not paid, show activation card
+  if (!user?.isPaid) {
+    return <ActivationCard />;
+  }
+  
+  // If they are a regular paid user, show the standard dashboard
   return <UserDashboard />;
 }
