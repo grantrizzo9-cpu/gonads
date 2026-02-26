@@ -50,7 +50,7 @@ export function generateHtmlForWebsite(
   username: string
 ): string {
   const { homepage } = data;
-  const affiliateLink = `/signup?ref=${username}&theme=${encodeURIComponent(theme.name)}`;
+  const affiliateLink = `https://hostproai.com/?ref=${username}`;
   
   // Create boilerplate legal content to avoid AI safety filters
   const legal = {
@@ -275,5 +275,5 @@ export function generateHtmlForWebsite(
     </script>
 </body>
 </html>
-`
-}
+
+    
