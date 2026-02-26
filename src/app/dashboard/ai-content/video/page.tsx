@@ -8,7 +8,7 @@ import { generateVideoScript, type GenerateVideoScriptOutput } from '@/ai/flows/
 import { describeVideo, type DescribeVideoOutput } from '@/ai/flows/describe-video-flow';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage, FormDescription } from '@/components/ui/form';
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
@@ -249,7 +249,7 @@ export default function VideoStudioPage() {
                         <div className="space-y-2">
                         <Label htmlFor="video-upload">Video File</Label>
                         <Input id="video-upload" type="file" accept="video/*" onChange={handleFileChange} disabled={isAnalyzing} />
-                        <FormDescription>Max file size: 4MB. Analysis uses advanced AI and may take a moment.</FormDescription>
+                        <p className="text-sm text-muted-foreground">Max file size: 4MB. Analysis uses advanced AI and may take a moment.</p>
                         </div>
                         {uploadedVideoUri && (
                         <div className="space-y-4 pt-4">
