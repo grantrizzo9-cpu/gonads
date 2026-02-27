@@ -1,7 +1,4 @@
 
-'use client';
-
-import { Suspense } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -15,9 +12,7 @@ export default function StrategyCenterPage() {
   
   return (
     <>
-      <Suspense>
-        <Header />
-      </Suspense>
+      <Header />
       <main className="flex-1">
         <section className="container px-4 sm:px-6 py-12 md:py-24">
           <div className="mx-auto mb-12 max-w-3xl text-center">
@@ -59,9 +54,7 @@ export default function StrategyCenterPage() {
           </div>
         </section>
       </main>
-      <Suspense>
-        <Footer />
-      </Suspense>
+      <Footer />
     </>
   );
 }

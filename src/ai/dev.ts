@@ -1,6 +1,4 @@
 'use server';
-import { config } from 'dotenv';
-config();
 
 import '@/ai/flows/generate-seo-blog-article.ts';
 import '@/ai/flows/generate-social-media-ad-script-flow.ts';
