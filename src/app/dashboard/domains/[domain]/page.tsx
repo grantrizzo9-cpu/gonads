@@ -223,6 +223,15 @@ export default function ManageDomainPage() {
                     <CardDescription>Once your domain is verified (the 'Deploy' button is enabled), select a generated website from your collection to deploy to this domain.</CardDescription>
                 </CardHeader>
                 <CardContent>
+                    {allRecordsFound && !domain.deployedWebsiteId && (
+                        <Alert className="mb-6">
+                            <Info className="h-4 w-4" />
+                            <AlertTitle className="font-bold">Final Step: Deploy Your Site</AlertTitle>
+                            <AlertDescription>
+                                Your DNS is connected! Now, choose a website from the dropdown below and click 'Deploy' to make it live on the internet.
+                            </AlertDescription>
+                        </Alert>
+                    )}
                     <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
                         <Select onValueChange={setSelectedWebsite} defaultValue={selectedWebsite} disabled={!allRecordsFound || isDeploying}>
                             <SelectTrigger>
@@ -278,6 +287,8 @@ export default function ManageDomainPage() {
         </div>
     );
 }
+
+    
 
     
 
