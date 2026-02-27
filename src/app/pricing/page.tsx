@@ -17,7 +17,7 @@ export default function PricingPage() {
                 Find Your Edge. Start Earning Daily Income.
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                Pay a one-time activation fee to start your trial. After the trial, your daily plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
+                Choose a simple daily plan to get started. With just two referrals, your own daily subscription cost is covered by the platform's share, putting you in profit mode immediately.
                 </p>
             </div>
 

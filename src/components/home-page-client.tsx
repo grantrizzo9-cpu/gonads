@@ -48,15 +48,15 @@ const whyPartnerFeatures = [
 
 const incomePathSteps = [
     {
-        title: "Activate Your Trial",
-        description: "Pay a one-time activation fee (equal to one day's plan cost) to secure your server resources and start your trial.",
+        title: "Start Your Daily Plan",
+        description: "Choose your plan and make your first daily payment. There are no large upfront fees, just a simple daily subscription to get started.",
     },
     {
-        title: "Refer Two Users to Be Profitable",
+        title: "Refer Two & Become Profitable",
         description: "Share your unique affiliate link. Your daily plan cost is covered by the platform's 30% share from just two referrals on the same plan as you, putting you in profit mode.",
     },
     {
-        title: "Earn 70-75% Recurring Profit",
+        title: "Earn 70-75% Recurring Daily Profit",
         description: "You earn 70% of every recurring daily payment from all your referrals. After 10 referrals, this increases to 75%. Payouts are sent automatically to your payment provider.",
     },
 ];
@@ -69,12 +69,12 @@ const marketingGuides = [
   },
   {
     icon: TrendingUp,
-    title: "Plus Guides",
+    title: "Pro Guides",
     description: "Dive into content creation, email marketing, and web analytics to grow your audience.",
   },
   {
     icon: Rocket,
-    title: "Pro & Enterprise Guides",
+    title: "Premium Guides",
     description: "Master advanced SEO, PPC advertising, conversion optimization, and strategic partnerships to scale your income.",
   },
 ];
@@ -118,8 +118,8 @@ const faqs = [
     answer: "Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single day. We provide a scalable platform so your income can grow as large as your marketing efforts.",
   },
   {
-    question: "Can I get a refund on the activation fee?",
-    answer: "Yes. We offer a no-questions-asked refund on your one-time activation fee if you request it within 24 hours of joining, with one important condition: to be eligible for a refund, you must not have received any commission payouts from your referrals. If you have been paid out, a refund is not possible. If you decide it's not for you (and haven't received payouts), just let us know, and we'll process it with no hard feelings. Please note that if you choose to receive a refund, your account will be closed, and you will no longer be able to log in.",
+    question: "What is your refund policy?",
+    answer: "Given our daily payment model and the immediate value provided, we do not offer refunds on daily subscription fees. However, you can cancel your subscription at any time to prevent future charges. Our focus is on making you profitable quickly, so you never have to worry about refunds.",
   }
 ];
 

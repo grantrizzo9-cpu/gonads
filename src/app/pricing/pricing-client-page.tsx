@@ -10,24 +10,18 @@ import { useAuth } from "@/components/auth/auth-provider";
 import Link from "next/link";
 import { useSearchParams } from "next/navigation";
 
-// Mock function to get affiliate's plan index. In a real app, this would be a DB lookup.
 const getAffiliatePlanIndex = (username: string | undefined | null): number => {
     if (!username) {
-        // Default for direct visitors (no ref link): show all plans.
         return pricingTiers.length - 1;
     }
 
-    // Mock affiliate plans.
     const mockAffiliates: { [key: string]: string } = {
-        'hostproai': 'Diamond',
+        'hostproai': 'Premium',
+        'pro_user': 'Pro',
         'starter_user': 'Starter',
-        'bronze_user': 'Bronze',
-        'silver_user': 'Silver',
-        'gold_user': 'Gold',
-        'platinum_user': 'Platinum',
     };
 
-    const planName = mockAffiliates[username.toLowerCase()] || 'Gold'; // Default if affiliate not in mock list
+    const planName = mockAffiliates[username.toLowerCase()] || 'Pro';
     const planIndex = pricingTiers.findIndex(t => t.name === planName);
     return planIndex > -1 ? planIndex : pricingTiers.length - 1;
 };
@@ -40,14 +34,10 @@ export function PricingClientPage() {
     
     let visibleTiers: PricingTier[] = pricingTiers;
 
-    // If a user is not logged in, we check for a referral code to filter plans.
     if (!user) {
         const affiliatePlanIndex = getAffiliatePlanIndex(ref);
         visibleTiers = pricingTiers.slice(0, affiliatePlanIndex + 1);
     }
-    // If a user is logged in, they are either an affiliate or an admin,
-    // and they will be redirected to the /dashboard/upgrade page, so this page's
-    // filtering is primarily for new, prospective customers.
 
     return (
         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
@@ -62,7 +52,7 @@ export function PricingClientPage() {
                 <CardTitle className="font-headline text-2xl">{tier.name}</CardTitle>
                 <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-bold tracking-tighter">${tier.price.toFixed(2)}</span>
-                    <span className="text-muted-foreground">/ month (AUD)</span>
+                    <span className="text-muted-foreground">/ day (AUD)</span>
                 </div>
                 <CardDescription>{tier.description}</CardDescription>
                 </CardHeader>

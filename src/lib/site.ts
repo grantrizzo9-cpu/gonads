@@ -1,5 +1,4 @@
 
-
 export type Article = {
   slug: string;
   title: string;
@@ -168,120 +167,60 @@ const starterGuides = [
   'Guide: Infrastructure as Income',
 ];
 
-const bronzeGuides = [
+const proGuides = [
   ...starterGuides,
   'Guide: Roadmap to 10 Referrals (75% Bump)',
-];
-
-const silverGuides = [
-  ...bronzeGuides,
   'Guide: AI Content Velocity',
-];
-
-const goldGuides = [
-  ...silverGuides,
   'Guide: NVMe Edge SEO Advantage',
 ];
 
-const platinumGuides = [
-  ...goldGuides,
+const premiumGuides = [
+  ...proGuides,
   'Guide: Daily Cashflow Management',
-];
-
-const diamondGuides = [
-  ...platinumGuides,
   'Guide: 1-Click Niche Site Scaling',
 ];
 
 export const pricingTiers: PricingTier[] = [
   {
-    id: 'starter',
+    id: 'starter_daily',
     name: 'Starter',
-    price: 29.95,
-    description: 'For marketers starting their journey.',
-    stripePaymentLink: 'https://buy.stripe.com/test_bJe7sMfaWdM06CX3Y99k400',
+    price: 2.99,
+    description: 'Essential tools for those starting their affiliate marketing journey.',
+    stripePaymentLink: 'https://buy.stripe.com/test_bIYg1S3se1Ze4iA144',
     features: [
-      '1 Hosted Site',
+      '5 Hosted Sites',
       'NVMe Edge Storage',
-      'Basic AI Tools (Ad Copy)',
-      '70% Commission Rate',
+      'AI Ad Copy Generator',
       ...starterGuides,
     ],
   },
   {
-    id: 'bronze',
-    name: 'Bronze',
-    price: 49.95,
-    description: 'For marketers expanding their portfolio.',
-    stripePaymentLink: 'https://buy.stripe.com/test_bJeaEY2oa23i0ez52d9k401',
+    id: 'pro_daily',
+    name: 'Pro',
+    price: 4.99,
+    description: 'For serious marketers ready to scale their content and earnings.',
+    stripePaymentLink: 'https://buy.stripe.com/test_aEUcPKd8S9rCgyIeUY',
     features: [
-      '5 Hosted Sites',
+      '25 Hosted Sites',
       'NVMe Edge Storage',
-      'AI Blog, Article & Website Creation',
-      '70% Commission Rate',
-      ...bronzeGuides,
-    ],
-  },
-  {
-    id: 'silver',
-    name: 'Silver',
-    price: 99.95,
-    description: 'For marketers expanding their portfolio.',
-    stripePaymentLink: 'https://buy.stripe.com/test_14A5kE6Eq9vK1iD66h9k402',
-    features: [
-      '15 Hosted Sites',
-      'NVMe Edge Storage',
-      'AI Blog, Article & Website Creation',
-      '70% Commission Rate',
+      'AI Blog & Website Generator',
       'Priority Support',
-      ...silverGuides,
-    ],
-  },
-  {
-    id: 'gold',
-    name: 'Gold',
-    price: 149.95,
-    description: 'For serious marketers scaling their operations.',
-    stripePaymentLink: 'https://buy.stripe.com/test_5kQ4gA1k60Zef9teCN9k403',
-    features: [
-      '50 Hosted Sites',
-      'NVMe Edge Storage',
-      'AI Blog, Article & Website Creation',
-      '75% Commission Rate',
-      'Priority Support',
-      ...goldGuides,
+      ...proGuides,
     ],
     isPopular: true,
   },
   {
-    id: 'platinum',
-    name: 'Platinum',
-    price: 299.95,
-    description: 'For affiliate teams managing multiple brands.',
-    stripePaymentLink: 'https://buy.stripe.com/test_dRm3cw8My23i3qL9it9k404',
-    features: [
-      '150 Hosted Sites',
-      'NVMe Edge Storage',
-      'AI Blog, Article & Website Creation',
-      '75% Commission Rate',
-      'Priority Support',
-      ...platinumGuides,
-    ],
-  },
-  {
-    id: 'diamond',
-    name: 'Diamond',
-    price: 499.00,
-    description: 'For agencies and large-scale businesses.',
-    stripePaymentLink: 'https://buy.stripe.com/test_7sY6oI9QC7nCe5pcuF9k405',
+    id: 'premium_daily',
+    name: 'Premium',
+    price: 9.99,
+    description: 'The ultimate suite for agencies and large-scale affiliate businesses.',
+    stripePaymentLink: 'https://buy.stripe.com/test_8wM4gAgcUgJUeCOfZ3',
     features: [
       'Unlimited Hosted Sites',
       'NVMe Edge Storage',
       'Full AI Suite with Video Generation',
-      '75% Commission Rate',
       'Dedicated Account Manager',
-      'Whitelabel Solution',
-      ...diamondGuides,
+      ...premiumGuides,
     ],
   },
 ];

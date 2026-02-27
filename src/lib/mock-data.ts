@@ -9,31 +9,31 @@ export const payoutHistory = [
 
 export const platformReferrals = [
   // Referral for rentariz to make testing easier
-  { referredUser: 'Initial Follower', email: 'initial.follower@example.com', affiliate: 'rentariz', plan: 'Gold', status: 'activated' },
+  { referredUser: 'Initial Follower', email: 'initial.follower@example.com', affiliate: 'rentariz', plan: 'Pro', status: 'activated' },
 
   // Referrals for admin's affiliate username 'rizzosai'
-  { referredUser: 'Alice', email: 'alice@example.com', affiliate: 'rizzosai', plan: 'Gold', status: 'activated' },
+  { referredUser: 'Alice', email: 'alice@example.com', affiliate: 'rizzosai', plan: 'Pro', status: 'activated' },
   { referredUser: 'Bob', email: 'bob@example.com', affiliate: 'rizzosai', plan: 'Starter', status: 'pending' },
-  { referredUser: 'Charlie', email: 'charlie@example.com', affiliate: 'rizzosai', plan: 'Silver', status: 'activated' },
+  { referredUser: 'Charlie', email: 'charlie@example.com', affiliate: 'rizzosai', plan: 'Starter', status: 'activated' },
   
   // Referrals for a new mock affiliate 'power_affiliate' to demonstrate the 75% commission tier
-  { referredUser: 'Dave', email: 'dave@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },
-  { referredUser: 'Eve', email: 'eve@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },
-  { referredUser: 'Frank', email: 'frank@example.com', affiliate: 'power_affiliate', plan: 'Platinum', status: 'activated' },
-  { referredUser: 'Grace', email: 'grace@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },
-  { referredUser: 'Heidi', email: 'heidi@example.com', affiliate: 'power_affiliate', plan: 'Silver', status: 'activated' },
-  { referredUser: 'Ivan', email: 'ivan@example.com', affiliate: 'power_affiliate', plan: 'Bronze', status: 'activated' },
-  { referredUser: 'Judy', email: 'judy@example.com', affiliate: 'power_affiliate', plan: 'Silver', status: 'activated' },
-  { referredUser: 'Mallory', email: 'mallory@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },
+  { referredUser: 'Dave', email: 'dave@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'activated' },
+  { referredUser: 'Eve', email: 'eve@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'activated' },
+  { referredUser: 'Frank', email: 'frank@example.com', affiliate: 'power_affiliate', plan: 'Premium', status: 'activated' },
+  { referredUser: 'Grace', email: 'grace@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'activated' },
+  { referredUser: 'Heidi', email: 'heidi@example.com', affiliate: 'power_affiliate', plan: 'Starter', status: 'activated' },
+  { referredUser: 'Ivan', email: 'ivan@example.com', affiliate: 'power_affiliate', plan: 'Starter', status: 'activated' },
+  { referredUser: 'Judy', email: 'judy@example.com', affiliate: 'power_affiliate', plan: 'Starter', status: 'activated' },
+  { referredUser: 'Mallory', email: 'mallory@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'activated' },
   { referredUser: 'Nancy', email: 'nancy@example.com', affiliate: 'power_affiliate', plan: 'Starter', status: 'activated' },
-  { referredUser: 'Oscar', email: 'oscar@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },
-  { referredUser: 'Peggy', email: 'peggy@example.com', affiliate: 'power_affiliate', plan: 'Diamond', status: 'activated' },
-  { referredUser: 'Trent', email: 'trent@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'pending' },
+  { referredUser: 'Oscar', email: 'oscar@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'activated' },
+  { referredUser: 'Peggy', email: 'peggy@example.com', affiliate: 'power_affiliate', plan: 'Premium', status: 'activated' },
+  { referredUser: 'Trent', email: 'trent@example.com', affiliate: 'power_affiliate', plan: 'Pro', status: 'pending' },
 
   // Original mock data
-  { referredUser: 'fdwy', email: 'fdwy@gmail.com', affiliate: 'pbEPXXC42KYATeIrkIu8Uy16FaF3', plan: 'Silver', status: 'pending' },
-  { referredUser: 'dwe', email: 'dwe@gmail.com', affiliate: 'pbEPXXC42KYATeIrkIu8Uy16FaF3', plan: 'Gold', status: 'activated' },
+  { referredUser: 'fdwy', email: 'fdwy@gmail.com', affiliate: 'pbEPXXC42KYATeIrkIu8Uy16FaF3', plan: 'Starter', status: 'pending' },
+  { referredUser: 'dwe', email: 'dwe@gmail.com', affiliate: 'pbEPXXC42KYATeIrkIu8Uy16FaF3', plan: 'Pro', status: 'activated' },
   { referredUser: 'johndoe', email: 'johndoe@gmail.com', affiliate: 'aBCdEFgHiJkLmNoPqRsTuVwXyZ1', plan: 'Starter', status: 'activated' },
-  { referredUser: 'janedoe', email: 'janedoe@gmail.com', affiliate: 'aBCdEFgHiJkLmNoPqRsTuVwXyZ1', plan: 'Silver', status: 'pending' },
-  { referredUser: 'testuser', email: 'testuser@gmail.com', affiliate: 'aBCdEFgHiJkLmNoPqRsTuVwXyZ1', plan: 'Platinum', status: 'activated' },
+  { referredUser: 'janedoe', email: 'janedoe@gmail.com', affiliate: 'aBCdEFgHiJkLmNoPqRsTuVwXyZ1', plan: 'Starter', status: 'pending' },
+  { referredUser: 'testuser', email: 'testuser@gmail.com', affiliate: 'aBCdEFgHiJkLmNoPqRsTuVwXyZ1', plan: 'Premium', status: 'activated' },
 ];

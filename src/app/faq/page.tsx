@@ -31,9 +31,9 @@ export default function FAQPage() {
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
-              <AccordionTrigger className="text-lg">How does the free trial work?</AccordionTrigger>
+              <AccordionTrigger className="text-lg">How does the pricing and trial work?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                To start your trial, you pay a one-time activation fee. This secures your server resources and goes 100% to the platform owner. After that, you get a trial period to use all the tools and start referring others. Once your trial ends, your daily subscription cost is covered by the platform's 30% share from just two referrals on the same plan as you—meaning you only ever have to pay once to be in profit.
+                We use a simple, transparent daily subscription model with no long-term contracts. There is no traditional "free trial." Your subscription begins with your first daily payment. Our model is designed to make you profitable quickly: the platform's 30% share from just two referrals on the same daily plan as you is enough to cover your own daily subscription cost. This means you can be in profit mode with just two sales.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
@@ -45,7 +45,7 @@ export default function FAQPage() {
             <AccordionItem value="item-4">
               <AccordionTrigger className="text-lg">What are the different AI tools and who gets them?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                Our AI studio features are tiered. The Starter plan gives you AI Ad Copy generation. The Bronze plan and up unlocks the powerful AI Blog, Article, and Website Creation tools. The ultimate tool, AI Video Generation, is exclusively available for our Diamond plan members, allowing them to create engaging video scripts and content effortlessly. All other plans (Silver, Gold, Platinum) have access to the full AI content suite except for video generation.
+                Our AI studio features are tiered to provide increasing value. The Starter plan gives you our powerful AI Ad Copy generator. The Pro plan unlocks the AI Blog and Website Creation tools. The ultimate tool, AI Video Generation, is exclusively available for our Premium plan members, allowing them to create engaging video scripts and content effortlessly.
               </AccordionContent>
             </AccordionItem>
              <AccordionItem value="item-5">

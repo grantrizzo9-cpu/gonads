@@ -36,7 +36,7 @@ const defaultMockUser: User = {
   displayName: 'Platform Admin',
   username: 'rizzosai',
   isPaid: true,
-  plan: 'Diamond',
+  plan: 'Premium',
   referrer: null,
   isFriendAndFamily: true,
 };
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             displayName: 'Rentariz',
             username: 'rentariz',
             isPaid: true,
-            plan: 'Diamond',
+            plan: 'Premium',
             isFriendAndFamily: false,
             referrer: null,
         };
@@ -186,7 +186,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
                 ...u,
                 isFriendAndFamily: isFamily,
                 isPaid: isFamily, // isPaid is true if they are family (free access)
-                plan: isFamily ? 'Diamond' : undefined,
+                plan: isFamily ? 'Premium' : undefined,
                 isNewlyActivatedFamily: isFamily, // Set flag to true on activation, false on deactivation
             };
         }
