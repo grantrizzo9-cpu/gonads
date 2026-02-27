@@ -91,10 +91,10 @@ export const DomainsProvider = ({ children }: { children: ReactNode }) => {
     
     domainName = domainName.toLowerCase().replace(/^(https?:\/\/)?(www\.)?/, '').split('/')[0];
 
-    // Simulate a unique verification CNAME record from the hosting provider
-    const uniqueIdPart1 = Math.random().toString(36).substring(2, 10);
-    const verificationHost = `_acme-challenge.${uniqueIdPart1}`;
-    const verificationValue = `${Math.random().toString(36).substring(2, 15)}.authorize.certificatemanager.goog.`;
+    // Simulate a unique verification CNAME record from the hosting provider, matching the user's example structure
+    const randomHex = (size: number) => [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+    const verificationHost = `_acme-challenge_${randomHex(12)}`;
+    const verificationValue = `${randomHex(8)}-${randomHex(4)}-${randomHex(4)}-${randomHex(4)}-${randomHex(12)}.authorize.certificatemanager.goog.`;
 
 
     const newDomain: Domain = {
@@ -129,7 +129,8 @@ export const DomainsProvider = ({ children }: { children: ReactNode }) => {
     
     await new Promise(resolve => setTimeout(resolve, 1500)); // Simulate network delay
 
-    // Simulate a successful verification since the user will use a real DNS checker.
+    // This simulation marks the records as found so the user can proceed in the UI.
+    // The user will use the external DNS checker for the real verification.
     const updatedRecords = domain.dnsRecords.map(record => {
       return { ...record, status: 'found' } as DnsRecord;
     });

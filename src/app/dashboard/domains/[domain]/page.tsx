@@ -101,10 +101,14 @@ export default function ManageDomainPage() {
         );
     }
     
-    const handleVerify = async () => {
+    const handleRefreshStatus = async () => {
         setIsVerifying(true);
         await verifyDomainDns(domain.id);
         setIsVerifying(false);
+        toast({
+            title: "Dashboard Status Refreshed",
+            description: "The domain status has been updated in your dashboard."
+        });
     };
 
     const handleDeploy = async () => {
@@ -170,16 +174,16 @@ export default function ManageDomainPage() {
                             <AlertCircle className="h-4 w-4" />
                             <AlertTitle>Action Required: Connect Your Domain</AlertTitle>
                             <AlertDescription>
-                                Your domain is not yet connected. Add all the required DNS records at your domain provider (e.g., GoDaddy, Namecheap), then click the verification button below. It can take some time for DNS changes to propagate.
+                                Your domain is not yet connected. Add all the required DNS records at your domain provider, then use the "Live DNS Check" links to confirm they are active globally. This can take some time.
                             </AlertDescription>
                         </Alert>
                     ) : (
                          <Alert>
-                            <ShieldCheck className="h-4 w-4" />
-                            <AlertTitle>Domain Connected! SSL is Provisioning.</AlertTitle>
+                            <Info className="h-4 w-4" />
+                            <AlertTitle>DNS Connected! SSL is Provisioning.</AlertTitle>
                             <AlertDescription>
-                                 <p>Great news! Your DNS records are correctly configured. If you are seeing a "Not Secure" warning in your browser, please be patient.</p>
-                                 <p className="mt-2">A free SSL certificate is being provisioned automatically. This process can take up to a few hours. Once complete, your site will be secure.</p>
+                                 <p>Great news! Our system has confirmed your DNS records. If you see a "Not Secure" warning in your browser, please be patient.</p>
+                                 <p className="mt-2">A free SSL certificate is being provisioned automatically. This can take up to a few hours. You can use the "Check SSL Status" button above to monitor its progress.</p>
                             </AlertDescription>
                         </Alert>
                     )}
@@ -188,20 +192,25 @@ export default function ManageDomainPage() {
                     <div>
                         <h3 className="font-semibold text-lg mb-2">Step 1: Add DNS Records</h3>
                         <p className="text-muted-foreground mb-4">
-                            Log in to your domain registrar and add the following records exactly as they appear. One of the CNAME records is a unique verification code for your SSL certificate.
+                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following records exactly as they appear. After adding them, use the "Live DNS Check" links to verify they are active.
                         </p>
                         <div className="space-y-3 rounded-lg bg-muted p-4 border">
                            {domain.dnsRecords.map((record, index) => (
                                <div key={index}>
-                                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between font-mono text-sm">
-                                        <div className="break-all">
+                                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                        <div className="break-all font-mono text-sm">
                                             <p className="font-bold">{record.type} Record:</p>
                                             <p><strong className="text-muted-foreground font-medium">Host:</strong> {record.host}</p>
                                             <p><strong className="text-muted-foreground font-medium">Value:</strong> {record.value}</p>
                                         </div>
-                                        <div className="flex items-center gap-2 text-xs font-sans mt-2 sm:mt-0 sm:ml-4 flex-shrink-0">
+                                        <div className="flex items-center gap-2 text-xs font-sans mt-2 sm:mt-0 flex-shrink-0">
                                             {getStatusIcon(record.status)}
                                             <span className="capitalize">{record.status}</span>
+                                            <Button variant="outline" size="sm" asChild>
+                                                <a href={`https://dnschecker.org/#${record.type}/${record.host === '@' ? domain.name : record.host + '.' + domain.name}`} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                                    Live DNS Check <ExternalLink className="ml-2 h-3 w-3"/>
+                                                </a>
+                                            </Button>
                                         </div>
                                    </div>
                                    {index < domain.dnsRecords.length - 1 && <hr className="border-border my-3"/>}
@@ -210,14 +219,14 @@ export default function ManageDomainPage() {
                         </div>
                     </div>
                      <div>
-                        <h3 className="font-semibold text-lg mb-2">Step 2: Verify Configuration</h3>
+                        <h3 className="font-semibold text-lg mb-2">Step 2: Refresh Dashboard Status</h3>
                          <p className="text-muted-foreground mb-4">
-                           After adding the records in your registrar, click the button below to check the connection. Note: DNS changes can sometimes take time to propagate across the internet.
+                           After you have used the "Live DNS Check" links and confirmed all records are active, click the button below. This will refresh your dashboard and unlock the deployment step.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Button variant="outline" onClick={handleVerify} disabled={isVerifying}>
+                            <Button variant="outline" onClick={handleRefreshStatus} disabled={isVerifying}>
                                 {isVerifying ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <RefreshCw className="mr-2"/>}
-                                 {isVerifying ? 'Verifying...' : 'Verify DNS Records'}
+                                 {isVerifying ? 'Refreshing...' : 'Refresh Status'}
                             </Button>
                         </div>
                     </div>
@@ -227,7 +236,7 @@ export default function ManageDomainPage() {
             <Card>
                 <CardHeader>
                     <CardTitle className="font-headline flex items-center gap-2"><Link2 />Step 3: Deploy a Website</CardTitle>
-                    <CardDescription>Once your domain is verified, select a generated website from your collection to make it live.</CardDescription>
+                    <CardDescription>Once your domain status is 'verified', select a generated website from your collection to make it live.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     {!allRecordsFound && (
@@ -250,7 +259,7 @@ export default function ManageDomainPage() {
                     )}
                      {allRecordsFound && generatedWebsites.length > 0 && (
                         <Alert className="mb-6 border-primary text-primary-foreground">
-                            <Info className="h-4 w-4 text-primary" />
+                            <ShieldCheck className="h-4 w-4 text-primary" />
                             <AlertTitle className="font-bold text-primary">Final Step: Deploy Your Site</AlertTitle>
                             <AlertDescription className="text-primary-foreground/90">
                                 Your DNS is connected! Now, choose a website from the dropdown below and click 'Deploy' to make it live on the internet.
