@@ -43,8 +43,12 @@ export function StripeCheckoutButton({ tier }: { tier: PricingTier }) {
                 url.searchParams.append('metadata[endorsely_referral]', endorselyReferral);
             }
 
-            // Redirect the user to the Stripe Payment Link
-            window.location.href = url.toString();
+            // Redirect the user to the Stripe Payment Link at the top level
+            if (window.top) {
+              window.top.location.href = url.toString();
+            } else {
+              window.location.href = url.toString();
+            }
 
         } catch (error) {
             console.error("Stripe checkout error:", error);
