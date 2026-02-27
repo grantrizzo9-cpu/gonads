@@ -1,12 +1,8 @@
-# Settings to manage and configure a Firebase App Hosting backend.
-# https://firebase.google.com/docs/app-hosting/configure
-
 backend:
   runConfig:
     memoryMiB: 2048
     maxInstances: 1
     timeoutSeconds: 600
-
 hosting:
   site: studio-9195964548-d846f
   customDomains:
