@@ -146,25 +146,7 @@ export default function ManageDomainPage() {
              <Button variant="ghost" asChild>
                 <Link href="/dashboard/domains"><ArrowLeft className="mr-2"/> Back to Hosting Management</Link>
             </Button>
-
-            {allRecordsFound ? (
-                 <Alert variant="default" className="bg-green-50 border-green-200 text-green-800 dark:bg-green-950 dark:border-green-800 dark:text-green-300 [&>svg]:text-green-600">
-                    <CheckCircle2 className="h-4 w-4" />
-                    <AlertTitle className="font-bold">Domain Connected!</AlertTitle>
-                    <AlertDescription>
-                       All DNS records are pointing to our servers correctly. You can now deploy one of your generated websites to this domain.
-                    </AlertDescription>
-                </Alert>
-            ) : (
-                <Alert variant="destructive">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertTitle>Action Required</AlertTitle>
-                    <AlertDescription>
-                       One or more DNS records are missing or incorrect. Please configure them at your domain registrar and click "Verify DNS" to check again.
-                    </AlertDescription>
-                </Alert>
-            )}
-
+            
             <Card>
                 <CardHeader>
                     <div className="flex justify-between items-start">
@@ -175,17 +157,31 @@ export default function ManageDomainPage() {
                             </CardTitle>
                             <CardDescription>Follow the steps below to connect your domain.</CardDescription>
                         </div>
-                        <Button variant="outline" onClick={handleVerify} disabled={isVerifying}>
-                            {isVerifying ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <RefreshCw className="mr-2"/>}
-                             Verify DNS
+                         <Button asChild variant="outline">
+                            <a href={`https://dnschecker.org/#A/${domain.name}`} target="_blank" rel="noopener noreferrer">
+                                Check DNS Status <ExternalLink className="ml-2"/>
+                            </a>
                         </Button>
                     </div>
                 </CardHeader>
                 <CardContent className="space-y-6">
+                     <Alert variant="default">
+                        <Clock className="h-4 w-4" />
+                        <AlertTitle>Connecting Your Domain: What to Expect</AlertTitle>
+                        <AlertDescription>
+                            <p>After you configure your DNS records, two things need to happen automatically. This can take time.</p>
+                            <ul className="list-disc list-inside mt-2 space-y-1">
+                                <li><strong>DNS Propagation (up to a few hours):</strong> Your new DNS settings need to spread across the internet. During this time, you will see a <strong>"Site Not Found"</strong> error. This is normal.</li>
+                                <li><strong>SSL Certificate Provisioning (up to an hour):</strong> After your DNS propagates, we automatically install a free SSL certificate. Until this is complete, your site may show a <strong>"Not Secure"</strong> warning. This is also normal.</li>
+                            </ul>
+                            <p className="mt-2 font-semibold">Please be patient. These messages will disappear on their own once the automated setup is complete.</p>
+                        </AlertDescription>
+                    </Alert>
+
                     <div>
                         <h3 className="font-semibold text-lg mb-2">Step 1: Configure Your DNS Records</h3>
                         <p className="text-muted-foreground mb-4">
-                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following <strong>three</strong> DNS records. If your registrar uses '@' for the root domain, use that for the 'Host' field of the A records.
+                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following <strong>three</strong> DNS records. Use '@' for the root domain if your registrar requires it. The "Verify DNS" button here is a simulator for your convenience; the real check happens on the global internet.
                         </p>
                         <div className="space-y-3 rounded-lg bg-muted p-4 border">
                            {domain.dnsRecords.map((record, index) => (
@@ -205,45 +201,18 @@ export default function ManageDomainPage() {
                                </div>
                            ))}
                         </div>
-                        {!allRecordsFound && (
-                            <Alert variant="destructive" className="mt-4">
-                                <AlertCircle className="h-4 w-4" />
-                                <AlertTitle>Important Tip!</AlertTitle>
-                                <AlertDescription>
-                                    <p>If your `www` CNAME record isn't working, it's likely because a conflicting `A` record for `www` already exists. Most registrars create this automatically.</p>
-                                    <p className="mt-2 font-bold">You must delete any `A` record with the host `www` before the `CNAME` record will work correctly.</p>
-                                </AlertDescription>
-                            </Alert>
-                        )}
-                        <Alert variant="default" className="mt-4">
-                            <Info className="h-4 w-4" />
-                            <AlertTitle>Why are there three records?</AlertTitle>
-                            <AlertDescription>
-                                <ul className="list-disc list-inside space-y-2">
-                                    <li>The <strong>two 'A' records</strong> point your main domain (the part without 'www') directly to our server's physical IP addresses for reliability.</li>
-                                    <li>The <strong>one 'CNAME' record</strong> tells the internet that your 'www' subdomain is just an alias for your main domain.</li>
-                                </ul>
-                                <p className="mt-2">This setup ensures that visitors arrive at your site correctly whether they type <strong>{domain.name}</strong> or <strong>www.{domain.name}</strong> into their browser.</p>
-                            </AlertDescription>
-                        </Alert>
                     </div>
                      <div>
-                        <h3 className="font-semibold text-lg mb-2">Step 2: Wait for DNS Propagation</h3>
-                        <p className="text-muted-foreground mb-4">
-                           After adding the records, it can take time (from a few minutes to several hours) for the changes to take effect globally. Clicking "Verify DNS" too soon might show errors even if your setup is correct.
+                        <h3 className="font-semibold text-lg mb-2">Step 2: Verify and Deploy</h3>
+                         <p className="text-muted-foreground mb-4">
+                           Once you've confirmed your DNS is propagating with an external tool, you can deploy a website. The simulated "Verify" button below will turn green to enable the "Deploy" button.
                         </p>
-                         <Alert>
-                            <Clock className="h-4 w-4" />
-                            <AlertTitle>Be Patient!</AlertTitle>
-                            <AlertDescription>
-                                DNS is not instant. If you just saved your records, please wait at least 30-60 minutes before clicking "Verify DNS". You can use a third-party tool like DNS Checker to see the live status of your domain's propagation around the world.
-                            </AlertDescription>
-                        </Alert>
-                        <Button asChild variant="outline" className="mt-4">
-                            <a href={`https://dnschecker.org/#A/${domain.name}`} target="_blank" rel="noopener noreferrer">
-                                Check DNS Status with dnschecker.org <ExternalLink className="ml-2"/>
-                            </a>
-                        </Button>
+                        <div className="flex flex-col sm:flex-row gap-4">
+                            <Button variant="outline" onClick={handleVerify} disabled={isVerifying}>
+                                {isVerifying ? <Loader2 className="mr-2 h-4 w-4 animate-spin"/> : <RefreshCw className="mr-2"/>}
+                                 Simulate DNS Verification
+                            </Button>
+                        </div>
                     </div>
                 </CardContent>
             </Card>
@@ -251,7 +220,7 @@ export default function ManageDomainPage() {
             <Card>
                 <CardHeader>
                     <CardTitle className="font-headline flex items-center gap-2"><Link2 />Step 3: Deploy a Website</CardTitle>
-                    <CardDescription>Once your domain is verified, select a generated website from your collection to deploy to this domain.</CardDescription>
+                    <CardDescription>Once your domain is verified (the 'Deploy' button is enabled), select a generated website from your collection to deploy to this domain.</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col sm:flex-row gap-4 max-w-lg">
@@ -309,5 +278,7 @@ export default function ManageDomainPage() {
         </div>
     );
 }
+
+    
 
     
