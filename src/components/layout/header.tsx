@@ -9,6 +9,7 @@ import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/auth/auth-provider';
 
 const navLinks = [
+  { href: '/blog', label: 'Blog' },
   { href: '/pricing', label: 'Pricing' },
 ];
 
