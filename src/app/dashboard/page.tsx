@@ -53,7 +53,7 @@ const chartConfig = {
 };
 
 function AdminDashboard() {
-  const { allUsers, setFamilyStatus } = useAuth();
+  const { allUsers, setFamilyStatus, user } = useAuth();
   const { toast } = useToast();
 
   const handleActivate = (email: string, displayName: string) => {
@@ -61,6 +61,15 @@ function AdminDashboard() {
     toast({
         title: "Family Member Activated!",
         description: `${displayName} has been granted free Diamond plan access.`,
+    });
+  };
+  
+  const copyToClipboard = (link: string) => {
+    if (!link) return;
+    navigator.clipboard.writeText(link);
+    toast({
+      title: 'Copied to clipboard!',
+      description: 'Your affiliate link has been copied.',
     });
   };
 
@@ -73,6 +82,41 @@ function AdminDashboard() {
         <h1 className="text-3xl font-bold font-headline">Admin Dashboard</h1>
         <p className="text-muted-foreground">Platform-wide user management.</p>
       </div>
+      
+      <Card>
+        <CardHeader>
+          <CardTitle className="font-headline">How to Test the Customer Journey</CardTitle>
+          <CardDescription>Follow these steps to experience the exact process your customers will go through.</CardDescription>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          <ol className="list-decimal list-inside space-y-6">
+            <li>
+              <strong>Log Out of Your Admin Account</strong>
+              <p className="text-muted-foreground text-sm pl-6">Click your avatar in the top-right corner and select "Log out".</p>
+            </li>
+            <li>
+              <strong>Use Your Main Affiliate Link</strong>
+              <p className="text-muted-foreground text-sm pl-6">This link directs customers to the main platform homepage, with your referral code attached.</p>
+              <div className="flex gap-2 mt-2 pl-6">
+                <Input readOnly value={`https://rizzosai.com/?ref=${user?.username}`} className="bg-muted" />
+                <Button variant="outline" size="sm" onClick={() => copyToClipboard(`https://rizzosai.com/?ref=${user?.username}`)}>Copy</Button>
+              </div>
+            </li>
+            <li>
+              <strong>Sign Up as a New "Customer"</strong>
+              <p className="text-muted-foreground text-sm pl-6">On the homepage, click "Sign Up" and register using a different email address (e.g., a personal email or an alias like `yourname+test1@gmail.com`).</p>
+            </li>
+            <li>
+              <strong>Experience the Activation Flow</strong>
+              <p className="text-muted-foreground text-sm pl-6">You will be logged in as the new user and taken to their dashboard. There, you'll see the "Activate Your Plan" page, which is the same payment process your real customers will follow.</p>
+            </li>
+          </ol>
+        </CardContent>
+        <CardFooter>
+            <p className="text-sm text-muted-foreground">To switch back, just log out of the test customer account and log back in with your admin email.</p>
+        </CardFooter>
+      </Card>
+
 
       <Card>
         <CardHeader>
