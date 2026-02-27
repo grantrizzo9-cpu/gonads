@@ -1,4 +1,3 @@
-
 'use client';
 
 import { Suspense } from "react";
@@ -23,7 +22,7 @@ export default function PrivacyPage() {
 
             <h2 className="font-headline">How Do We Use Your Personal Information?</h2>
             <p>We use the Order Information that we collect generally to fulfill any orders placed through the Site (including processing your payment information and providing you with an account). Additionally, we use this Order Information to:</p>
-            <ul class="list-disc list-inside">
+            <ul className="list-disc list-inside">
                 <li>Communicate with you;</li>
                 <li>Screen our orders for potential risk or fraud; and</li>
                 <li>When in line with the preferences you have shared with us, provide you with information or advertising relating to our products or services.</li>
