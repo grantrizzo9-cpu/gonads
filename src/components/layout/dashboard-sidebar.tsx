@@ -31,6 +31,7 @@ import {
   SidebarGroup,
   SidebarGroupLabel
 } from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
 
 
 const navLinks = [
@@ -60,12 +61,23 @@ export function DashboardSidebar() {
   const pathname = usePathname();
   const { user } = useAuth();
   const isAdmin = user?.email === 'rentapog@gmail.com';
+  const hasAccess = !!user?.isPaid || !!user?.isFriendAndFamily;
 
   const isActive = (href: string) => {
     return pathname === href || (href !== '/dashboard' && pathname.startsWith(href));
   }
 
   const linksToDisplay = isAdmin ? adminNavLinks : navLinks;
+  
+  // List of links to disable for unpaid users
+  const protectedLinks = [
+      "/dashboard/ai-content",
+      "/dashboard/website",
+      "/dashboard/domains",
+      "/dashboard/strategy-center",
+      "/dashboard/referrals",
+      "/dashboard/payouts",
+  ];
 
   return (
     <Sidebar collapsible="icon">
@@ -83,16 +95,21 @@ export function DashboardSidebar() {
 
         <SidebarContent>
             <SidebarMenu>
-                {linksToDisplay.map(link => (
-                    <SidebarMenuItem key={link.href}>
-                        <SidebarMenuButton asChild isActive={isActive(link.href)} tooltip={link.label}>
-                            <Link href={link.href}>
-                                <link.icon/>
-                                <span>{link.label}</span>
-                            </Link>
-                        </SidebarMenuButton>
-                    </SidebarMenuItem>
-                ))}
+                {linksToDisplay.map(link => {
+                    const isProtected = protectedLinks.some(p => link.href.startsWith(p));
+                    const isDisabled = !isAdmin && !hasAccess && isProtected;
+                    
+                    return (
+                        <SidebarMenuItem key={link.href}>
+                            <SidebarMenuButton asChild isActive={isActive(link.href)} tooltip={link.label} disabled={isDisabled}>
+                                <Link href={isDisabled ? "#" : link.href} className={cn(isDisabled && "pointer-events-none")}>
+                                    <link.icon/>
+                                    <span>{link.label}</span>
+                                </Link>
+                            </SidebarMenuButton>
+                        </SidebarMenuItem>
+                    );
+                })}
             </SidebarMenu>
             
             {isAdmin && (
