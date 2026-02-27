@@ -26,7 +26,7 @@ export default function ReferralsPage() {
                         <TableHead>Customer</TableHead>
                         <TableHead>Plan</TableHead>
                         <TableHead>Status</TableHead>
-                        <TableHead className="text-right">Daily Commission</TableHead>
+                        <TableHead className="text-right">Est. Monthly Commission</TableHead>
                     </TableRow>
                     </TableHeader>
                     <TableBody>

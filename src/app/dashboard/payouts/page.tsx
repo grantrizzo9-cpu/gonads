@@ -13,13 +13,13 @@ export default function PayoutsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="font-headline text-2xl flex items-center gap-2"><Wallet/>Payout Settings</CardTitle>
-          <CardDescription>Configure your payout details to receive daily commissions. Payouts are processed automatically every 24 hours via Stripe Connect.</CardDescription>
+          <CardDescription>Configure your payout details to receive recurring commissions. Payouts are processed automatically every month via Stripe Connect.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 max-w-md">
              <div>
                 <Label htmlFor="payout-email">Payout Method</Label>
-                <p className="text-sm text-muted-foreground">Connect your Stripe account to enable automated daily payouts. This is a one-time setup.</p>
+                <p className="text-sm text-muted-foreground">Connect your Stripe account to enable automated monthly payouts. This is a one-time setup.</p>
              </div>
              <Button disabled>Connect with Stripe (Coming Soon)</Button>
           </div>
@@ -32,7 +32,7 @@ export default function PayoutsPage() {
       <Card>
         <CardHeader>
           <CardTitle>Payout History</CardTitle>
-          <CardDescription>A log of your recent daily commission payouts.</CardDescription>
+          <CardDescription>A log of your recent monthly commission payouts.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>

@@ -197,7 +197,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'starter',
     name: 'Starter',
-    price: 9.95,
+    price: 29.95,
     description: 'For marketers starting their journey.',
     stripePaymentLink: 'https://buy.stripe.com/test_bJe7sMfaWdM06CX3Y99k400',
     features: [
@@ -211,7 +211,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'bronze',
     name: 'Bronze',
-    price: 29.95,
+    price: 49.95,
     description: 'For marketers expanding their portfolio.',
     stripePaymentLink: 'https://buy.stripe.com/test_bJeaEY2oa23i0ez52d9k401',
     features: [
@@ -225,7 +225,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'silver',
     name: 'Silver',
-    price: 49.95,
+    price: 99.95,
     description: 'For marketers expanding their portfolio.',
     stripePaymentLink: 'https://buy.stripe.com/test_14A5kE6Eq9vK1iD66h9k402',
     features: [
@@ -240,7 +240,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'gold',
     name: 'Gold',
-    price: 99.95,
+    price: 149.95,
     description: 'For serious marketers scaling their operations.',
     stripePaymentLink: 'https://buy.stripe.com/test_5kQ4gA1k60Zef9teCN9k403',
     features: [
@@ -256,7 +256,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'platinum',
     name: 'Platinum',
-    price: 199.95,
+    price: 299.95,
     description: 'For affiliate teams managing multiple brands.',
     stripePaymentLink: 'https://buy.stripe.com/test_dRm3cw8My23i3qL9it9k404',
     features: [

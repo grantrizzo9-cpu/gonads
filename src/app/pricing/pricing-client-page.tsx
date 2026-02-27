@@ -62,7 +62,7 @@ export function PricingClientPage() {
                 <CardTitle className="font-headline text-2xl">{tier.name}</CardTitle>
                 <div className="flex items-baseline gap-2">
                     <span className="text-4xl font-bold tracking-tighter">${tier.price.toFixed(2)}</span>
-                    <span className="text-muted-foreground">/ day (AUD)</span>
+                    <span className="text-muted-foreground">/ month (AUD)</span>
                 </div>
                 <CardDescription>{tier.description}</CardDescription>
                 </CardHeader>

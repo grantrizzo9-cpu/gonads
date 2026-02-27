@@ -225,7 +225,7 @@ function ActivationCard() {
       </CardHeader>
       <CardContent>
         <p>
-          Click the button below to choose a plan and complete the activation. Your 3-day free trial
+          Click the button below to choose a plan and complete the activation. Your trial
           will start immediately after the one-time activation fee is paid.
         </p>
       </CardContent>
@@ -319,7 +319,7 @@ function UserDashboard() {
           <CardHeader>
             <CardTitle className="font-headline flex items-center gap-2">
               <AreaChartIcon className="h-5 w-5" />
-              Daily Earnings by Plan (This Week)
+              Monthly Earnings by Plan (This Week)
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -390,7 +390,7 @@ function UserDashboard() {
                   <TableHead>Customer</TableHead>
                   <TableHead>Plan</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Daily Commission</TableHead>
+                  <TableHead className="text-right">Est. Monthly Commission</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

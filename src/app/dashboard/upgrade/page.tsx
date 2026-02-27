@@ -104,7 +104,7 @@ export default function UpgradePage() {
               {user?.isPaid ? "Upgrade Your Plan" : "Activate Your Plan"}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-             Pay a one-time activation fee to start your 3-day trial. After the trial, your daily plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
+             Pay a one-time activation fee to start your trial. After the trial, your monthly plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
             </p>
         </div>
         {visibleTiers.length > 0 ? (
@@ -120,7 +120,7 @@ export default function UpgradePage() {
                       <CardTitle className="font-headline text-2xl">{tier.name}</CardTitle>
                       <div className="flex items-baseline gap-2">
                         <span className="text-4xl font-bold tracking-tighter">${tier.price.toFixed(2)}</span>
-                        <span className="text-muted-foreground">/ day (AUD)</span>
+                        <span className="text-muted-foreground">/ month (AUD)</span>
                       </div>
                       <CardDescription>{tier.description}</CardDescription>
                     </CardHeader>
@@ -156,7 +156,7 @@ export default function UpgradePage() {
             )
         )}
         <div className="mt-12 text-center text-muted-foreground">
-            <p><strong>Commission Structure:</strong> All plans start at a 70% recurring daily commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 10 active referrals.</p>
+            <p><strong>Commission Structure:</strong> All plans start at a 70% recurring monthly commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 10 active referrals.</p>
         </div>
     </div>
   );
