@@ -21,8 +21,8 @@ const whyPartnerFeatures = [
   },
   {
     icon: WalletCards,
-    title: "Reliable Monthly Payouts",
-    description: "No more waiting for your money. We pay out your commissions reliably every month directly to your configured payout provider.",
+    title: "Reliable Daily Payouts",
+    description: "No more waiting for your money. We pay out your commissions reliably every day directly to your configured payout provider.",
   },
   {
     icon: Users,
@@ -49,15 +49,15 @@ const whyPartnerFeatures = [
 const incomePathSteps = [
     {
         title: "Activate Your Trial",
-        description: "Pay a one-time activation fee (equal to one month's plan cost) to secure your server resources and start your trial.",
+        description: "Pay a one-time activation fee (equal to one day's plan cost) to secure your server resources and start your trial.",
     },
     {
         title: "Refer Two Users to Be Profitable",
-        description: "Share your unique affiliate link. Your monthly plan cost is covered by the platform's 30% share from just two referrals on the same plan as you, putting you in profit mode.",
+        description: "Share your unique affiliate link. Your daily plan cost is covered by the platform's 30% share from just two referrals on the same plan as you, putting you in profit mode.",
     },
     {
         title: "Earn 70-75% Recurring Profit",
-        description: "You earn 70% of every recurring monthly payment from all your referrals. After 10 referrals, this increases to 75%. Payouts are sent automatically to your payment provider.",
+        description: "You earn 70% of every recurring daily payment from all your referrals. After 10 referrals, this increases to 75%. Payouts are sent automatically to your payment provider.",
     },
 ];
 
@@ -107,7 +107,7 @@ const faqs = [
   },
   {
     question: "How and when do I get paid?",
-    answer: "We process all commission payouts on a reliable monthly schedule. All your earned commissions from recurring payments are automatically sent to the payout account you have on file. There are no minimum payout thresholds.",
+    answer: "We process all commission payouts on a reliable daily schedule. All your earned commissions from recurring payments are automatically sent to the payout account you have on file. There are no minimum payout thresholds.",
   },
   {
     question: "What am I selling?",
@@ -115,7 +115,7 @@ const faqs = [
   },
   {
     question: "Is there a limit to how much I can earn?",
-    answer: "Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single month. We provide a scalable platform so your income can grow as large as your marketing efforts.",
+    answer: "Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single day. We provide a scalable platform so your income can grow as large as your marketing efforts.",
   },
   {
     question: "Can I get a refund on the activation fee?",
@@ -140,10 +140,10 @@ export function HomePageClient() {
         <section className="w-full py-20 md:py-32 lg:py-40 bg-background">
           <div className="container px-4 sm:px-6 mx-auto text-center">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
-              Earn 70%-75% Monthly Commissions with<br/> <span className="text-primary">AI-Powered Hosting</span>
+              Earn 70%-75% Daily Commissions with<br/> <span className="text-primary">AI-Powered Hosting</span>
             </h1>
             <p className="mx-auto mt-6 max-w-[700px] text-lg text-muted-foreground md:text-xl">
-              Get started today and build a reliable recurring income stream. Our automated system handles everything.
+              Get started today and build a reliable daily income stream. Our automated system handles everything.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Button size="lg" asChild>
@@ -188,8 +188,8 @@ export function HomePageClient() {
             <div className="container grid items-center gap-12 px-4 md:px-6 lg:grid-cols-2 lg:gap-24">
                 <div className="space-y-8">
                     <div className="space-y-3">
-                        <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Your Simple Path to Recurring Income</h2>
-                        <p className="text-muted-foreground">In just three easy steps, you can be on your way to earning reliable, monthly income.</p>
+                        <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Your Simple Path to Daily Income</h2>
+                        <p className="text-muted-foreground">In just three easy steps, you can be on your way to earning reliable, daily income.</p>
                     </div>
                     <ul className="space-y-6">
                         {incomePathSteps.map((step, index) => (
@@ -342,7 +342,7 @@ export function HomePageClient() {
         <section id="cta" className="w-full bg-primary py-12 md:py-20">
           <div className="container text-center text-primary-foreground px-4 sm:px-6">
             <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Ready to Start Earning?</h2>
-            <p className="mt-4 mx-auto max-w-xl">Join the most profitable affiliate program in the industry and start your journey to recurring income.</p>
+            <p className="mt-4 mx-auto max-w-xl">Join the most profitable affiliate program in the industry and start your journey to daily income.</p>
             <div className="mt-8">
               <Button size="lg" variant="secondary" asChild>
                 <Link href={signupHref}>Sign Up & Get Your Affiliate Link</Link>

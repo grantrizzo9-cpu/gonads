@@ -14,10 +14,10 @@ export default function PricingPage() {
         <section className="container px-4 sm:px-6 py-12 md:py-24">
             <div className="mx-auto mb-12 max-w-3xl text-center">
                 <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl">
-                Find Your Edge. Start Earning Recurring Income.
+                Find Your Edge. Start Earning Daily Income.
                 </h1>
                 <p className="mt-4 text-lg text-muted-foreground">
-                Pay a one-time activation fee to start your trial. After the trial, your monthly plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
+                Pay a one-time activation fee to start your trial. After the trial, your daily plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
                 </p>
             </div>
 
@@ -26,7 +26,7 @@ export default function PricingPage() {
             </Suspense>
 
             <div className="mt-12 text-center text-muted-foreground">
-                <p><strong>Commission Structure:</strong> All plans start at a 70% recurring monthly commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 10 active referrals.</p>
+                <p><strong>Commission Structure:</strong> All plans start at a 70% recurring daily commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 10 active referrals.</p>
             </div>
         </section>
       </main>

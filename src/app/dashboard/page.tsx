@@ -319,7 +319,7 @@ function UserDashboard() {
           <CardHeader>
             <CardTitle className="font-headline flex items-center gap-2">
               <AreaChartIcon className="h-5 w-5" />
-              Monthly Earnings by Plan (This Week)
+              Daily Earnings by Plan (This Week)
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -390,7 +390,7 @@ function UserDashboard() {
                   <TableHead>Customer</TableHead>
                   <TableHead>Plan</TableHead>
                   <TableHead>Status</TableHead>
-                  <TableHead className="text-right">Est. Monthly Commission</TableHead>
+                  <TableHead className="text-right">Est. Daily Commission</TableHead>
                 </TableRow>
               </TableHeader>
               <TableBody>

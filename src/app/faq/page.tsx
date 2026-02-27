@@ -25,21 +25,21 @@ export default function FAQPage() {
           </div>
           <Accordion type="single" collapsible className="w-full">
             <AccordionItem value="item-1">
-              <AccordionTrigger className="text-lg">How do the monthly payments work?</AccordionTrigger>
+              <AccordionTrigger className="text-lg">How do the daily payments work?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                Our payment system is designed for reliability and predictability. At the end of each monthly billing cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 70% or 75% commission directly to the payout account you have on file. There's no minimum payout threshold.
+                Our payment system is designed for speed and transparency. At the end of each 24-hour cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 70% or 75% commission directly to the payout account you have on file. There's no minimum payout threshold.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-2">
               <AccordionTrigger className="text-lg">How does the free trial work?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                To start your trial, you pay a one-time activation fee. This secures your server resources and goes 100% to the platform owner. After that, you get a trial period to use all the tools and start referring others. Once your trial ends, your monthly subscription cost is covered by the platform's 30% share from just two referrals on the same plan as you—meaning you only ever have to pay once to be in profit.
+                To start your trial, you pay a one-time activation fee. This secures your server resources and goes 100% to the platform owner. After that, you get a trial period to use all the tools and start referring others. Once your trial ends, your daily subscription cost is covered by the platform's 30% share from just two referrals on the same plan as you—meaning you only ever have to pay once to be in profit.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-3">
               <AccordionTrigger className="text-lg">What can I do in my affiliate dashboard?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                Your dashboard is your mission control center. It provides a real-time overview of your business. You can track key metrics like monthly earnings, total earnings, and the number of active referrals. Your unique affiliate link, based on your username, is always visible for easy copying and sharing. The dashboard also features charts to visualize your earnings trends and referral growth over time, along with a detailed table of your recent referrals and their status.
+                Your dashboard is your mission control center. It provides a real-time overview of your business. You can track key metrics like daily earnings, total earnings, and the number of active referrals. Your unique affiliate link, based on your username, is always visible for easy copying and sharing. The dashboard also features charts to visualize your earnings trends and referral growth over time, along with a detailed table of your recent referrals and their status.
               </AccordionContent>
             </AccordionItem>
             <AccordionItem value="item-4">
@@ -51,13 +51,13 @@ export default function FAQPage() {
              <AccordionItem value="item-5">
               <AccordionTrigger className="text-lg">How does the commission bump to 75% work?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                It's simple and automatic. All members start at a generous 70% recurring monthly commission rate. Once you reach the milestone of having 10 active referrals, our system automatically upgrades your account to the 75% commission tier. This is a permanent upgrade for the lifetime of your account, significantly boosting your monthly income.
+                It's simple and automatic. All members start at a generous 70% recurring daily commission rate. Once you reach the milestone of having 10 active referrals, our system automatically upgrades your account to the 75% commission tier. This is a permanent upgrade for the lifetime of your account, significantly boosting your daily income.
               </AccordionContent>
             </AccordionItem>
              <AccordionItem value="item-6">
               <AccordionTrigger className="text-lg">Is there a limit to how much I can earn?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
-                Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single month. With our scalable infrastructure and recurring commission model, your income grows directly in line with your marketing efforts. We provide the tools and the platform; you provide the ambition.
+                Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single day. With our scalable infrastructure and recurring commission model, your income grows directly in line with your marketing efforts. We provide the tools and the platform; you provide the ambition.
               </AccordionContent>
             </AccordionItem>
           </Accordion>
