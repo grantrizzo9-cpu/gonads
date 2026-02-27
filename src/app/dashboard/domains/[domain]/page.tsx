@@ -172,20 +172,20 @@ export default function ManageDomainPage() {
                     {!allRecordsFound ? (
                         <Alert variant="destructive">
                             <AlertCircle className="h-4 w-4" />
-                            <AlertTitle>Action Required: Connect Your Domain</AlertTitle>
+                            <AlertTitle>Action Required: Point Your DNS Records</AlertTitle>
                             <AlertDescription>
-                                Your domain is not yet connected. Add all the required DNS records at your domain provider, then use the "Live DNS Check" links to confirm they are active globally. This can take some time.
+                                Your domain is not yet connected. Copy the DNS records listed in Step 1 into your domain provider's settings (e.g., GoDaddy, Namecheap). After saving, it can take some time for the changes to become active globally.
                             </AlertDescription>
                         </Alert>
                     ) : (
-                         <Alert>
-                            <Hourglass className="h-4 w-4" />
-                            <AlertTitle>Step Complete: DNS Verified. Now Awaiting SSL Activation.</AlertTitle>
+                         <Alert variant="default" className="border-green-500/50">
+                            <CheckCircle2 className="h-4 w-4 text-green-500" />
+                            <AlertTitle className="text-green-600">Step 1 Complete: DNS Verified!</AlertTitle>
                             <AlertDescription>
-                                <p>Your domain's DNS records are correct. The system is now automatically provisioning a free SSL certificate for <strong>{domain.name}</strong>.</p>
-                                <p className="mt-2"><strong>This is not instant and can take several hours.</strong></p>
-                                <p className="mt-2">During this time, it is normal to see a "Not Secure" warning in your browser. This is expected behavior while the certificate is being issued and propagated globally.</p>
-                                <p className="mt-2">You can use the "Check SSL Status" button on this page to monitor its progress. Once it shows as valid, your site will be fully secure and you can proceed with deploying a website.</p>
+                                <p>Your DNS records are pointing correctly to our servers. The next step is happening automatically.</p>
+                                <p className="mt-2"><strong>Next Step: Awaiting SSL Certificate.</strong></p>
+                                <p className="mt-1">The system is now issuing a free SSL certificate for <strong>{domain.name}</strong>. This is not instant and can take <strong>several hours</strong>.</p>
+                                <p className="mt-2">It is <strong>completely normal</strong> to see a "Not Secure" warning in your browser during this time. This is expected. Your site will be secure once this process is complete.</p>
                             </AlertDescription>
                         </Alert>
                     )}
@@ -194,30 +194,42 @@ export default function ManageDomainPage() {
                     <div>
                         <h3 className="font-semibold text-lg mb-2">Step 1: Add DNS Records</h3>
                         <p className="text-muted-foreground mb-4">
-                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following records exactly as they appear. After adding them, use the "Live DNS Check" links to verify they are active.
+                            Log in to your domain registrar (e.g., GoDaddy, Namecheap) and add the following records exactly as they appear. The verification records are unique to this specific domain. After adding them, use the "Live DNS Check" links to confirm they are active.
                         </p>
                         <div className="space-y-3 rounded-lg bg-muted p-4 border">
-                           {domain.dnsRecords.map((record, index) => (
-                               <div key={index}>
-                                   <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                                        <div className="break-all font-mono text-sm">
-                                            <p className="font-bold">{record.type} Record:</p>
-                                            <p><strong className="text-muted-foreground font-medium">Host:</strong> {record.host}</p>
-                                            <p><strong className="text-muted-foreground font-medium">Value:</strong> {record.value}</p>
-                                        </div>
-                                        <div className="flex items-center gap-2 text-xs font-sans mt-2 sm:mt-0 flex-shrink-0">
-                                            {getStatusIcon(record.status)}
-                                            <span className="capitalize">{record.status}</span>
-                                            <Button variant="outline" size="sm" asChild>
-                                                <a href={`https://dnschecker.org/#${record.type}/${record.host === '@' ? domain.name : record.host + '.' + domain.name}`} target="_blank" rel="noopener noreferrer" className="flex items-center">
-                                                    Live DNS Check <ExternalLink className="ml-2 h-3 w-3"/>
-                                                </a>
-                                            </Button>
-                                        </div>
+                           {domain.dnsRecords.map((record, index) => {
+                                let description = '';
+                                if (record.type === 'A') {
+                                    description = 'Points your domain to the main hosting servers. This value is the same for all domains.';
+                                } else if (record.host === 'www') {
+                                    description = "Redirects 'www' traffic to your root domain.";
+                                } else if (record.type === 'CNAME' || record.type === 'TXT') {
+                                    description = 'This is a unique code to verify your domain ownership. It will be different for each domain.';
+                                }
+
+                               return (
+                                   <div key={index}>
+                                       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                                            <div className="flex-grow break-all font-mono text-sm">
+                                                <p className="font-bold">{record.type} Record:</p>
+                                                <p><strong className="text-muted-foreground font-medium">Host:</strong> {record.host}</p>
+                                                <p><strong className="text-muted-foreground font-medium">Value:</strong> {record.value}</p>
+                                                {description && <p className="text-xs font-sans text-muted-foreground mt-1 italic">{description}</p>}
+                                            </div>
+                                            <div className="flex items-center gap-2 text-xs font-sans mt-2 sm:mt-0 flex-shrink-0">
+                                                {getStatusIcon(record.status)}
+                                                <span className="capitalize">{record.status}</span>
+                                                <Button variant="outline" size="sm" asChild>
+                                                    <a href={`https://dnschecker.org/#${record.type}/${record.host === '@' ? domain.name : record.host + '.' + domain.name}`} target="_blank" rel="noopener noreferrer" className="flex items-center">
+                                                        Live DNS Check <ExternalLink className="ml-2 h-3 w-3"/>
+                                                    </a>
+                                                </Button>
+                                            </div>
+                                       </div>
+                                       {index < domain.dnsRecords.length - 1 && <hr className="border-border my-3"/>}
                                    </div>
-                                   {index < domain.dnsRecords.length - 1 && <hr className="border-border my-3"/>}
-                               </div>
-                           ))}
+                               );
+                           })}
                         </div>
                     </div>
                      <div>
