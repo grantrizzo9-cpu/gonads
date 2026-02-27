@@ -64,17 +64,17 @@ export const strategyArticles: Article[] = [
   },
   {
     slug: 'roadmap-to-10-referrals',
-    title: 'Guide: Roadmap to 10 Referrals (75% Bump)',
-    description: 'A step-by-step guide to reaching 10 active referrals and unlocking the 75% commission tier.',
+    title: 'Guide: Roadmap to 25 Referrals (70% Bump)',
+    description: 'A step-by-step guide to reaching 25 active referrals and unlocking the 70% commission tier.',
     image: 'strategy-2',
     content: `
-      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Your Roadmap to the 75% Commission Tier</h2>
-      <p class="mb-4">Reaching your first 10 active referrals with Rizzos Ai is a critical milestone. It’s the threshold where your daily commission rate permanently increases from an already generous 70% to an industry-leading 75%. This 5% bump may seem small, but it represents a significant, compounding increase in your daily income over the lifetime of your referrals. This isn\'t just a promotional target; it\'s a strategic tipping point that accelerates your journey towards substantial passive income. Getting there requires a thoughtful, multi-faceted approach. Forget scattergun tactics; this roadmap provides a structured, three-stage plan to help you efficiently build your referral base and unlock that lucrative top-tier commission. Each stage focuses on a different strategy, from targeting high-intent users to leveraging our powerful AI tools and finally, to building a sustainable community that generates referrals on autopilot. This detailed plan, when executed consistently, can help you achieve your goal faster than you ever thought possible, solidifying your status as a high-earning affiliate partner. Let\'s dive into the specifics of each step and equip you with the knowledge to succeed. This article provides a comprehensive, step-by-step guide with examples and pro-tips for each stage.</p>
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Surgical Strike (First 1-3 Referrals)</h3>
+      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Your Roadmap to the 70% Commission Tier</h2>
+      <p class="mb-4">Reaching 25 active referrals with Rizzos Ai is a critical milestone. It’s the threshold where your daily commission rate permanently increases from an already generous 65% to an industry-leading 70%. This 5% bump may seem small, but it represents a significant, compounding increase in your daily income over the lifetime of your referrals. This isn't just a promotional target; it\'s a strategic tipping point that accelerates your journey towards substantial passive income. Getting there requires a thoughtful, multi-faceted approach. Forget scattergun tactics; this roadmap provides a structured, three-stage plan to help you efficiently build your referral base and unlock that lucrative top-tier commission. Each stage focuses on a different strategy, from targeting high-intent users to leveraging our powerful AI tools and finally, to building a sustainable community that generates referrals on autopilot. This detailed plan, when executed consistently, can help you achieve your goal faster than you ever thought possible, solidifying your status as a high-earning affiliate partner. Let\'s dive into the specifics of each step and equip you with the knowledge to succeed. This article provides a comprehensive, step-by-step guide with examples and pro-tips for each stage.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Surgical Strike (First 1-5 Referrals)</h3>
       <p class="mb-4">Your initial focus should be on precision, not volume. Instead of broad-stroke marketing, become a problem-solver. Your ideal first customers are those actively experiencing the pain of slow, unreliable hosting. Spend time in webmaster forums, Facebook groups for small businesses, and on Reddit threads where people complain about their current hosting providers. Look for phrases like "my site is so slow," "my host keeps going down," or "should I switch from [Budget Host]?". Engage genuinely, offer advice, and then introduce Rizzos Ai as the definitive solution. Create a simple, powerful blog post on your own site titled "Why I Switched to NVMe Hosting and Doubled My Site Speed." Use real data if you can. This targeted, value-first approach builds trust and secures high-quality initial referrals who will stick around.</p>
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: The AI Content Engine (Referrals 4-7)</h3>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: The AI Content Engine (Referrals 6-15)</h3>
       <p class="mb-4">With a small base of daily income, it\'s time to scale your content production. This is where our integrated AI Studio becomes your superpower. Use the Blog Generator to rapidly create a library of high-value, SEO-optimized, and well-structured content. Think beyond simple reviews. Generate articles like: "Core Web Vitals Explained: How Your Host is Secretly Killing Your Rank," "The 2024 Guide to E-commerce Hosting Performance," or "Case Study: Reducing WooCommerce Cart Abandonment with Faster Load Times." Then, use the Ad Studio to create hyper-targeted social media campaigns promoting these articles to relevant audiences (e.g., e-commerce store owners, SaaS founders). The goal is to establish yourself as an authority on web performance, drawing potential customers to you with valuable information before you even pitch the product.</p>
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: The Community Flywheel (Referrals 8-10+)</h3>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: The Community Flywheel (Referrals 16-25+)</h3>
       <p class="mb-4">Now it’s time to build a sustainable referral engine. Start a small, focused community on a platform like Discord, a private Facebook group, or even an email newsletter. The focus should be on "Digital Marketing & Growth," not just hosting. Offer weekly tips, share success stories (including your own), and answer questions about SEO, content marketing, and conversion optimization. Provide genuine value 90% of the time. In the remaining 10%, you can naturally introduce Rizzos Ai as the foundational tool for achieving the performance goals you discuss. Host Q&A sessions, invite guest experts, and feature member success stories. As you build authority and trust within this community, it will become a powerful, self-perpetuating flywheel, generating organic referrals as members recommend the platform to their own networks.</p>
     `,
   },
@@ -150,6 +150,16 @@ export const strategyArticles: Article[] = [
       <p class="mb-4">This paradigm shift enables a portfolio strategy. Instead of betting everything on one or two ideas, you can now deploy a dozen niche sites in a single afternoon. Let them sit for a few weeks, watch your analytics, and see which ones start to gain organic traction. You can then use the AI Studio to double down on the winners, adding more content and promoting them, while simply abandoning the losers with minimal time or capital lost. This is how you de-risk affiliate marketing and scale your operations exponentially. It\'s not just about saving time; it\'s about fundamentally changing the economics of the game in your favor.</p>
     `,
   },
+  {
+    slug: 'white-label-affiliate-business',
+    title: 'Guide: White-Labeling Your Affiliate Business',
+    description: 'Learn how to present the platform as your own branded solution to increase trust and conversions.',
+    image: 'strategy-1',
+    content: `
+      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">The Ultimate Authority: White-Labeling Your Business</h2>
+      <p class="mb-4">For elite affiliates and agencies, the final step in establishing market dominance is to move beyond being a reseller and become the brand. White-labeling allows you to present the Rizzos Ai platform as your own proprietary solution. This guide is for Diamond-tier partners who have access to this powerful feature. Instead of sending clients to a co-branded page, you can host the entire experience under your own domain, with your own branding, colors, and logo. This builds unparalleled trust and positions you as a full-service provider, not just an affiliate. When clients sign up for "Your Brand Hosting," they are buying into your ecosystem. This dramatically increases conversion rates and customer loyalty, as you are the expert and the provider. This guide covers the technical steps for setting up white-labeling and the marketing strategies to leverage it for maximum impact. We'll explore how to customize the user sign-up flow, integrate your branding into the client dashboard, and structure your pricing to create a high-value, branded service that commands premium rates.</p>
+    `,
+  },
 ];
 
 export type PricingTier = {
@@ -169,7 +179,7 @@ const starterGuides = [
 
 const proGuides = [
   ...starterGuides,
-  'Guide: Roadmap to 10 Referrals (75% Bump)',
+  'Guide: Roadmap to 25 Referrals (70% Bump)',
   'Guide: AI Content Velocity',
   'Guide: NVMe Edge SEO Advantage',
 ];
@@ -180,20 +190,13 @@ const premiumGuides = [
   'Guide: 1-Click Niche Site Scaling',
 ];
 
+const diamondGuides = [ 
+  ...premiumGuides,
+  'Guide: White-Labeling Your Affiliate Business',
+];
+
+
 export const pricingTiers: PricingTier[] = [
-  {
-    id: 'starter_daily',
-    name: 'Starter',
-    price: 2.99,
-    description: 'Essential tools for those starting their affiliate marketing journey.',
-    stripePaymentLink: 'https://buy.stripe.com/test_5kQ8wQaUGfU8gdxcuF9k406',
-    features: [
-      '5 Hosted Sites',
-      'NVMe Edge Storage',
-      'AI Ad Copy Generator',
-      ...starterGuides,
-    ],
-  },
   {
     id: 'pro_daily',
     name: 'Pro',
@@ -221,6 +224,21 @@ export const pricingTiers: PricingTier[] = [
       'Full AI Suite with Video Generation',
       'Dedicated Account Manager',
       ...premiumGuides,
+    ],
+  },
+  {
+    id: 'diamond_daily',
+    name: 'Diamond',
+    price: 19.99,
+    description: 'For elite agencies requiring white-labeling and API access.',
+    stripePaymentLink: '',
+    features: [
+      'Unlimited Hosted Sites',
+      'NVMe Edge Storage',
+      'Full AI Suite with Video Generation',
+      'Dedicated Account Manager',
+      'API Access & White-Labeling',
+      ...diamondGuides,
     ],
   },
 ];

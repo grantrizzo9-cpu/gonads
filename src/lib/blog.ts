@@ -219,7 +219,7 @@ export const blogArticles: BlogArticle[] = [
             <li><strong>Content is King:</strong> Your content must be high-quality, comprehensive, and genuinely helpful. Your goal should be to create the single best resource on the internet for your target keyword. The Rizzos Ai Blog Generator is an invaluable tool for this, allowing you to create long-form, well-structured articles in minutes.</li>
             <li><strong>Strategic Keyword Placement:</strong> Once you have your target keyword, place it naturally in these key areas:
                 <ul>
-                    <li>The page's URL (e.g., `yoursite.com/best-hosting-for-ecommerce-beginners`)</li>
+                    <li>The page's URL (e.g., \`yoursite.com/best-hosting-for-ecommerce-beginners\`)</li>
                     <li>The SEO Title / Meta Title (This is the blue link shown in Google search results)</li>
                     <li>The Meta Description (The short text snippet under the title in search results)</li>
                     <li>Your main H1 heading</li>

@@ -15,14 +15,17 @@ import { useToast } from "@/hooks/use-toast";
 
 const getAffiliatePlanIndex = (username: string | undefined | null): number => {
     if (!username) {
+        // Default for direct signups (no referrer): show all plans.
         return pricingTiers.length - 1;
     }
+
     const mockAffiliates: { [key: string]: string } = {
-        'hostproai': 'Premium',
+        'hostproai': 'Diamond',
+        'premium_user': 'Premium',
         'pro_user': 'Pro',
-        'starter_user': 'Starter',
     };
-    const planName = mockAffiliates[username.toLowerCase()] || 'Pro';
+
+    const planName = mockAffiliates[username.toLowerCase()] || 'Pro'; // Default if affiliate not in mock list
     const planIndex = pricingTiers.findIndex(t => t.name === planName);
     return planIndex > -1 ? planIndex : pricingTiers.length - 1;
 };
@@ -89,7 +92,7 @@ export default function UpgradePage() {
               {user?.isPaid ? "Upgrade Your Plan" : "Activate Your Plan"}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-             Choose a daily plan to get started. With just two referrals on the same plan, your own subscription is paid for, putting you in profit mode.
+             Pay a one-time activation fee to start your trial. After the trial, your monthly plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
             </p>
         </div>
         {visibleTiers.length > 0 ? (
@@ -105,7 +108,7 @@ export default function UpgradePage() {
                       <CardTitle className="font-headline text-2xl">{tier.name}</CardTitle>
                       <div className="flex items-baseline gap-2">
                         <span className="text-4xl font-bold tracking-tighter">${tier.price.toFixed(2)}</span>
-                        <span className="text-muted-foreground">/ day (AUD)</span>
+                        <span className="text-muted-foreground">/ month (AUD)</span>
                       </div>
                       <CardDescription>{tier.description}</CardDescription>
                     </CardHeader>
@@ -141,7 +144,7 @@ export default function UpgradePage() {
             )
         )}
         <div className="mt-12 text-center text-muted-foreground">
-            <p><strong>Commission Structure:</strong> All plans start at a 65% recurring daily commission rate. <br /> Automatically upgrade to <strong>70%</strong> upon reaching 25 active referrals.</p>
+            <p><strong>Commission Structure:</strong> All plans start at a 65% recurring monthly commission rate. <br /> Automatically upgrade to <strong>70%</strong> upon reaching 25 active referrals.</p>
         </div>
     </div>
   );
