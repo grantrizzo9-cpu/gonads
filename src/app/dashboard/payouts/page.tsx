@@ -13,26 +13,26 @@ export default function PayoutsPage() {
       <Card>
         <CardHeader>
           <CardTitle className="font-headline text-2xl flex items-center gap-2"><Wallet/>Payout Settings</CardTitle>
-          <CardDescription>Configure your payout details to receive recurring commissions. Payouts are processed automatically every month via Stripe Connect.</CardDescription>
+          <CardDescription>Configure your payout details to receive daily commissions. You'll need to connect a mass payout provider like Payoneer or another service that can handle automated daily payments.</CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-4 max-w-md">
              <div>
                 <Label htmlFor="payout-email">Payout Method</Label>
-                <p className="text-sm text-muted-foreground">Connect your Stripe account to enable automated monthly payouts. This is a one-time setup.</p>
+                <p className="text-sm text-muted-foreground">To enable automated daily payouts to your affiliates, you must connect a mass payout provider.</p>
              </div>
-             <Button disabled>Connect with Stripe (Coming Soon)</Button>
+             <Button disabled>Connect Payout Provider (Coming Soon)</Button>
           </div>
         </CardContent>
         <CardFooter>
-            <p className="text-xs text-muted-foreground">Rizzos Ai uses Stripe Connect to manage payouts securely.</p>
+            <p className="text-xs text-muted-foreground">Services like Payoneer or Wise can handle mass payouts.</p>
         </CardFooter>
       </Card>
 
       <Card>
         <CardHeader>
           <CardTitle>Payout History</CardTitle>
-          <CardDescription>A log of your recent monthly commission payouts.</CardDescription>
+          <CardDescription>A log of your recent daily commission payouts.</CardDescription>
         </CardHeader>
         <CardContent>
           <Table>
