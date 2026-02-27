@@ -34,7 +34,7 @@ const defaultMockUser: User = {
   uid: 'mock-admin-user-123',
   email: 'rentapog@gmail.com',
   displayName: 'Platform Admin',
-  username: 'hostproai',
+  username: 'rizzosai',
   isPaid: true,
   plan: 'Diamond',
   referrer: null,

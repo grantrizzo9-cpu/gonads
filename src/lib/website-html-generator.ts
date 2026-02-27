@@ -50,7 +50,7 @@ export function generateHtmlForWebsite(
   username: string
 ): string {
   const { homepage } = data;
-  const affiliateLink = `https://hostproai.com/?ref=${username}`;
+  const affiliateLink = `https://rizzosai.com/?ref=${username}`;
   
   // Create boilerplate legal content to avoid AI safety filters
   const legal = {
@@ -172,9 +172,9 @@ export function generateHtmlForWebsite(
                         <div class="bg-card p-6 rounded-lg border border-border">
                             <div class="flex items-center gap-4 mb-4">
                                 <div class="w-10 h-10 rounded-full bg-primary text-primary-foreground flex items-center justify-center font-bold text-xl flex-shrink-0">3</div>
-                                <h3 class="text-lg font-semibold">Earn Daily, Paid to PayPal</h3>
+                                <h3 class="text-lg font-semibold">Earn Daily, Paid to Your Provider</h3>
                             </div>
-                            <p class="opacity-80 text-sm">Every referral after your first two is pure profit, paid out daily. All recurring commissions you earn are calculated every 24 hours and sent directly to your registered PayPal account. Your affiliate business funds itself, and your profits are available as daily cash flow.</p>
+                            <p class="opacity-80 text-sm">Every referral after your first two is pure profit, paid out daily. All recurring commissions you earn are calculated every 24 hours and sent directly to your registered payment account. Your affiliate business funds itself, and your profits are available as daily cash flow.</p>
                         </div>
                     </div>
                 </div>
@@ -193,8 +193,8 @@ export function generateHtmlForWebsite(
                         </div>
                         <div class="bg-background p-8 rounded-lg border border-border text-left">
                             <div class="text-5xl font-extrabold text-primary mb-4">24hrs</div>
-                            <h3 class="text-xl font-bold mb-2">To Your PayPal Account</h3>
-                            <p class="opacity-70">Stop waiting 30-90 days for your money. We process payouts every 24 hours. The money you earn today is in your PayPal account tomorrow, ready to be reinvested or spent. This is true cash flow velocity.</p>
+                            <h3 class="text-xl font-bold mb-2">To Your Payment Provider</h3>
+                            <p class="opacity-70">Stop waiting 30-90 days for your money. We process payouts every 24 hours. The money you earn today is in your account tomorrow, ready to be reinvested or spent. This is true cash flow velocity.</p>
                         </div>
                     </div>
                 </div>
@@ -275,5 +275,5 @@ export function generateHtmlForWebsite(
     </script>
 </body>
 </html>
-`;
+`
 }

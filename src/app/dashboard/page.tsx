@@ -248,7 +248,7 @@ function UserDashboard() {
 
   const commissionRate = activeReferrals >= 10 ? 75 : 70;
 
-  const affiliateLink = user?.username ? `https://hostproai.com/?ref=${user.username}` : '';
+  const affiliateLink = user?.username ? `https://rizzosai.com/?ref=${user.username}` : '';
 
   const copyToClipboard = () => {
     if (!affiliateLink) return;

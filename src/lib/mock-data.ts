@@ -11,10 +11,10 @@ export const platformReferrals = [
   // Referral for rentariz to make testing easier
   { referredUser: 'Initial Follower', email: 'initial.follower@example.com', affiliate: 'rentariz', plan: 'Gold', status: 'activated' },
 
-  // Referrals for admin's affiliate username 'hostproai'
-  { referredUser: 'Alice', email: 'alice@example.com', affiliate: 'hostproai', plan: 'Gold', status: 'activated' },
-  { referredUser: 'Bob', email: 'bob@example.com', affiliate: 'hostproai', plan: 'Starter', status: 'pending' },
-  { referredUser: 'Charlie', email: 'charlie@example.com', affiliate: 'hostproai', plan: 'Silver', status: 'activated' },
+  // Referrals for admin's affiliate username 'rizzosai'
+  { referredUser: 'Alice', email: 'alice@example.com', affiliate: 'rizzosai', plan: 'Gold', status: 'activated' },
+  { referredUser: 'Bob', email: 'bob@example.com', affiliate: 'rizzosai', plan: 'Starter', status: 'pending' },
+  { referredUser: 'Charlie', email: 'charlie@example.com', affiliate: 'rizzosai', plan: 'Silver', status: 'activated' },
   
   // Referrals for a new mock affiliate 'power_affiliate' to demonstrate the 75% commission tier
   { referredUser: 'Dave', email: 'dave@example.com', affiliate: 'power_affiliate', plan: 'Gold', status: 'activated' },

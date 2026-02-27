@@ -1,3 +1,4 @@
+
 "use client";
 
 import Link from 'next/link';
@@ -37,7 +38,7 @@ export function Header() {
           <Link href={homeHref} className="mr-6 flex items-center space-x-2">
             <Logo className="h-6 w-6" />
             <span className="font-bold font-headline sm:inline-block">
-              Host Pro Ai
+              Rizzos Ai
             </span>
           </Link>
           <nav className="hidden items-center gap-6 text-sm md:flex">

@@ -4,7 +4,7 @@ import { ClientProviders } from '@/components/providers/client-provider';
 import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Host Pro Ai',
+  title: 'Rizzos Ai',
   description: 'Infrastructure as Income for High-Income Affiliate Marketers',
 };
 

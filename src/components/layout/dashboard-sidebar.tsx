@@ -77,7 +77,7 @@ export function DashboardSidebar() {
                 <div className="flex h-8 w-8 items-center justify-center rounded-full bg-sidebar-primary text-sidebar-primary-foreground">
                     <Logo className="h-5 w-5 transition-all group-hover:scale-110" />
                 </div>
-                <span className="text-lg font-semibold tracking-tight text-foreground group-data-[collapsible=icon]:-ml-8 group-data-[collapsible=icon]:opacity-0">Host Pro Ai</span>
+                <span className="text-lg font-semibold tracking-tight text-foreground group-data-[collapsible=icon]:-ml-8 group-data-[collapsible=icon]:opacity-0">Rizzos Ai</span>
             </Link>
         </SidebarHeader>
 

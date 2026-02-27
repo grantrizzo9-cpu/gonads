@@ -81,7 +81,7 @@ const marketingGuides = [
 
 const testimonials = [
   {
-    quote: "I've never seen daily payouts this reliable. Host Pro Ai has completely changed my financial outlook. The 70% commission is just unbeatable.",
+    quote: "I've never seen daily payouts this reliable. Rizzos Ai has completely changed my financial outlook. The 70% commission is just unbeatable.",
     name: "Sarah J.",
     role: "Super Affiliate",
     avatar: "https://picsum.photos/seed/sarah/100/100",
@@ -160,7 +160,7 @@ export function HomePageClient() {
         <section id="features" className="w-full bg-muted py-12 md:py-24">
           <div className="container px-4 sm:px-6">
             <div className="mx-auto mb-12 max-w-2xl text-center">
-              <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Why Partner with Host Pro Ai?</h2>
+              <h2 className="font-headline text-3xl font-bold tracking-tighter sm:text-4xl">Why Partner with Rizzos Ai?</h2>
               <p className="mt-4 text-muted-foreground">We've built the ultimate platform for affiliates to thrive.</p>
             </div>
             <div className="grid gap-8 md:grid-cols-3">
