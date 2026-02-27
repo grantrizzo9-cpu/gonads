@@ -34,7 +34,7 @@ export default function ArticlePage() {
   let processedContent = article.content;
   
   if (slug === 'connecting-your-domain') {
-    const cnameValue = `your-username.hostproai.com`;
+    const cnameValue = `@`;
     const cnameHtml = `<code class="bg-muted p-1 rounded font-mono">${cnameValue}</code>`;
     processedContent = processedContent.replace(/\[USER_CNAME_VALUE\]/g, cnameHtml);
 

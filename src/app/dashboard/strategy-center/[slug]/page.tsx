@@ -47,11 +47,11 @@ export default function ArticlePage() {
     let content = article.content;
     
     if (slug === 'connecting-your-domain') {
-      const cnameValue = user?.username ? `${user.username}.hostproai.com` : `[your-username].hostproai.com`;
+      const cnameValue = '@';
       const cnameHtml = `<code class="bg-muted p-1 rounded font-mono">${cnameValue}</code>`;
       content = content.replace(/\[USER_CNAME_VALUE\]/g, cnameHtml);
 
-      const imageText = `For 'www', add CNAME record pointing to\\n${cnameValue}`;
+      const imageText = `For 'www', add CNAME record pointing to\\n@`;
       const imageUrl = `https://placehold.co/800x300/e2e8f0/2d3748/png?text=${encodeURIComponent(imageText)}`;
       const imageHtml = `
        <div class="my-4 p-2 border border-border rounded-lg bg-muted">
