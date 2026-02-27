@@ -2,6 +2,7 @@
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
+import { Suspense } from "react";
 import { ArrowRight } from "lucide-react";
 import { strategyArticles } from "@/lib/site";
 import { PlaceHolderImages } from "@/lib/placeholder-images";
@@ -41,7 +42,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
 
   return (
     <>
-      <Header />
+      <Suspense fallback={<div className="h-14" />}>
+        <Header />
+      </Suspense>
       <main className="flex-1">
         <article className="container max-w-4xl px-4 sm:px-6 py-12 md:py-24">
           <div className="space-y-4 text-center">
@@ -80,7 +83,9 @@ export default function ArticlePage({ params }: { params: { slug: string } }) {
           )}
         </article>
       </main>
-      <Footer />
+      <Suspense fallback={<div className="h-24" />}>
+        <Footer />
+      </Suspense>
     </>
   );
 }
