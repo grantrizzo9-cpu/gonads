@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/components/auth/auth-provider';
 import { useToast } from '@/hooks/use-toast';
 import { type PricingTier } from '@/lib/site';
@@ -12,6 +12,15 @@ export function StripeCheckoutButton({ tier }: { tier: PricingTier }) {
     const { user } = useAuth();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
+    const [endorselyReferral, setEndorselyReferral] = useState<string | null>(null);
+
+    useEffect(() => {
+        // On component mount, check for the Endorsely referral ID on the window object.
+        // This is necessary to capture the ID provided by the third-party script.
+        if (typeof window !== 'undefined' && (window as any).endorsely_referral) {
+            setEndorselyReferral((window as any).endorsely_referral);
+        }
+    }, []);
 
     const handleCheckout = async () => {
         if (!user || !user.email) {
@@ -25,9 +34,14 @@ export function StripeCheckoutButton({ tier }: { tier: PricingTier }) {
             const url = new URL(tier.stripePaymentLink);
             url.searchParams.append('client_reference_id', user.uid);
             url.searchParams.append('customer_email', user.email);
-            // Add metadata
+            // Add our own metadata
             url.searchParams.append('metadata[planName]', tier.name);
             url.searchParams.append('metadata[userId]', user.uid);
+            
+            // If the Endorsely referral ID was found, add it to the Stripe metadata
+            if (endorselyReferral) {
+                url.searchParams.append('metadata[endorsely_referral]', endorselyReferral);
+            }
 
             // Redirect the user to the Stripe Payment Link
             window.location.href = url.toString();
