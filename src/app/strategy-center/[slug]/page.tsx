@@ -1,5 +1,7 @@
 
-import { notFound } from "next/navigation";
+'use client';
+
+import { notFound, useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
@@ -11,8 +13,9 @@ import { Footer } from "@/components/layout/footer";
 import { Button } from "@/components/ui/button";
 
 
-export default function ArticlePage({ params }: { params: { slug: string } }) {
-  const slug = params.slug;
+export default function ArticlePage() {
+  const params = useParams();
+  const slug = typeof params.slug === 'string' ? params.slug : '';
   
   const article = strategyArticles.find((a) => a.slug === slug);
 

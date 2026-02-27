@@ -10,6 +10,6 @@ backend:
 hosting:
   site: studio-9195964548-d846f
   customDomains:
-    - rizzosai.com
-    - www.rizzosai.com
+    - hostproai.com
+    - www.hostproai.com
 
