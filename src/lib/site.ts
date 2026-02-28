@@ -212,7 +212,7 @@ export const pricingTiers: PricingTier[] = [
     name: 'Starter',
     price: 2.99,
     description: 'For new affiliates learning the ropes.',
-    stripePaymentLink: 'https://buy.stripe.com/test_aEUaEY9UCg88aO4eUU',
+    stripePaymentLink: 'https://buy.stripe.com/test_5kQ8wQaUGfU8gdxcuF9k406',
     features: [
       '5 Hosted Sites',
       'NVMe Edge Storage',
@@ -241,7 +241,7 @@ export const pricingTiers: PricingTier[] = [
     name: 'Diamond',
     price: 9.99,
     description: 'The ultimate suite for agencies and large-scale affiliate businesses.',
-    stripePaymentLink: 'https://buy.stripe.com/test_4gM8wQd2O23i6CX2U59k408',
+    stripePaymentLink: 'https://buy.stripe.com/test_eVqeVe2oadM08L53Y99k409',
     features: [
       'Unlimited Hosted Sites',
       'NVMe Edge Storage',
