@@ -23,7 +23,7 @@ export default function FAQPage() {
             <h1 className="font-headline text-4xl font-bold mb-4 text-accent">Frequently Asked Questions</h1>
             <p className="text-lg text-muted-foreground">Have questions? We have answers. Here are some of the most common queries we receive.</p>
           </div>
-          <Accordion type="single" collapsible className="w-full">
+          <Accordion type="multiple" defaultValue={["item-1", "item-2", "item-3", "item-4", "item-5", "item-6"]} className="w-full">
             <AccordionItem value="item-1">
               <AccordionTrigger className="text-lg">How do the daily payments work?</AccordionTrigger>
               <AccordionContent className="text-base text-muted-foreground">
