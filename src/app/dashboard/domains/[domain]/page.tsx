@@ -178,15 +178,14 @@ export default function ManageDomainPage() {
                             </AlertDescription>
                         </Alert>
                     ) : (
-                         <Alert variant="default" className="border-green-500/50">
-                            <CheckCircle2 className="h-4 w-4 text-green-500" />
-                            <AlertTitle className="text-green-600">Step 1 Complete: DNS Verified!</AlertTitle>
-                            <AlertDescription>
-                                <p>Your DNS records are pointing correctly to our servers. The final setup step is now happening automatically.</p>
-                                <p className="mt-2"><strong>Final Step: Awaiting SSL & Global Routing.</strong></p>
-                                <p className="mt-1">The system is now issuing a free SSL certificate and configuring global routing for <strong>{domain.name}</strong>. This is a complex process and can take <strong>several hours</strong> to complete.</p>
-                                <p className="mt-2">During this time, it is <strong>completely normal</strong> to see a "Site Not Found" or a "Not Secure" privacy page. This is expected. Your site will become live automatically once this process finishes.</p>
-                                <p className="mt-2">You can use the "Check SSL Status" button at the top of this page to monitor progress.</p>
+                         <Alert variant="default" className="border-amber-500/50">
+                            <Hourglass className="h-4 w-4 text-amber-600" />
+                            <AlertTitle className="font-bold text-amber-700">Final Step: Awaiting SSL & Global Propagation</AlertTitle>
+                            <AlertDescription className="text-amber-900 dark:text-amber-200">
+                                <p>Your DNS records are verified! The system is now automatically issuing a free SSL certificate and deploying it across Google's global network.</p>
+                                <p className="mt-2"><strong>This final step is not instant and can take several hours.</strong></p>
+                                <p className="mt-2">During this waiting period, it is <strong>completely normal</strong> to see "Not Secure" or "Site Not Found" errors in your browser. This is expected and means the process is working.</p>
+                                <p className="mt-2">Even if an external SSL checker shows the certificate as "issued," it still needs to be distributed worldwide. Your site will become live automatically once this is complete. <strong>There are no further actions you need to take.</strong></p>
                             </AlertDescription>
                         </Alert>
                     )}
@@ -350,3 +349,5 @@ export default function ManageDomainPage() {
         </div>
     );
 }
+
+    
