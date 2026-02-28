@@ -43,12 +43,13 @@ export function StripeCheckoutButton({ tier }: { tier: PricingTier }) {
                 url.searchParams.append('metadata[endorsely_referral]', endorselyReferral);
             }
 
-            // Redirect the user to the Stripe Payment Link at the top level
-            if (window.top) {
-              window.top.location.assign(url.toString());
-            } else {
-              window.location.assign(url.toString());
-            }
+            // Open the Stripe Checkout page in a new tab to avoid cross-origin issues.
+            window.open(url.toString(), '_blank', 'noopener,noreferrer');
+            // The user will complete checkout in the new tab and be redirected back.
+            // We will keep the loading spinner active while waiting for their return, but let's re-enable the button after a short delay
+            // in case the user closes the new tab without completing the purchase.
+            setTimeout(() => setIsLoading(false), 5000);
+
 
         } catch (error) {
             console.error("Stripe checkout error:", error);
