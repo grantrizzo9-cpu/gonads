@@ -40,31 +40,33 @@ const verifyStripeSessionFlow = ai.defineFlow(
       throw new Error('Stripe is not configured on the server. The STRIPE_SECRET_KEY environment variable is missing.');
     }
 
-    // First, retrieve the session to get the overall status and client reference ID.
     const session = await stripe.checkout.sessions.retrieve(sessionId);
 
-    // Then, explicitly list the line items for that session, expanding the product data.
-    // This is the most reliable way to get product info for a session created via Payment Link.
-    const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, {
-      expand: ['data.price.product'],
-    });
-    
     let planName: string | null = null;
 
-    if (lineItems.data && lineItems.data.length > 0) {
-      // The price object is on the line item.
-      // The expanded product object is on the price object.
-      const product = lineItems.data[0].price?.product;
-      
-      // Check if product is an expanded object with a 'name' property
-      if (product && typeof product === 'object' && 'name' in product) {
-        planName = product.name as string;
-      }
+    // PRIMARY METHOD: Check the session's metadata. 
+    // This is the most direct way to get the plan name we passed in the URL.
+    if (session.metadata && session.metadata.planName) {
+        planName = session.metadata.planName;
+    } 
+    // FALLBACK METHOD: If metadata is not present for any reason, get it from the line items.
+    // This is more robust and serves as a reliable backup.
+    else {
+        const lineItems = await stripe.checkout.sessions.listLineItems(sessionId, {
+          expand: ['data.price.product'],
+        });
+        
+        if (lineItems.data && lineItems.data.length > 0) {
+          const product = lineItems.data[0].price?.product;
+          if (product && typeof product === 'object' && 'name' in product) {
+            planName = product.name as string;
+          }
+        }
     }
     
     return {
         status: session.payment_status,
-        planName: planName, // This will now be correctly populated
+        planName: planName,
         userId: session.client_reference_id,
     };
   }
