@@ -17,8 +17,8 @@ export type VerifyStripeSessionInput = z.infer<typeof VerifyStripeSessionInputSc
 
 const VerifyStripeSessionOutputSchema = z.object({
   status: z.string().describe('The payment status of the session (e.g., "paid", "unpaid").'),
-  planName: z.string().nullable().describe('The plan name from the session metadata.'),
-  userId: z.string().nullable().describe('The user ID from the session metadata.'),
+  planName: z.string().nullable().describe('The name of the plan purchased in the session.'),
+  userId: z.string().nullable().describe('The user ID passed as the client_reference_id.'),
 });
 export type VerifyStripeSessionOutput = z.infer<typeof VerifyStripeSessionOutputSchema>;
 
@@ -33,12 +33,22 @@ const verifyStripeSessionFlow = ai.defineFlow(
     outputSchema: VerifyStripeSessionOutputSchema,
   },
   async ({ sessionId }) => {
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+        expand: ['line_items.data.price.product'],
+    });
+
+    let planName: string | null = null;
+    if (session.line_items && session.line_items.data && session.line_items.data.length > 0) {
+        const product = session.line_items.data[0].price?.product;
+        if (typeof product === 'object' && product !== null && 'name' in product) {
+            planName = product.name as string;
+        }
+    }
 
     return {
         status: session.payment_status,
-        planName: session.metadata?.planName || null,
-        userId: session.metadata?.userId || null,
+        planName: planName,
+        userId: session.client_reference_id,
     };
   }
 );
