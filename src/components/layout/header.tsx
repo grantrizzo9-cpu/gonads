@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/icons/logo';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/components/auth/auth-provider';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const navLinks = [
   { href: '/blog', label: 'Blog' },
@@ -16,7 +17,7 @@ const navLinks = [
 export function Header() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const { user } = useAuth();
+  const { user, loading } = useAuth();
 
   const ref = searchParams.get('ref');
   
@@ -57,7 +58,12 @@ export function Header() {
           </nav>
         </div>
         <div className="flex flex-1 items-center justify-end space-x-2">
-          {user ? (
+          {loading ? (
+             <div className="flex items-center gap-2">
+                <Skeleton className="h-10 w-20" />
+                <Skeleton className="h-10 w-24" />
+             </div>
+          ) : user ? (
             <Button asChild>
               <Link href="/dashboard">Go to Dashboard</Link>
             </Button>
