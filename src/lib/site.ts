@@ -15,29 +15,46 @@ export const strategyArticles: Article[] = [
     image: 'strategy-2',
     content: `
       <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">Introduction: Your Professional Online Address</h2>
-      <p class="mb-4">Once you\'ve activated your Rizzos Ai account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.your-domain.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with our system. Following these steps will make your site live to the world on your own branded address.</p>
+      <p class="mb-4">Once you've activated your account, the next crucial step is to give your website a professional address with a custom domain name (e.g., <code>www.your-domain.com</code>). This guide will walk you through the entire process, from purchasing a domain to configuring it to work with our system. Following these steps will make your site live to the world on your own branded address.</p>
       
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Required DNS Records</h3>
-      <p class="mb-4">You will need to add the following records at your domain registrar. These records tell the internet where to find your website hosted on our servers. You can find the exact, unique records for your specific domain on the Hosting page in your dashboard.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: Add Your Domain in the Dashboard</h3>
+      <p class="mb-4">First, go to the <a href="/dashboard/domains" class="font-bold text-primary hover:underline">Hosting</a> section of your dashboard. Enter your domain name into the "Add Domain" form and click the button. The system will then generate a unique set of DNS records specifically for your domain. <strong>Use the records shown on that page for the next steps; the examples below are for illustration only.</strong></p>
+
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Add DNS Records at Your Registrar</h3>
+      <p class="mb-4">Log in to your domain registrar (e.g., GoDaddy, Namecheap) and navigate to the DNS management section for your domain. You will need to add four records in total. Here is an example of what they look like:</p>
       
-      <p class="mb-4">Here are the values you will typically need to enter into your domain registrar's DNS settings:</p>
-      <ul class="list-none mb-4 space-y-2 bg-muted p-4 rounded-lg">
-          <li><strong>Type:</strong> A, <strong>Host:</strong> @, <strong>Value:</strong> 35.219.200.7</li>
-          <li><strong>Type:</strong> CNAME, <strong>Host:</strong> www, <strong>Value:</strong> @</li>
-      </ul>
-      <p class="mb-4 text-sm opacity-80">Note: Some registrars use your full domain name (e.g., <code>your-domain.com</code>) instead of '@' for the host or value. Both are correct.</p>
+      <div class="bg-muted p-4 rounded-lg border border-border space-y-4">
+        <div>
+            <h4 class="font-semibold">Main A Record</h4>
+            <p class="text-sm opacity-80">This points your root domain to our server.</p>
+            <ul class="list-none mt-2 space-y-1 font-mono text-xs bg-background p-2 rounded">
+                <li><strong>Type:</strong> A</li>
+                <li><strong>Host/Name:</strong> @</li>
+                <li><strong>Value/Points to:</strong> 35.219.200.7</li>
+            </ul>
+        </div>
+        <div>
+            <h4 class="font-semibold">WWW CNAME Record</h4>
+            <p class="text-sm opacity-80">This ensures 'www.your-domain.com' also works.</p>
+            <ul class="list-none mt-2 space-y-1 font-mono text-xs bg-background p-2 rounded">
+                <li><strong>Type:</strong> CNAME</li>
+                <li><strong>Host/Name:</strong> www</li>
+                <li><strong>Value/Points to:</strong> your-domain.com</li>
+            </ul>
+            <p class="text-xs opacity-60 mt-2">Note: For the CNAME value, you must use your own domain name. Do not use '@' here.</p>
+        </div>
+        <div>
+            <h4 class="font-semibold">Verification Records (CNAME & TXT)</h4>
+            <p class="text-sm opacity-80">These two records are unique security codes used to verify you own the domain and to issue a free SSL certificate. <strong>You must copy the exact values from your hosting dashboard.</strong> They will look something like this:</p>
+            <ul class="list-none mt-2 space-y-1 font-mono text-xs bg-background p-2 rounded">
+                <li><strong>Type:</strong> CNAME, <strong>Host:</strong> _acme-challenge_..., <strong>Value:</strong> ...long-unique-string...</li>
+                <li><strong>Type:</strong> TXT, <strong>Host:</strong> @, <strong>Value:</strong> fah-claim=...long-unique-string...</li>
+            </ul>
+        </div>
+      </div>
 
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: Adding the 'A' Record</h3>
-       <p class="mb-4">Log in to your domain registrar (e.g., GoDaddy, Namecheap) and navigate to the DNS management section. Create a new 'A' record. Set the host/name to '@' and point the record's value to 35.219.200.7.</p>
-
-
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Adding the 'CNAME' Record</h3>
-      <p class="mb-4">In the same DNS management panel, you will add a CNAME record. Set the host/name to 'www' and point the value to '@'.</p>
-      
-      [DNS_IMAGE_PLACEHOLDER]
-
-      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 4: Wait for Propagation & Verify</h3>
-      <p class="mb-4">DNS changes can take some time to propagate across the internet. Once you\'ve completed the steps above, go to the <a href="/dashboard/domains" class="font-bold text-primary hover:underline">Hosting</a> page in your dashboard and use the verifier tool to check if your domain is fully connected.</p>
+      <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 3: Wait for Propagation & Verify</h3>
+      <p class="mb-4">DNS changes can take some time to propagate across the internet (from a few minutes to a few hours). You can use the "Live DNS Check" links next to each record on your hosting page to see when they become active globally. Once all records are found, click the "Refresh Status" button on your dashboard to unlock the final deployment step.</p>
     `,
   },
   {
