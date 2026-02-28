@@ -110,7 +110,7 @@ export const DomainsProvider = ({ children }: { children: ReactNode }) => {
       dnsRecords: [
         { type: 'A', host: '@', value: '199.36.158.100', status: 'verifying' },
         { type: 'A', host: '@', value: '199.36.158.101', status: 'verifying' },
-        { type: 'CNAME', host: 'www', value: domainName, status: 'verifying' },
+        { type: 'CNAME', host: 'www', value: '@', status: 'verifying' },
         { type: 'CNAME', host: acmeChallengeHost, value: acmeChallengeValue, status: 'verifying' },
         { type: 'TXT', host: '@', value: fahClaimValue, status: 'verifying' }
       ],
