@@ -40,12 +40,29 @@ const verifyStripeSessionFlow = ai.defineFlow(
       throw new Error('Stripe is not configured on the server.');
     }
 
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    // Retrieve the session and expand the line items to get the associated product.
+    // This is the most robust way to determine what was purchased via a Payment Link.
+    const session = await stripe.checkout.sessions.retrieve(sessionId, {
+      expand: ['line_items.data.price.product'],
+    });
 
-    // This is the robust fix: Get the planName directly from the metadata
-    // that we passed into the URL from the checkout button. This is much
-    // more reliable than trying to parse the line_items.
-    const planName = session.metadata?.planName || null;
+    let planName: string | null = null;
+
+    // The primary and most reliable method is to get the product name from the expanded line item.
+    if (session.line_items && session.line_items.data.length > 0) {
+      const product = session.line_items.data[0]?.price?.product;
+      
+      // Check if product is an expanded object with a 'name' property
+      if (product && typeof product === 'object' && 'name' in product) {
+        planName = product.name as string;
+      }
+    }
+    
+    // As a fallback, check the metadata. This was the previous method and proved unreliable,
+    // but we'll keep it as a secondary check.
+    if (!planName && session.metadata?.planName) {
+        planName = session.metadata.planName;
+    }
 
     return {
         status: session.payment_status,
