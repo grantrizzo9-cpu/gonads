@@ -7,7 +7,7 @@ import Stripe from 'stripe';
 if (!process.env.STRIPE_SECRET_KEY) {
   // In a real app, you'd want to handle this more gracefully,
   // perhaps by disabling payment features and logging a critical error.
-  console.error('STRIPE_SECRET_KEY environment variable not set.');
+  console.error("CRITICAL: STRIPE_SECRET_KEY environment variable is not set. Payment verification will fail.");
 }
 
 // Initialize Stripe only if the key exists.
@@ -37,7 +37,7 @@ const verifyStripeSessionFlow = ai.defineFlow(
   },
   async ({ sessionId }) => {
     if (!stripe) {
-      throw new Error('Stripe is not configured on the server.');
+      throw new Error('Stripe is not configured on the server. The STRIPE_SECRET_KEY environment variable is missing.');
     }
 
     // Retrieve the session and expand the line items to get the associated product.

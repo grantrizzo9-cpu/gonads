@@ -8,6 +8,7 @@ To get started, take a look at src/app/page.tsx.
 
 This project uses a `.env` file to manage secret keys and other environment-specific configurations. You will need to add your own keys for services like Google AI Studio to enable all features.
 
+- **`STRIPE_SECRET_KEY`**: Required for server-side payment verification with Stripe. You can find this in your Stripe Dashboard under "Developers" > "API keys".
 - **`GEMINI_API_KEY`**: Required for AI video generation and analysis features.
 
 **Important:** Any variable that needs to be accessed in the browser **MUST** be prefixed with `NEXT_PUBLIC_`.
