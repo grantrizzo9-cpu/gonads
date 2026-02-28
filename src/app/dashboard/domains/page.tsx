@@ -21,6 +21,12 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+
 
 export default function HostingPage() {
     const { domains, addDomain, deleteDomain } = useDomains();
@@ -92,9 +98,18 @@ export default function HostingPage() {
                                             </Link>
                                         </TableCell>
                                         <TableCell>
-                                            <Badge variant={getStatusVariant(domain.status)}>
-                                                {domain.status === 'pending' ? 'Action Required' : 'Awaiting SSL'}
-                                            </Badge>
+                                            <Tooltip>
+                                                <TooltipTrigger asChild>
+                                                    <Badge variant={getStatusVariant(domain.status)}>
+                                                        {domain.status === 'pending' ? 'Action Required' : 'Awaiting SSL'}
+                                                    </Badge>
+                                                </TooltipTrigger>
+                                                {domain.status === 'verified' && (
+                                                    <TooltipContent>
+                                                        <p>DNS connected. Waiting for Google to issue the SSL certificate. This can take several hours.</p>
+                                                    </TooltipContent>
+                                                )}
+                                            </Tooltip>
                                         </TableCell>
                                         <TableCell className="text-right space-x-2">
                                             <Button variant="outline" size="sm" asChild>
