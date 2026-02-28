@@ -61,13 +61,13 @@ export const strategyArticles: Article[] = [
     `,
   },
   {
-    slug: 'roadmap-to-10-referrals',
-    title: 'Guide: Roadmap to 25 Referrals (70% Bump)',
-    description: 'A step-by-step guide to reaching 25 active referrals and unlocking the 70% commission tier.',
+    slug: 'roadmap-to-25-referrals',
+    title: 'Guide: Roadmap to 25 Referrals (75% Bump)',
+    description: 'A step-by-step guide to reaching 25 active referrals and unlocking the 75% commission tier.',
     image: 'strategy-2',
     content: `
-      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Your Roadmap to the 70% Commission Tier</h2>
-      <p class="mb-4">Reaching 25 active referrals with Rizzos Ai is a critical milestone. It’s the threshold where your daily commission rate permanently increases from an already generous 65% to an industry-leading 70%. This 5% bump may seem small, but it represents a significant, compounding increase in your daily income over the lifetime of your referrals. This isn't just a promotional target; it\'s a strategic tipping point that accelerates your journey towards substantial passive income. Getting there requires a thoughtful, multi-faceted approach. Forget scattergun tactics; this roadmap provides a structured, three-stage plan to help you efficiently build your referral base and unlock that lucrative top-tier commission. Each stage focuses on a different strategy, from targeting high-intent users to leveraging our powerful AI tools and finally, to building a sustainable community that generates referrals on autopilot. This detailed plan, when executed consistently, can help you achieve your goal faster than you ever thought possible, solidifying your status as a high-earning affiliate partner. Let\'s dive into the specifics of each step and equip you with the knowledge to succeed. This article provides a comprehensive, step-by-step guide with examples and pro-tips for each stage.</p>
+      <h2 class="font-headline text-2xl font-bold mb-4 text-accent">Your Roadmap to the 75% Commission Tier</h2>
+      <p class="mb-4">Reaching 25 active referrals with Rizzos Ai is a critical milestone. It’s the threshold where your daily commission rate permanently increases from an already generous 70% to an industry-leading 75%. This 5% bump may seem small, but it represents a significant, compounding increase in your daily income over the lifetime of your referrals. This isn't just a promotional target; it\'s a strategic tipping point that accelerates your journey towards substantial passive income. Getting there requires a thoughtful, multi-faceted approach. Forget scattergun tactics; this roadmap provides a structured, three-stage plan to help you efficiently build your referral base and unlock that lucrative top-tier commission. Each stage focuses on a different strategy, from targeting high-intent users to leveraging our powerful AI tools and finally, to building a sustainable community that generates referrals on autopilot. This detailed plan, when executed consistently, can help you achieve your goal faster than you ever thought possible, solidifying your status as a high-earning affiliate partner. Let\'s dive into the specifics of each step and equip you with the knowledge to succeed. This article provides a comprehensive, step-by-step guide with examples and pro-tips for each stage.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 1: The Surgical Strike (First 1-5 Referrals)</h3>
       <p class="mb-4">Your initial focus should be on precision, not volume. Instead of broad-stroke marketing, become a problem-solver. Your ideal first customers are those actively experiencing the pain of slow, unreliable hosting. Spend time in webmaster forums, Facebook groups for small businesses, and on Reddit threads where people complain about their current hosting providers. Look for phrases like "my site is so slow," "my host keeps going down," or "should I switch from [Budget Host]?". Engage genuinely, offer advice, and then introduce Rizzos Ai as the definitive solution. Create a simple, powerful blog post on your own site titled "Why I Switched to NVMe Hosting and Doubled My Site Speed." Use real data if you can. This targeted, value-first approach builds trust and secures high-quality initial referrals who will stick around.</p>
       <h3 class="font-headline text-xl font-bold mt-6 mb-2 text-accent">Step 2: The AI Content Engine (Referrals 6-15)</h3>
@@ -177,12 +177,12 @@ const starterGuides = [
 
 const proGuides = [
   ...starterGuides,
-  'Guide: Roadmap to 25 Referrals (70% Bump)',
+  'Guide: Roadmap to 25 Referrals (75% Bump)',
   'Guide: AI Content Velocity',
   'Guide: NVMe Edge SEO Advantage',
 ];
 
-const premiumGuides = [
+const diamondGuides = [
   ...proGuides,
   'Guide: Daily Cashflow Management',
   'Guide: 1-Click Niche Site Scaling',
@@ -221,8 +221,8 @@ export const pricingTiers: PricingTier[] = [
     isPopular: true,
   },
   {
-    id: 'premium_daily',
-    name: 'Premium',
+    id: 'diamond_daily',
+    name: 'Diamond',
     price: 9.99,
     description: 'The ultimate suite for agencies and large-scale affiliate businesses.',
     stripePaymentLink: 'https://buy.stripe.com/test_4gM8wQd2O23i6CX2U59k408',
@@ -232,7 +232,7 @@ export const pricingTiers: PricingTier[] = [
       'Full AI Suite with Video Generation',
       'Dedicated Account Manager',
       'API Access & White-Labeling',
-      ...premiumGuides,
+      ...diamondGuides,
     ],
   },
 ];

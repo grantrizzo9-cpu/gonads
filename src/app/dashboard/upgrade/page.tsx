@@ -101,7 +101,7 @@ export default function UpgradePage() {
               {user?.isPaid ? "Upgrade Your Plan" : "Activate Your Plan"}
             </h1>
             <p className="mt-4 text-lg text-muted-foreground">
-             Pay a one-time activation fee to start your trial. After the trial, your monthly plan fee is covered by the platform's 30% share from just two of your referrals, putting you in profit mode immediately.
+             Pay a one-time activation fee to start your 3-day trial. After the trial, your monthly plan fee is covered by the platform's share from just two of your referrals, putting you in profit mode immediately.
             </p>
         </div>
         {visibleTiers.length > 0 ? (
@@ -153,7 +153,7 @@ export default function UpgradePage() {
             )
         )}
         <div className="mt-12 text-center text-muted-foreground">
-            <p><strong>Commission Structure:</strong> All plans start at a 65% recurring daily commission rate. <br /> Automatically upgrade to <strong>70%</strong> upon reaching 25 active referrals.</p>
+            <p><strong>Commission Structure:</strong> All plans start at a 70% recurring daily commission rate. <br /> Automatically upgrade to <strong>75%</strong> upon reaching 25 active referrals.</p>
         </div>
     </div>
   );

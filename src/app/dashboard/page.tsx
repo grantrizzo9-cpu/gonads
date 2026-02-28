@@ -222,8 +222,7 @@ function ActivationCard() {
       </CardHeader>
       <CardContent>
         <p>
-          Click the button below to choose a plan and complete the activation. Your trial
-          will start immediately after the one-time activation fee is paid.
+          Click the button below to pay the one-time activation fee and start your 3-day trial. You're just one step away from daily income.
         </p>
       </CardContent>
       <CardFooter>
@@ -243,7 +242,7 @@ function UserDashboard() {
   const { referrals, dailyEarnings, monthlyReferrals, totalEarnings, activeReferrals } =
     useEarnings();
 
-  const commissionRate = activeReferrals >= 25 ? 70 : 65;
+  const commissionRate = activeReferrals >= 25 ? 75 : 70;
 
   const affiliateLink = user?.username ? `https://rizzosai.com/?ref=${user.username}` : '';
 
@@ -292,7 +291,7 @@ function UserDashboard() {
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">{activeReferrals}</div>
-            <p className="text-xs text-muted-foreground">Next target: 25 for 70% rate</p>
+            <p className="text-xs text-muted-foreground">Next target: 25 for 75% rate</p>
           </CardContent>
         </Card>
         <Card>

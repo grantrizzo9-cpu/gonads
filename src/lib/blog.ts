@@ -56,9 +56,9 @@ export const blogArticles: BlogArticle[] = [
       <h2 class="font-headline text-2xl font-bold mt-8 mb-4 text-accent">The Daily Compound Growth Engine: A Practical Example</h2>
       <p>Let's compare two affiliates. Affiliate A uses a traditional network with a 30-day payout. Affiliate B uses Rizzos Ai with daily payouts. Both start with a $100 ad budget and have found a campaign that returns $1.50 in commission for every $1.00 spent.</p>
       <ol class="list-decimal list-inside space-y-4 my-4">
-        <li><strong>Day 1:</strong> Both affiliates spend $100 on ads and earn $150 in commissions. For Affiliate A, that $150 is now locked away. For Affiliate B, a 65% commission of $97.50 is queued for tomorrow's payout.</li>
-        <li><strong>Day 2:</strong> Affiliate A has no new capital and must stop their ads. They are now waiting. Affiliate B receives their $97.50 payout and immediately reinvests it into the same winning campaign. This new ad spend generates $146.25 in new commissions, of which they will receive $95.06 on Day 3.</li>
-        <li><strong>Day 3:</strong> Affiliate A is still waiting. Affiliate B receives $95.06, reinvests it, and continues the cycle.</li>
+        <li><strong>Day 1:</strong> Both affiliates spend $100 on ads and earn $150 in commissions. For Affiliate A, that $150 is now locked away. For Affiliate B, a 70% commission of $105 is queued for tomorrow's payout.</li>
+        <li><strong>Day 2:</strong> Affiliate A has no new capital and must stop their ads. They are now waiting. Affiliate B receives their $105 payout and immediately reinvests it into the same winning campaign. This new ad spend generates $157.50 in new commissions, of which they will receive $110.25 on Day 3.</li>
+        <li><strong>Day 3:</strong> Affiliate A is still waiting. Affiliate B receives $110.25, reinvests it, and continues the cycle.</li>
       </ol>
       <p>By the end of the month, Affiliate A finally gets their first $150 payout. In that same time, Affiliate B has compounded their earnings every single day, turning their initial $100 into a significantly larger daily payout and a much bigger base of referred customers. This is the power of cash flow velocity. It creates a self-funding, perpetually growing marketing machine.</p>
 
@@ -185,7 +185,7 @@ export const blogArticles: BlogArticle[] = [
                 <ul>
                     <li><strong>Product Name:</strong> Rizzos Ai - AI-Powered Hosting</li>
                     <li><strong>Target Audience:</strong> Aspiring affiliate marketers, small business owners, bloggers struggling with slow websites.</li>
-                    <li><strong>Key Benefits:</strong> Earn 65% daily commissions, sub-second load times, integrated AI content tools, build a recurring income stream.</li>
+                    <li><strong>Key Benefits:</strong> Earn 70% daily commissions, sub-second load times, integrated AI content tools, build a recurring income stream.</li>
                 </ul>
             </li>
             <li><strong>Select Your Platform:</strong> Choose the platform you're targeting, such as Facebook, Google Ads, or TikTok. The AI understands the unique constraints and best practices for each. It knows that a Google Ad headline needs to be concise and keyword-focused, while an Instagram ad can be more conversational and emoji-rich.</li>
@@ -332,7 +332,7 @@ export const blogArticles: BlogArticle[] = [
     slug: 'understanding-recurring-revenue',
     title: 'The Holy Grail: Understanding and Building Recurring Revenue Streams',
     description: 'Move beyond one-time commissions. Learn why recurring revenue is the key to financial stability and how to build a business around it.',
-    image: 'income-path',
+    image: 'strategy-1',
     author: 'Rizzos Ai Team',
     date: 'July 25, 2024',
     content: `
@@ -347,7 +347,7 @@ export const blogArticles: BlogArticle[] = [
         <ol class="list-decimal list-inside space-y-4 my-4">
             <li><strong>Predictable Income & Stability:</strong> With recurring commissions, your income becomes cumulative. The sales you made last month continue to pay you this month, and the sales you make this month will add to that base. This creates a predictable, stable foundation of income that grows over time, reducing financial stress and allowing you to make long-term plans.</li>
             <li><strong>Compounding Growth:</strong> Your efforts compound. Each new referral doesn't just represent a single payout; they increase your baseline daily income. This creates a snowball effect where your growth accelerates over time.</li>
-            <li><strong>Higher Customer Lifetime Value (LTV):</strong> The total amount you earn from a single customer (their Lifetime Value) is dramatically higher with a recurring model. A customer who pays $5/day and stays for a year generates $1825 in revenue. At a 65% commission, that one referral is worth nearly $1200 to you, paid out in daily increments. This allows you to spend more to acquire a customer, knowing you will be highly profitable over the long term.</li>
+            <li><strong>Higher Customer Lifetime Value (LTV):</strong> The total amount you earn from a single customer (their Lifetime Value) is dramatically higher with a recurring model. A customer who pays $5/day and stays for a year generates $1825 in revenue. At a 70% commission, that one referral is worth nearly $1300 to you, paid out in daily increments. This allows you to spend more to acquire a customer, knowing you will be highly profitable over the long term.</li>
             <li><strong>Freedom and Flexibility:</strong> A strong base of recurring revenue gives you freedom. It means you can afford to have a slow sales week, take a vacation, or spend time working *on* your business (e.g., creating new content, exploring new strategies) instead of constantly working *in* it (chasing the next sale).</li>
         </ol>
 

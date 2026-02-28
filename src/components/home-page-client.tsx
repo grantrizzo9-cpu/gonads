@@ -16,8 +16,8 @@ import { Footer } from "@/components/layout/footer";
 const whyPartnerFeatures = [
   {
     icon: DollarSign,
-    title: "Generous 65-70% Commissions",
-    description: "Start at a 65% recurring commission rate. Refer 25 active customers to permanently unlock our top-tier 70% rate.",
+    title: "Generous 70-75% Commissions",
+    description: "Start at a 70% recurring commission rate. Refer 25 active customers to permanently unlock our top-tier 75% rate.",
   },
   {
     icon: WalletCards,
@@ -48,16 +48,16 @@ const whyPartnerFeatures = [
 
 const incomePathSteps = [
     {
-        title: "Start Your Daily Plan",
-        description: "Choose your plan and make your first daily payment. There are no large upfront fees, just a simple daily subscription to get started.",
+        title: "Start Your 3-Day Trial",
+        description: "Choose your plan and pay a simple one-time activation fee to begin your 3-day, full-featured trial.",
     },
     {
-        title: "Refer Two & Become Profitable",
-        description: "Share your unique affiliate link. Your daily plan cost is covered by the platform's 30% share from just two referrals on the same plan as you, putting you in profit mode.",
+        title: "Start with 2 Referrals & Enter Profit Mode",
+        description: "Every new customer is automatically assigned their first two referrals. The platform's 30% share from these two referrals is designed to cover your own daily plan cost, making you profitable from day one.",
     },
     {
-        title: "Earn 65-70% Recurring Daily Profit",
-        description: "You earn 65% of every recurring daily payment from all your referrals. After 25 referrals, this increases to 70%. Payouts are sent automatically to your payment provider.",
+        title: "Earn 70-75% Recurring Daily Profit",
+        description: "You earn 70% of every recurring daily payment from all your referrals. After 25 referrals, this increases to 75%. Payouts are sent automatically to your payment provider.",
     },
 ];
 
@@ -81,7 +81,7 @@ const marketingGuides = [
 
 const testimonials = [
   {
-    quote: "The recurring revenue model has completely changed my financial outlook. Rizzos Ai's 70% commission is just unbeatable.",
+    quote: "The recurring revenue model has completely changed my financial outlook. Rizzos Ai's 75% commission is just unbeatable.",
     name: "Sarah J.",
     role: "Super Affiliate",
     avatar: "https://picsum.photos/seed/sarah/100/100",
@@ -102,12 +102,20 @@ const testimonials = [
 
 const faqs = [
   {
+    question: "How does the 3-day paid activation trial work?",
+    answer: "To ensure commitment and prevent abuse, we have a one-time paid activation fee which is equal to one day's cost of your selected plan. Paying this fee instantly starts your 3-day, full-featured trial. After the trial, your account automatically transitions to the standard recurring daily payment plan."
+  },
+    {
+    question: "How do I get my first 2 referrals?",
+    answer: "To help you become profitable as quickly as possible, every new customer is automatically assigned their first 2 referrals by the platform. The commissions from these two referrals are designed to cover the cost of your own daily plan, putting you in profit mode from day one."
+  },
+  {
     question: "How does the referral tracking work?",
     answer: "When you sign up, you get a unique affiliate link. Share this link, and our system automatically tracks anyone who signs up through it, permanently linking them to your account. You can monitor all your referral activity in your affiliate dashboard in real-time.",
   },
   {
     question: "How and when do I get paid?",
-    answer: "We process all commission payouts on a reliable daily schedule. All your earned commissions from recurring payments are automatically sent to the payout account you have on file. There are no minimum payout thresholds.",
+    answer: "We process all commission payouts on a reliable daily schedule. All your earned commissions (70%, rising to 75% after 25 referrals) from recurring payments are automatically sent to the payout account you have on file. There are no minimum payout thresholds.",
   },
   {
     question: "What am I selling?",
@@ -117,14 +125,10 @@ const faqs = [
     question: "Is there a limit to how much I can earn?",
     answer: "Absolutely not. Your earning potential is uncapped. The more customers you refer, the more you earn, every single day. We provide a scalable platform so your income can grow as large as your marketing efforts.",
   },
-  {
-    question: "What is your refund policy?",
-    answer: "Given our daily payment model and the immediate value provided, we do not offer refunds on daily subscription fees. However, you can cancel your subscription at any time to prevent future charges. Our focus is on making you profitable quickly, so you never have to worry about refunds.",
-  }
 ];
 
 export function HomePageClient() {
-  const incomePathImage = PlaceHolderImages.find(img => img.id === 'income-path');
+  const incomePathImage = PlaceHolderImages.find(img => img.id === 'strategy-1');
   const affiliateDashboardImage = PlaceHolderImages.find(img => img.id === 'affiliate-dashboard');
   const aiStudioImage = PlaceHolderImages.find(img => img.id === 'ai-studio');
   
@@ -140,7 +144,7 @@ export function HomePageClient() {
         <section className="w-full py-20 md:py-32 lg:py-40 bg-background">
           <div className="container px-4 sm:px-6 mx-auto text-center">
             <h1 className="font-headline text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl text-foreground">
-              Earn 65%-70% Daily Commissions with<br/> <span className="text-primary">AI-Powered Hosting</span>
+              Earn 70%-75% Daily Commissions with<br/> <span className="text-primary">AI-Powered Hosting</span>
             </h1>
             <p className="mx-auto mt-6 max-w-[700px] text-lg text-muted-foreground md:text-xl">
               Get started today and build a reliable daily income stream. Our automated system handles everything.

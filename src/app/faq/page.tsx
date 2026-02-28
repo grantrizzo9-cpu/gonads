@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Suspense } from "react";
@@ -12,12 +13,16 @@ import {
 
 const faqs = [
   {
-    question: "How do the daily payments work?",
-    answer: "Our payment system is designed for speed and transparency. At the end of each 24-hour cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 65% or 70% commission directly to the payout account you have on file. There's no minimum payout threshold."
+    question: "How does the 3-day paid activation trial work?",
+    answer: "To ensure commitment and prevent abuse, we have a one-time paid activation fee which is equal to one day's cost of your selected plan. Paying this fee instantly starts your 3-day, full-featured trial. After the trial, your account automatically transitions to the standard recurring daily payment plan."
   },
   {
-    question: "How does the pricing and trial work?",
-    answer: "We use a simple, transparent daily subscription model with no long-term contracts. There is no traditional \"free trial.\" Your subscription begins with your first daily payment. Our model is designed to make you profitable quickly: the platform's 30% share from just two referrals on the same daily plan as you is enough to cover your own daily subscription cost. This means you can be in profit mode with just two sales."
+    question: "How do I get my first 2 referrals?",
+    answer: "To help you become profitable as quickly as possible, every new customer is automatically assigned their first 2 referrals by the platform. The commissions from these two referrals are designed to cover the cost of your own daily plan, putting you in profit mode from day one."
+  },
+  {
+    question: "How do the daily payments work?",
+    answer: "Our payment system is designed for speed and transparency. At the end of each 24-hour cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 70% commission (or 75% after 25 referrals) directly to the payout account you have on file. There's no minimum payout threshold."
   },
   {
     question: "What can I do in my affiliate dashboard?",
@@ -28,8 +33,8 @@ const faqs = [
     answer: "Our AI studio features are tiered to provide increasing value. The Starter plan gives you our powerful AI Ad Copy generator. The Pro plan unlocks the AI Blog and Website Creation tools. The ultimate tool, AI Video Generation, is exclusively available for our Premium plan members, allowing them to create engaging video scripts and content effortlessly."
   },
   {
-    question: "How does the commission bump to 70% work?",
-    answer: "It's simple and automatic. All members start at a generous 65% recurring daily commission rate. Once you reach the milestone of having 25 active referrals, our system automatically upgrades your account to the 70% commission tier. This is a permanent upgrade for the lifetime of your account, significantly boosting your daily income."
+    question: "How does the commission bump to 75% work?",
+    answer: "It's simple and automatic. All members start at a generous 70% recurring daily commission rate. Once you reach the milestone of having 25 active referrals, our system automatically upgrades your account to the 75% commission tier. This is a permanent upgrade for the lifetime of your account, significantly boosting your daily income."
   },
   {
     question: "Is there a limit to how much I can earn?",
