@@ -196,6 +196,20 @@ const diamondGuides = [
 
 export const pricingTiers: PricingTier[] = [
   {
+    id: 'starter_daily',
+    name: 'Starter',
+    price: 2.99,
+    description: 'For new affiliates learning the ropes.',
+    stripePaymentLink: 'https://buy.stripe.com/test_aEUaEY9UCg88aO4eUU',
+    features: [
+      '5 Hosted Sites',
+      'NVMe Edge Storage',
+      'AI Ad Copy Generator',
+      'Community Support',
+      ...starterGuides,
+    ],
+  },
+  {
     id: 'pro_daily',
     name: 'Pro',
     price: 4.99,
@@ -208,7 +222,6 @@ export const pricingTiers: PricingTier[] = [
       'Priority Support',
       ...proGuides,
     ],
-    isPopular: true,
   },
   {
     id: 'premium_daily',
@@ -227,7 +240,7 @@ export const pricingTiers: PricingTier[] = [
   {
     id: 'diamond_daily',
     name: 'Diamond',
-    price: 19.99,
+    price: 9.99,
     description: 'For elite agencies requiring white-labeling and API access.',
     stripePaymentLink: 'https://buy.stripe.com/test_4gM8wQd2O23i6CX2U59k408',
     features: [
@@ -238,5 +251,6 @@ export const pricingTiers: PricingTier[] = [
       'API Access & White-Labeling',
       ...diamondGuides,
     ],
+    isPopular: true,
   },
 ];
