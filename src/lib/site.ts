@@ -186,10 +186,6 @@ const premiumGuides = [
   ...proGuides,
   'Guide: Daily Cashflow Management',
   'Guide: 1-Click Niche Site Scaling',
-];
-
-const diamondGuides = [ 
-  ...premiumGuides,
   'Guide: White-Labeling Your Affiliate Business',
 ];
 
@@ -222,26 +218,13 @@ export const pricingTiers: PricingTier[] = [
       'Priority Support',
       ...proGuides,
     ],
+    isPopular: true,
   },
   {
     id: 'premium_daily',
     name: 'Premium',
     price: 9.99,
     description: 'The ultimate suite for agencies and large-scale affiliate businesses.',
-    stripePaymentLink: 'https://buy.stripe.com/test_bJe7sMfaWdM06CX3Y99k400',
-    features: [
-      'Unlimited Hosted Sites',
-      'NVMe Edge Storage',
-      'Full AI Suite with Video Generation',
-      'Dedicated Account Manager',
-      ...premiumGuides,
-    ],
-  },
-  {
-    id: 'diamond_daily',
-    name: 'Diamond',
-    price: 9.99,
-    description: 'For elite agencies requiring white-labeling and API access.',
     stripePaymentLink: 'https://buy.stripe.com/test_4gM8wQd2O23i6CX2U59k408',
     features: [
       'Unlimited Hosted Sites',
@@ -249,8 +232,7 @@ export const pricingTiers: PricingTier[] = [
       'Full AI Suite with Video Generation',
       'Dedicated Account Manager',
       'API Access & White-Labeling',
-      ...diamondGuides,
+      ...premiumGuides,
     ],
-    isPopular: true,
   },
 ];
