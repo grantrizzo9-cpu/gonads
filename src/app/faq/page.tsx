@@ -14,7 +14,7 @@ import {
 const faqs = [
   {
     question: "How does the 3-day paid activation trial work?",
-    answer: "To ensure commitment and prevent abuse, we have a one-time paid activation fee which is equal to one day's cost of your selected plan. Paying this fee instantly starts your 3-day, full-featured trial. After the trial, your account automatically transitions to the standard recurring daily payment plan."
+    answer: "To ensure commitment and prevent abuse, new customers pay a one-time activation fee equal to one day's cost of their selected plan. This fee activates a 3-day, full-featured trial, after which the account automatically transitions to a recurring daily payment plan."
   },
   {
     question: "How do I get my first 2 referrals?",
@@ -22,7 +22,7 @@ const faqs = [
   },
   {
     question: "How do the daily payments work?",
-    answer: "Our payment system is designed for speed and transparency. At the end of each 24-hour cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 70% commission (or 75% after 25 referrals) directly to the payout account you have on file. There's no minimum payout threshold."
+    answer: "Our payment system is designed for speed and transparency. At the end of each 24-hour cycle, our system calculates the recurring commissions you've earned from all your active referrals. We then automatically send your 70% commission (rising to 75% after 25 referrals) directly to the payout account you have on file. There's no minimum payout threshold."
   },
   {
     question: "What can I do in my affiliate dashboard?",

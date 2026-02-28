@@ -103,9 +103,9 @@ const testimonials = [
 const faqs = [
   {
     question: "How does the 3-day paid activation trial work?",
-    answer: "To ensure commitment and prevent abuse, we have a one-time paid activation fee which is equal to one day's cost of your selected plan. Paying this fee instantly starts your 3-day, full-featured trial. After the trial, your account automatically transitions to the standard recurring daily payment plan."
+    answer: "To ensure commitment and prevent abuse, new customers pay a one-time activation fee equal to one day's cost of their selected plan. This fee activates a 3-day, full-featured trial, after which the account automatically transitions to a recurring daily payment plan."
   },
-    {
+  {
     question: "How do I get my first 2 referrals?",
     answer: "To help you become profitable as quickly as possible, every new customer is automatically assigned their first 2 referrals by the platform. The commissions from these two referrals are designed to cover the cost of your own daily plan, putting you in profit mode from day one."
   },
@@ -128,7 +128,7 @@ const faqs = [
 ];
 
 export function HomePageClient() {
-  const incomePathImage = PlaceHolderImages.find(img => img.id === 'strategy-1');
+  const incomePathImage = PlaceHolderImages.find(img => img.id === 'income-path');
   const affiliateDashboardImage = PlaceHolderImages.find(img => img.id === 'affiliate-dashboard');
   const aiStudioImage = PlaceHolderImages.find(img => img.id === 'ai-studio');
   

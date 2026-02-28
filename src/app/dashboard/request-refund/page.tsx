@@ -25,7 +25,7 @@ export default function RequestRefundPage() {
             <Hourglass className="h-4 w-4" />
             <AlertTitle>How to Request a Refund</AlertTitle>
             <AlertDescription>
-                <p className="mb-2">All refund requests are handled manually by our team. If you meet the eligibility criteria, please send an email to <a href="mailto:rentapog@gmail.com" className="text-primary hover:underline">rentapog@gmail.com</a> to start the process.</p>
+                <p className="mb-2">All refund requests are handled manually by our team. If you meet the eligibility criteria, please send an email to <a href="mailto:admin@rizzosai.com" className="text-primary hover:underline">admin@rizzosai.com</a> to start the process.</p>
                 <p>We do our best to process requests quickly, but please **allow us up to 24 hours** to respond before filing a payment dispute. If your request is approved, the refund will be sent directly to your account, and your affiliate account will be closed.</p>
             </AlertDescription>
         </Alert>
