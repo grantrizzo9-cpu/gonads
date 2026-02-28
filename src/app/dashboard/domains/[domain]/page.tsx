@@ -200,11 +200,11 @@ export default function ManageDomainPage() {
                            {domain.dnsRecords.map((record, index) => {
                                 let description = '';
                                 if (record.type === 'A') {
-                                    description = 'Points your domain to the main hosting servers. This value is the same for all domains.';
-                                } else if (record.host === 'www') {
-                                    description = "Redirects 'www' traffic to your root domain.";
+                                    description = 'Points your domain to the main hosting servers. Think of this as the server\'s "street address" - it is the same for all domains on our platform.';
+                                } else if (record.type === 'CNAME' && record.host === 'www') {
+                                    description = "This record is an alias. It ensures that visitors who type 'www' in front of your domain are sent to the correct place. It should point to your root domain ('@' or your domain name).";
                                 } else if (record.type === 'CNAME' || record.type === 'TXT') {
-                                    description = 'This is a unique code to verify your domain ownership. It will be different for each domain.';
+                                    description = 'This is a unique security code used by our system to verify you own this domain and to issue a free SSL certificate. It will be different for every domain.';
                                 }
 
                                return (
