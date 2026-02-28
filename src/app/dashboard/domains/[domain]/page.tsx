@@ -182,10 +182,11 @@ export default function ManageDomainPage() {
                             <CheckCircle2 className="h-4 w-4 text-green-500" />
                             <AlertTitle className="text-green-600">Step 1 Complete: DNS Verified!</AlertTitle>
                             <AlertDescription>
-                                <p>Your DNS records are pointing correctly to our servers. The next step is happening automatically.</p>
-                                <p className="mt-2"><strong>Next Step: Awaiting SSL Certificate.</strong></p>
-                                <p className="mt-1">The system is now issuing a free SSL certificate for <strong>{domain.name}</strong>. This is not instant and can take <strong>several hours</strong>.</p>
-                                <p className="mt-2">It is <strong>completely normal</strong> to see a "Not Secure" warning in your browser during this time. This is expected. Your site will be secure once this process is complete.</p>
+                                <p>Your DNS records are pointing correctly to our servers. The final setup step is now happening automatically.</p>
+                                <p className="mt-2"><strong>Final Step: Awaiting SSL & Global Routing.</strong></p>
+                                <p className="mt-1">The system is now issuing a free SSL certificate and configuring global routing for <strong>{domain.name}</strong>. This is a complex process and can take <strong>several hours</strong> to complete.</p>
+                                <p className="mt-2">During this time, it is <strong>completely normal</strong> to see a "Site Not Found" or a "Not Secure" privacy page. This is expected. Your site will become live automatically once this process finishes.</p>
+                                <p className="mt-2">You can use the "Check SSL Status" button at the top of this page to monitor progress.</p>
                             </AlertDescription>
                         </Alert>
                     )}
