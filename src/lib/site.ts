@@ -184,6 +184,7 @@ export type PricingTier = {
   features: string[];
   isPopular?: boolean;
   stripePaymentLink: string;
+  paypalPlanId: string;
 };
 
 const starterGuides = [
@@ -213,6 +214,7 @@ export const pricingTiers: PricingTier[] = [
     price: 2.99,
     description: 'For new affiliates learning the ropes.',
     stripePaymentLink: 'https://buy.stripe.com/test_5kQ8wQaUGfU8gdxcuF9k406',
+    paypalPlanId: 'P-66F843543S398142TNGS3L2Y',
     features: [
       '5 Hosted Sites',
       'NVMe Edge Storage',
@@ -227,6 +229,7 @@ export const pricingTiers: PricingTier[] = [
     price: 4.99,
     description: 'For serious marketers ready to scale their content and earnings.',
     stripePaymentLink: 'https://buy.stripe.com/test_fZuaEY6Eq37m0ez2U59k407',
+    paypalPlanId: 'P-7EX49431NB264250ANGS3MNA',
     features: [
       '25 Hosted Sites',
       'NVMe Edge Storage',
@@ -242,6 +245,7 @@ export const pricingTiers: PricingTier[] = [
     price: 9.99,
     description: 'The ultimate suite for agencies and large-scale affiliate businesses.',
     stripePaymentLink: 'https://buy.stripe.com/test_eVqeVe2oadM08L53Y99k409',
+    paypalPlanId: 'P-6L602198J1314742YNGS3M6Y',
     features: [
       'Unlimited Hosted Sites',
       'NVMe Edge Storage',

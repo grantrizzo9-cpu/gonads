@@ -8,48 +8,54 @@ import { type PricingTier } from '@/lib/site';
 import { Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
-// This component now simulates a payment flow since PayPal has been removed.
+// PayPal subscription plan IDs from environment variables
+const PAYPAL_CLIENT_ID = process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '';
+
 export function PayPalCheckoutButton({ tier }: { tier: PricingTier }) {
     const { activateAccount, user } = useAuth();
     const { activateReferral } = useReferrals();
     const { toast } = useToast();
     const [isLoading, setIsLoading] = useState(false);
 
-    const handleSuccessfulPayment = useCallback(() => {
-        try {
-            activateAccount(tier.name);
-            if (user?.email) {
-              activateReferral(user.email, tier.name);
-            }
-            toast({
-                title: "Account Activated!",
-                description: `Your ${tier.name} plan is now active. Welcome aboard!`,
+    const handleSubscribe = useCallback(async () => {
+        if (!user || !user.email) {
+            toast({ 
+                title: "You must be logged in", 
+                description: "Please log in or sign up to activate a plan.",
+                variant: "destructive"
             });
-            // Redirect to the domain connection guide after successful payment.
-            window.location.assign('/dashboard/strategy-center/connecting-your-domain');
+            return;
+        }
+
+        setIsLoading(true);
+        try {
+            // Redirect to PayPal subscription flow with the plan ID
+            const returnUrl = `${window.location.origin}/dashboard/upgrade?payment_success=true&planName=${encodeURIComponent(tier.name)}`;
+            const cancelUrl = `${window.location.origin}/dashboard/upgrade`;
+            
+            // PayPal subscription URL pattern
+            const paypalUrl = `https://www.paypal.com/cgi-bin/webscr?cmd=_xclick-subscriptions&business=${PAYPAL_CLIENT_ID}&item_name=${encodeURIComponent(tier.name + ' Plan')}&item_number=${tier.id}&a3=${tier.price}&p3=1&t3=D&src=1&sra=1&no_note=1&charset=UTF-8&custom=${user.uid}&return=${encodeURIComponent(returnUrl)}&cancel_return=${encodeURIComponent(cancelUrl)}&notify_url=${encodeURIComponent(`${window.location.origin}/api/paypal/webhook`)}`;
+            
+            window.location.href = paypalUrl;
         } catch (e) {
-            console.error("Error during post-payment processing:", e);
-            // In case of error, stop loading
+            console.error("Error initiating PayPal subscription:", e);
+            toast({
+                title: "Error",
+                description: "Failed to initiate payment. Please try again.",
+                variant: "destructive"
+            });
             setIsLoading(false);
         }
-    }, [activateAccount, tier.name, user?.email, activateReferral, toast]);
-
-    const handleActivate = useCallback(() => {
-        setIsLoading(true);
-        // Simulate network delay for payment processing
-        setTimeout(() => {
-            handleSuccessfulPayment();
-        }, 1000);
-    }, [handleSuccessfulPayment]);
+    }, [user, tier, toast, activateAccount]);
 
     return (
         <div className="w-full">
-             <Button className="w-full" onClick={handleActivate} disabled={isLoading}>
+             <Button className="w-full" onClick={handleSubscribe} disabled={isLoading}>
                 {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                 {isLoading ? 'Processing...' : `Activate ${tier.name} Plan`}
             </Button>
             <p className="text-xs text-center text-muted-foreground mt-2">
-                Payment processing is handled by our third-party provider, PayQuicker.
+                Secure payments powered by PayPal.
             </p>
         </div>
     );
