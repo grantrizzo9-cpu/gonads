@@ -47,8 +47,8 @@ export default function UpgradePage() {
             title: "Account Activated!",
             description: `Your ${planName} plan is now active. Welcome aboard!`,
         });
-        // Redirect to guide page after successful activation
-        router.replace('/dashboard/strategy-center/connecting-your-domain');
+        // Redirect to onboarding page after successful activation
+        router.replace('/dashboard/onboarding');
     }
   }, [searchParams, user, activateAccount, router, toast]);
 
