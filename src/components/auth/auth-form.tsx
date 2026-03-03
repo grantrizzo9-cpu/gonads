@@ -11,6 +11,7 @@ import { Label } from '@/components/ui/label';
 import { Loader2 } from 'lucide-react';
 import { themes } from '@/lib/data';
 import { useToast } from '@/hooks/use-toast';
+import { handleUserSignup } from '@/app/actions/auth';
 
 type AuthFormProps = {
   mode: 'login' | 'signup';
@@ -138,6 +139,20 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
           email: email,
           affiliate: effectiveReferrer,
       });
+
+      // Send welcome email and subscribe to list
+      try {
+        const emailResult = await handleUserSignup(email, username);
+        if (!emailResult.success) {
+          console.warn('Failed to send welcome email:', emailResult.error);
+          toast({
+            title: "Note",
+            description: "Account created! Welcome email may take a moment to arrive.",
+          });
+        }
+      } catch (error) {
+        console.error('Error sending welcome email:', error);
+      }
 
       // The `as any` cast is necessary because MockUser is defined locally.
       signIn(newUser as any, true, effectiveReferrer);

@@ -1,15 +1,19 @@
 
 'use client';
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { HardDrive, ServerOff, PlusCircle, Trash2 } from 'lucide-react';
+import { HardDrive, ServerOff, PlusCircle, Trash2, AlertCircle } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useDomains, type Domain } from "@/contexts/domains-provider";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { useAuth } from "@/components/auth/auth-provider";
+import { getWebsites, getDomainMappingsForUser, setDomainMapping } from "@/lib/firestore";
+import { useToast } from "@/hooks/use-toast";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -30,7 +34,22 @@ import {
 
 export default function HostingPage() {
     const { domains, addDomain, deleteDomain } = useDomains();
+    const { user } = useAuth();
+    const { toast } = useToast();
     const [newDomainName, setNewDomainName] = useState("");
+    const [websiteCount, setWebsiteCount] = useState(0);
+    const [loadingWebsites, setLoadingWebsites] = useState(false);
+
+    // Load website count for Firebase integration hint
+    useEffect(() => {
+        if (user?.uid) {
+            setLoadingWebsites(true);
+            getWebsites(user.uid)
+                .then(websites => setWebsiteCount(websites.length))
+                .catch(err => console.error("Failed to load websites", err))
+                .finally(() => setLoadingWebsites(false));
+        }
+    }, [user?.uid]);
 
     const handleAddDomain = () => {
         if (newDomainName.trim()) {
@@ -42,9 +61,9 @@ export default function HostingPage() {
     const getStatusVariant = (status: Domain['status']): 'default' | 'secondary' | 'destructive' | 'outline' => {
         switch (status) {
             case 'verified':
-                return 'secondary'; // Gray for 'waiting' status
+                return 'secondary';
             case 'pending':
-                return 'destructive'; // Red for 'action required'
+                return 'destructive';
             case 'error':
                 return 'destructive';
             default:
@@ -54,6 +73,15 @@ export default function HostingPage() {
 
     return (
         <div className="space-y-8">
+            {websiteCount > 0 && (
+                <Alert>
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>
+                        Great! You have {websiteCount} generated website{websiteCount !== 1 ? 's' : ''}. Connect your domains below to make them live!
+                    </AlertDescription>
+                </Alert>
+            )}
+
             <Card>
                 <CardHeader>
                     <CardTitle className="font-headline text-2xl flex items-center gap-2"><HardDrive/>Hosting Management</CardTitle>
