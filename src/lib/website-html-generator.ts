@@ -216,8 +216,57 @@ export function generateHtmlForWebsite(
                 </div>
             </section>
 
-            <!-- FAQ Section -->
-            <section id="faq" class="py-20 bg-card">
+            <!-- Email Capture Section -->
+            <section id="email-capture" class="py-20 bg-primary text-primary-foreground">
+                <div class="container mx-auto px-4 max-w-2xl text-center">
+                    <h2 class="text-3xl font-bold mb-4">Join Our Community</h2>
+                    <p class="text-lg opacity-90 mb-8">Get exclusive tips and strategies delivered to your inbox. We'll never share your email.</p>
+                    <div class="flex gap-2 mb-4">
+                        <input 
+                            type="email" 
+                            id="emailInput" 
+                            placeholder="Enter your email address" 
+                            class="flex-1 px-4 py-3 rounded-lg text-foreground"
+                            required
+                        >
+                        <button 
+                            onclick="captureEmail()"
+                            class="px-6 py-3 bg-background text-primary font-semibold rounded-lg hover:opacity-90 transition-opacity"
+                        >
+                            Subscribe
+                        </button>
+                    </div>
+                    <p class="text-sm opacity-80">We respect your privacy. Unsubscribe at any time.</p>
+                    <div id="emailMessage" class="mt-4"></div>
+                </div>
+            </section>
+
+            <!-- Our Program Section -->
+            <section id="our-program" class="py-20">
+                <div class="container mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold mb-12">About Our Affiliate Program</h2>
+                    <div class="max-w-4xl mx-auto bg-card p-8 rounded-lg border border-border text-left">
+                        <p class="text-lg mb-6">We're Rizzos AI, and we've built a platform that makes affiliate marketing accessible to everyone. Our mission is to help people like you generate sustainable income through unique, AI-generated content.</p>
+                        <div class="grid md:grid-cols-3 gap-8 mt-8">
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">70%</div>
+                                <p class="font-semibold mb-1">Base Commission</p>
+                                <p class="text-sm opacity-70">Earn 70% on every referral</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">75%</div>
+                                <p class="font-semibold mb-1">Premium Rate</p>
+                                <p class="text-sm opacity-70">Reach 10 referrals for 75%</p>
+                            </div>
+                            <div class="text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">Daily</div>
+                                <p class="font-semibold mb-1">Automated Payouts</p>
+                                <p class="text-sm opacity-70">Passive income on autopilot</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
                 <div class="container mx-auto px-4 max-w-3xl">
                     <h2 class="text-3xl font-bold mb-8 text-center">Frequently Asked Questions</h2>
                     <div class="space-y-4">
@@ -272,6 +321,46 @@ export function generateHtmlForWebsite(
             document.getElementById(pageId).style.display = 'block';
             window.scrollTo(0, 0);
         }
+
+        async function captureEmail() {
+            const emailInput = document.getElementById('emailInput');
+            const messageDiv = document.getElementById('emailMessage');
+            const email = emailInput.value.trim();
+
+            if (!email || !email.includes('@')) {
+                messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: 600;">Please enter a valid email address</p>';
+                return;
+            }
+
+            try {
+                const response = await fetch('/api/email/capture', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    emailInput.value = '';
+                    messageDiv.innerHTML = '<p style="color: #44ff44; font-weight: 600;">✓ Thanks for subscribing! Check your email for confirmation.</p>';
+                    setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ffaa00; font-weight: 600;">Already subscribed or error occurred</p>';
+                    setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: 600;">There was an issue. Please try again.</p>';
+            }
+        }
+
+        // Allow Enter key to submit
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && document.activeElement?.id === 'emailInput') {
+                captureEmail();
+            }
+        });
     </script>
 </body>
 </html>

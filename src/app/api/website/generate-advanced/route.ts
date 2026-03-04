@@ -442,8 +442,7 @@ function generateWebsiteHTML(params: GenerateWebsiteParams): string {
                 <div class="email-form">
                     <input type="email" placeholder="Enter your email address" id="emailInput" required>
                     <button onclick="captureEmail()">Subscribe</button>
-                </div>
-                <p style="font-size: 0.85rem; margin-top: 1rem; color: #999;">We respect your privacy. Unsubscribe at any time.</p>
+                </div>                <div id="emailMessage" style="margin-top: 10px; font-size: 0.9rem; min-height: 20px;"></div>                <p style="font-size: 0.85rem; margin-top: 1rem; color: #999;">We respect your privacy. Unsubscribe at any time.</p>
             </div>
         ` : ''}
 
@@ -502,35 +501,46 @@ function generateWebsiteHTML(params: GenerateWebsiteParams): string {
     </footer>
 
     <script>
-        function captureEmail() {
+        async function captureEmail() {
             const emailInput = document.getElementById('emailInput');
+            const messageDiv = document.getElementById('emailMessage');
             const email = emailInput.value.trim();
 
             if (!email || !email.includes('@')) {
-                alert('Please enter a valid email address');
+                messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: 600;">Please enter a valid email address</p>';
                 return;
             }
 
-            // Send to Zapier webhook
-            fetch('${process.env.NEXT_PUBLIC_ZAPIER_AFFILIATE_SIGNUP_WEBHOOK_URL}', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    email: email,
-                    source: 'generated_website',
-                    website_name: '${websiteName}',
-                    timestamp: new Date().toISOString()
-                })
-            })
-            .then(() => {
-                emailInput.value = '';
-                alert('Thanks for subscribing! Check your email for confirmation.');
-            })
-            .catch(err => {
-                console.error('Signup error:', err);
-                alert('There was an issue. Please try again.');
-            });
+            try {
+                const response = await fetch('/api/email/capture', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    emailInput.value = '';
+                    messageDiv.innerHTML = '<p style="color: #44ff44; font-weight: 600;">✓ Thanks for subscribing! Check your email for confirmation.</p>';
+                    setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
+                } else {
+                    messageDiv.innerHTML = '<p style="color: #ffaa00; font-weight: 600;">Already subscribed or error occurred</p>';
+                    setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
+                }
+            } catch (error) {
+                console.error('Signup error:', error);
+                messageDiv.innerHTML = '<p style="color: #ff4444; font-weight: 600;">There was an issue. Please try again.</p>';
+                setTimeout(() => { messageDiv.innerHTML = ''; }, 5000);
+            }
         }
+
+        // Allow Enter key to submit
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter' && document.activeElement?.id === 'emailInput') {
+                captureEmail();
+            }
+        });
     </script>
 </body>
 </html>`;
