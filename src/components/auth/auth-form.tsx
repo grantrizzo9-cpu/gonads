@@ -141,7 +141,11 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       });
 
       // Track affiliate referral (if user came from an affiliate link)
+      console.log('DEBUG: effectiveReferrer =', effectiveReferrer);
+      console.log('DEBUG: condition check - referrer exists?', !!effectiveReferrer, '- not hostproai?', effectiveReferrer !== 'hostproai');
+      
       if (effectiveReferrer && effectiveReferrer !== 'hostproai') {
+        console.log('DEBUG: Calling affiliate tracking API...');
         try {
           const trackingResponse = await fetch('/api/affiliate/track-referral', {
             method: 'POST',
@@ -153,15 +157,20 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
             }),
           });
           
+          console.log('DEBUG: API response status:', trackingResponse.status);
+          
           if (!trackingResponse.ok) {
             const errorData = await trackingResponse.json();
             console.error('Affiliate tracking API error:', trackingResponse.status, errorData);
           } else {
-            console.log('✓ Affiliate referral tracked successfully');
+            const result = await trackingResponse.json();
+            console.log('✓ Affiliate referral tracked successfully:', result);
           }
         } catch (error) {
           console.error('Failed to track affiliate referral:', error);
         }
+      } else {
+        console.log('DEBUG: Skipping affiliate tracking - condition not met');
       }
 
       // Send welcome email and subscribe to list (don't wait, don't block)
