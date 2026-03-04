@@ -32,7 +32,7 @@ const getAffiliatePlanIndex = (username: string | undefined | null): number => {
 };
 
 export default function UpgradePage() {
-  const { user, activateAccount } = useAuth();
+  const { user, activateAccount, loading } = useAuth();
   const searchParams = useSearchParams();
   const router = useRouter();
   const { toast } = useToast();
@@ -51,6 +51,17 @@ export default function UpgradePage() {
         router.replace('/dashboard/onboarding');
     }
   }, [searchParams, user, activateAccount, router, toast]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+          <p>Loading...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!user) {
     return null; // Or a loading spinner
