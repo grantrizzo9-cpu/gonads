@@ -15,7 +15,7 @@ import { handleUserSignup } from '@/app/actions/auth';
 
 type AuthFormProps = {
   mode: 'login' | 'signup';
-  referrer?: string;
+  affiliateUsername?: string;
   themeName?: string;
 };
 
@@ -73,7 +73,7 @@ const addUserToDB = (user: MockUser) => {
 }
 
 
-export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
+export function AuthForm({ mode, affiliateUsername, themeName }: AuthFormProps) {
   const { signIn } = useAuth();
   const { addReferral } = useReferrals();
   const { toast } = useToast();
@@ -111,7 +111,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
     await new Promise(resolve => setTimeout(resolve, 1000));
 
     if (mode === 'signup') {
-      const effectiveReferrer = referrer || 'hostproai';
+      const effectiveAffiliate = affiliateUsername || 'hostproai';
       
       const existingUser = findUserByEmail(email);
       if (existingUser) {
@@ -129,7 +129,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
           isPaid: false,
           plan: undefined,
           isFriendAndFamily: false,
-          referrer: effectiveReferrer,
+          referrer: effectiveAffiliate,
       };
       
       addUserToDB(newUser);
@@ -137,8 +137,46 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       addReferral({
           referredUser: username,
           email: email,
-          affiliate: effectiveReferrer,
+          affiliate: effectiveAffiliate,
       });
+
+      // Track referral to Firestore and send alerts
+      if (affiliateUsername) {
+        try {
+          const trackResult = await fetch('/api/affiliate/track-referral', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              affiliateUsername: effectiveAffiliate,
+              newUserUsername: username,
+              newUserEmail: email,
+            }),
+          });
+          const trackData = await trackResult.json();
+          if (trackData.success && trackData.referralCount === 2) {
+            toast({
+              title: "🎉 Referral Tracked!",
+              description: "Affiliate has reached 2 referrals - alerts sent!",
+            });
+          }
+        } catch (error) {
+          console.error('Error tracking referral:', error);
+        }
+      }
+
+      // Register the new user as an affiliate (for future referrals)
+      try {
+        await fetch('/api/affiliate/register', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            username,
+            email,
+          }),
+        });
+      } catch (error) {
+        console.error('Error registering affiliate:', error);
+      }
 
       // Send welcome email and subscribe to list
       try {
@@ -155,7 +193,7 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       }
 
       // The `as any` cast is necessary because MockUser is defined locally.
-      signIn(newUser as any, true, effectiveReferrer);
+      signIn(newUser as any, true, effectiveAffiliate);
       // Use a hard navigation to ensure all state is correctly loaded on the next page.
       // Redirect new users to payment/upgrade page
       window.location.assign('/dashboard/upgrade');
