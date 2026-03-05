@@ -146,6 +146,11 @@ export function AuthForm({ mode, referrer, themeName }: AuthFormProps) {
       
       if (effectiveReferrer && effectiveReferrer !== 'hostproai') {
         console.log('DEBUG: Calling affiliate tracking API...');
+        console.log('DEBUG: Fetching to /api/affiliate/track-referral with:', {
+          affiliateUsername: effectiveReferrer,
+          newUserEmail: email,
+          newUserUsername: username,
+        });
         try {
           const trackingResponse = await fetch('/api/affiliate/track-referral', {
             method: 'POST',

@@ -2,8 +2,11 @@ import { db } from '@/lib/firebase-admin';
 import { sendEmail } from '@/lib/brevo';
 
 export async function POST(req: Request) {
+  console.log('🚨 TRACK-REFERRAL ENDPOINT CALLED 🚨');
   try {
     const { affiliateUsername, newUserEmail, newUserUsername } = await req.json();
+    
+    console.log('🔧 Track Referral API - Input:', { affiliateUsername, newUserEmail, newUserUsername });
 
     if (!affiliateUsername || !newUserEmail || !newUserUsername) {
       return Response.json(
@@ -14,7 +17,9 @@ export async function POST(req: Request) {
 
     // Get or create affiliate document
     const affiliateRef = db.collection('affiliates').doc(affiliateUsername);
+    console.log('🔧 Fetching affiliate doc:', affiliateUsername);
     const affiliateDoc = await affiliateRef.get();
+    console.log('🔧 Affiliate doc exists?', affiliateDoc.exists);
 
     let affiliateData: any = {
       username: affiliateUsername,
@@ -31,16 +36,22 @@ export async function POST(req: Request) {
       };
     }
 
+    console.log('🔧 About to write affiliate data:', affiliateData);
+
     // Add referral to subcollection
     const referralRef = affiliateRef.collection('referrals').doc();
+    console.log('🔧 Writing referral to subcollection...');
     await referralRef.set({
       email: newUserEmail,
       username: newUserUsername,
       createdAt: new Date(),
     });
+    console.log('🔧 ✓ Referral written');
 
     // Update affiliate count
+    console.log('🔧 Updating affiliate count...');
     await affiliateRef.set(affiliateData, { merge: true });
+    console.log('🔧 ✓ Affiliate count updated');
 
     // If they just hit 2 referrals, send email alerts
     if (affiliateData.referralCount === 2) {
